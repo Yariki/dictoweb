@@ -10,9 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Model\" />
     <Folder Include="Interfaces\" />
-    <Folder Include="Core\" />
     <Folder Include="Repository\" />
     <Folder Include="UnitOfWork\" />
   </ItemGroup>

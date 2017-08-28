@@ -6,5 +6,7 @@
         public string Instance { get; set; }
         public string Domain { get; set; }
         public string SignUpSignInPolicyId { get; set; }
+        public int Expires { get; set; }
+        public string SecretKey { get; set; }
     }
 }

@@ -5,7 +5,9 @@ VisualStudioVersion = 15.0.26730.10
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DictoData", "DictoData\DictoData.csproj", "{F0366302-80EE-4CF3-B6D0-E96F21A72289}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DictoWeb", "DictoWeb\DictoWeb.csproj", "{D81AB19F-0D09-464D-9A92-1B5E1903C9FE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DictoWeb", "DictoWeb\DictoWeb.csproj", "{D81AB19F-0D09-464D-9A92-1B5E1903C9FE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DictoDtos", "DictoDtos\DictoDtos.csproj", "{8FA5AEA5-5994-46EE-8790-79FBA2C935E3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{D81AB19F-0D09-464D-9A92-1B5E1903C9FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D81AB19F-0D09-464D-9A92-1B5E1903C9FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D81AB19F-0D09-464D-9A92-1B5E1903C9FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8FA5AEA5-5994-46EE-8790-79FBA2C935E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8FA5AEA5-5994-46EE-8790-79FBA2C935E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8FA5AEA5-5994-46EE-8790-79FBA2C935E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8FA5AEA5-5994-46EE-8790-79FBA2C935E3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

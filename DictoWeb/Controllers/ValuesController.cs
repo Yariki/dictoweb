@@ -13,6 +13,7 @@ namespace DictoWeb.Controllers
     {
         // GET api/values
         [HttpGet]
+        [AllowAnonymous]
         public IEnumerable<string> Get()
         {
             return new string[] { "value1", "value2" };

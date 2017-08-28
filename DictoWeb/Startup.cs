@@ -28,9 +28,17 @@ namespace DictoWeb
             services.AddAuthentication(sharedOptions =>
             {
                 sharedOptions.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                sharedOptions.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                sharedOptions.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             })
             .AddAzureAdB2CBearer(options => Configuration.Bind("AzureAdB2C", options));
 
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("Administrator", policy => policy.RequireClaim("Administrator"));
+                options.AddPolicy("User", policy => policy.RequireClaim("User"));
+            });
+            services.AddRouting(options => options.LowercaseUrls = true);
             services.AddMvc();
         }
 
