@@ -19,7 +19,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\DictoData\DictoData.csproj" />
     <ProjectReference Include="..\DictoDtos\DictoDtos.csproj" />
+    <ProjectReference Include="..\DictoServices\DictoServices.csproj" />
   </ItemGroup>
 
 </Project>
