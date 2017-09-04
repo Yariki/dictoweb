@@ -4,7 +4,10 @@ using System.Security.Claims;
 using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
+using DictoData.Model;
 using DictoDtos.Dtos;
+using DictoServices.Interfaces;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -21,14 +24,18 @@ namespace DictoWeb.Controllers
     {
         private readonly JsonSerializerSettings _serializerSettings;
         private readonly IOptions<AzureAdB2COptions> _options;
+        private readonly IAccountService _accountService;
+        private readonly IMapper _mapper;
 
-        public LoginController(IOptions<AzureAdB2COptions> options)
+        public LoginController(IOptions<AzureAdB2COptions> options, IAccountService accontService, IMapper mapper)
         {
             _serializerSettings = new JsonSerializerSettings
             {
                 Formatting = Formatting.Indented
             };
             _options = options;
+            _accountService = accontService;
+            _mapper = mapper;
         }
 
         // GET
@@ -37,6 +44,11 @@ namespace DictoWeb.Controllers
         public async Task<IActionResult> Token([FromBody]UserDto user)
         {
             var identity = await GetClaimsIdentity(user);
+            if (identity == null)
+            {
+                return new BadRequestObjectResult($"There is no user with name {user.Email}");
+            }
+
             var claims = new[]
             {
                 new Claim(JwtRegisteredClaimNames.Sub, user.Email),
@@ -64,18 +76,21 @@ namespace DictoWeb.Controllers
         }
 
 
-        private static Task<ClaimsIdentity> GetClaimsIdentity(UserDto user)
+        private async Task<ClaimsIdentity> GetClaimsIdentity(UserDto user)
         {
-            if (user.Email == "user" && user.Password == "password")
+            var dbUser = _mapper.Map<User>(user);
+            var u = await _accountService.Authenticate(dbUser.Email,user.Password);
+            
+            if (u != null)
             {
-                return Task.FromResult(new ClaimsIdentity(new GenericIdentity(user.Email, "Token"),
+                return new ClaimsIdentity(new GenericIdentity(user.Email, "Token"),
                     new Claim[]
                     {
                         new Claim("Administrator",String.Empty)
                     }
-                ));
+                );
             }
-            return Task.FromResult<ClaimsIdentity>(null);
+            return null;
         }
     }
 }

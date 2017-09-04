@@ -2,6 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
+using DictoData.Context;
+using DictoServices.Interfaces;
+using DictoServices.Services;
+using DictoWeb.Helper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Authentication;
@@ -38,8 +43,12 @@ namespace DictoWeb
                 options.AddPolicy("Administrator", policy => policy.RequireClaim("Administrator"));
                 options.AddPolicy("User", policy => policy.RequireClaim("User"));
             });
+            services.AddDbContext<DictoContext>();
             services.AddRouting(options => options.LowercaseUrls = true);
             services.AddMvc();
+            services.AddAutoMapper();
+
+            services.AddServices();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

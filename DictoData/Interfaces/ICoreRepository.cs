@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using DictoData.Core;
+using Microsoft.EntityFrameworkCore;
 
 namespace DictoData.Interfaces
 {
@@ -14,5 +15,6 @@ namespace DictoData.Interfaces
         void Insert(T entity);
         void Delete(T entity);
         void Update(T entity);
+        DbSet<T> Set { get; }
     }
 }
