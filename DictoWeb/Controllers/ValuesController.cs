@@ -16,6 +16,9 @@ namespace DictoWeb.Controllers
         [AllowAnonymous]
         public IEnumerable<string> Get()
         {
+            var user = this.User;
+            var identity = user.Identity;
+            
             return new string[] { "value1", "value2" };
         }
 

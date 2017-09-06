@@ -33,8 +33,6 @@ namespace DictoWeb
             services.AddAuthentication(sharedOptions =>
             {
                 sharedOptions.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-                sharedOptions.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                sharedOptions.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             })
             .AddAzureAdB2CBearer(options => Configuration.Bind("AzureAdB2C", options));
 

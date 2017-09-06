@@ -66,7 +66,7 @@ namespace DictoServices.Services
 
             for (int i = 0; i < hash.Length; i++)
             {
-                str.Append(hash[i].ToString("X2"));
+                str.Append(hash[i].ToString("x2"));
             }
 
             return str.ToString();
