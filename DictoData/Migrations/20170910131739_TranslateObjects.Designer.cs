@@ -12,9 +12,10 @@ using System;
 namespace DictoData.Migrations
 {
     [DbContext(typeof(DictoContext))]
-    partial class DictoContextModelSnapshot : ModelSnapshot
+    [Migration("20170910131739_TranslateObjects")]
+    partial class TranslateObjects
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
