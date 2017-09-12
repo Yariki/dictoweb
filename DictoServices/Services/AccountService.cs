@@ -7,6 +7,7 @@ using DictoData.Model;
 using DictoData.UnitOfWork;
 using DictoServices.Core;
 using DictoServices.Interfaces;
+using Microsoft.Extensions.Logging;
 
 namespace DictoServices.Services
 {
@@ -14,7 +15,8 @@ namespace DictoServices.Services
     {
         private UnitOfWork _unitOfWork;
         
-        public AccountService(DictoContext context)
+        public AccountService(DictoContext context,ILogger<AccountService> logger)
+            : base(logger)
         {
             _unitOfWork = new UnitOfWork(context);
         }
