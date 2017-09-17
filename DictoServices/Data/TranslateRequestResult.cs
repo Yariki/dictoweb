@@ -2,9 +2,9 @@
 
 namespace DictoServices.Data
 {
-    public class GoogleRequestResult
+    public class TranslateRequestResult
     {
-        public GoogleRequestResult()
+        public TranslateRequestResult()
         {
             Translate = new Dictionary<string, string[]>();
         }

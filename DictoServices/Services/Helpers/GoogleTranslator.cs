@@ -5,38 +5,29 @@ using System.Text;
 using System.Threading.Tasks;
 using Dictionary.Dict;
 using DictoData.Model;
+using DictoServices.Base;
 using DictoServices.Data;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
 namespace DictoServices.Services.Helpers
 {
-    public class GoogleTranslator
+    public class GoogleTranslator : CoreTranslator
     {
         string _baseAddress = "https://clients5.google.com/translate_a/t?client=dict-chrome-ex&sl={0}&tl={1}&q={2}";
         string _soundUrl = "http://www.gstatic.com/dictionary/static/sounds/de/0/{0}.mp3";
-        private ILogger _logger;
-
-
-        private Language _source;
-        private Language _target;
-        private string _query;
-        
 
         public GoogleTranslator(ILogger logger, Language source, Language target, string query)
+            :base(logger,source,target,query)
         {
-            _logger = logger;
-            _source = source;
-            _target = target;
-            _query = query;
 
         }
 
 #region public method
-        public async Task<GoogleRequestResult> Request()
+        public override async Task<TranslateRequestResult> Request()
         {
-            string url = String.Format(_baseAddress, _soundUrl, _target, _query);
-            GoogleRequestResult result = null;
+            string url = String.Format(_baseAddress, _soundUrl, Target, Query);
+            TranslateRequestResult result = null;
             try
             {
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
@@ -58,7 +49,7 @@ namespace DictoServices.Services.Helpers
                         string resultRequest = reader.ReadToEnd();
                         
                         TTranslateDictionary dict = JsonConvert.DeserializeObject<TTranslateDictionary>(resultRequest);
-                        result  = (GoogleRequestResult)PasreJsonResult(dict, "utf-8");
+                        result  = (TranslateRequestResult)PasreJsonResult(dict, "utf-8");
                         reader.Close();
                         resp.Close();
                     }
@@ -90,9 +81,9 @@ namespace DictoServices.Services.Helpers
             return temp;
         }
 
-        private GoogleRequestResult PasreJsonResult(TTranslateDictionary dict,string enc)
+        private TranslateRequestResult PasreJsonResult(TTranslateDictionary dict,string enc)
         {
-            GoogleRequestResult res = new GoogleRequestResult();
+            TranslateRequestResult res = new TranslateRequestResult();
             res.Encoding = enc;
             if (dict.Sentences.Length > 0)
             {

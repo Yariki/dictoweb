@@ -2,8 +2,8 @@
 {
     public static class GlobalConst
     {
-        public static string GoogleTranslator => "Google";
+        public const string GoogleTranslator = "google";
 
-        public static string BingTranslator => "Bing";
+        public const string BingTranslator = "bing";
     }
 }

@@ -17,10 +17,9 @@ namespace DictoServices.Services
         {
         }
 
-        public async Task<GoogleRequestResult> Translate(TranslateQueryDto translateData)
+        public async Task<TranslateRequestResult> Translate(TranslateQueryDto translateData)
         {
-            var translator =   new BingTranslator(GetLogger(), GetLanguage(translateData.SourceLanguage), GetLanguage(translateData.TargetLanguage), translateData.Original);
-                //new GoogleTranslator(GetLogger(),GetLanguage(translateData.SourceLanguage),GetLanguage(translateData.TargetLanguage),translateData.Original);
+            var translator =  TranslationFactory.GetProvider(GetLogger(), GetLanguage(translateData.SourceLanguage), GetLanguage(translateData.TargetLanguage), translateData.Original,translateData.Provider);
             var result = await translator.Request();
             return result;
         }

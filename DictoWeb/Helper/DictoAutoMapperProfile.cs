@@ -13,7 +13,7 @@ namespace DictoWeb.Helper
             CreateMap<UserDto, User>();
             CreateMap<Role, RoleDto>();
             CreateMap<RoleDto, Role>();
-            CreateMap<GoogleRequestResult, TranslateDto>();
+            CreateMap<TranslateRequestResult, TranslateDto>();
         }
     }
 }

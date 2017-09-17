@@ -6,6 +6,6 @@ namespace DictoServices.Interfaces
 {
     public interface ITranslationService
     {
-        Task<GoogleRequestResult> Translate(TranslateQueryDto translateData);
+        Task<TranslateRequestResult> Translate(TranslateQueryDto translateData);
     }
 }
