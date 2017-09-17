@@ -42,6 +42,7 @@ namespace DictoWeb
                 options.AddPolicy("User", policy => policy.RequireClaim("User"));
             });
             services.AddDbContext<DictoContext>();
+            services.AddLogging();
             services.AddRouting(options => options.LowercaseUrls = true);
             services.AddMvc();
             services.AddAutoMapper();
@@ -50,13 +51,14 @@ namespace DictoWeb
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            loggerFactory.AddDebug();
+            loggerFactory.AddFile("Logs/{Date}.log");
             app.UseAuthentication();
             app.UseMvc();
         }

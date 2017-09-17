@@ -6,28 +6,32 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using DictoData.Model;
-using DictoDtos.Dtos;
+using DictoInfrasctructure.Core;
+using DictoInfrasctructure.Dtos;
 using DictoServices.Interfaces;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
+using Serilog.Events;
 
 namespace DictoWeb.Controllers
 {
     [Authorize]
     [Route("api/[controller]")]
-    public class LoginController : Controller
+    public class LoginController : CoreController<LoginController>
     {
         private readonly JsonSerializerSettings _serializerSettings;
         private readonly IOptions<AzureAdB2COptions> _options;
         private readonly IAccountService _accountService;
         private readonly IMapper _mapper;
 
-        public LoginController(IOptions<AzureAdB2COptions> options, IAccountService accontService, IMapper mapper)
+        public LoginController(IOptions<AzureAdB2COptions> options, IAccountService accontService, IMapper mapper, ILogger<LoginController> logger)
+            :base(logger)
         {
             _serializerSettings = new JsonSerializerSettings
             {
@@ -38,7 +42,7 @@ namespace DictoWeb.Controllers
             _mapper = mapper;
         }
 
-        // GET
+        
         [HttpPost("token")]
         [AllowAnonymous]
         public async Task<IActionResult> Token([FromBody]UserDto user)
@@ -56,8 +60,8 @@ namespace DictoWeb.Controllers
                 identity.FindFirst("Administrator")
             };
             var jwt = new JwtSecurityToken(
-                issuer: _options.Value.Domain,
-                audience: _options.Value.Domain,
+                issuer: _options.Value.ClientId,
+                audience: _options.Value.ClientId,
                 claims: claims,
                 expires: DateTime.UtcNow.AddMinutes(_options.Value.Expires),
                 signingCredentials: new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_options.Value.SecretKey)), SecurityAlgorithms.HmacSha256));

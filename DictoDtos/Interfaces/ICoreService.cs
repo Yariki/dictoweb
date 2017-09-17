@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DictoServices.Interfaces
+namespace DictoInfrasctructure.Interfaces
 {
     public interface ICoreService : IDisposable
     {

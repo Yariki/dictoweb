@@ -2,9 +2,8 @@
 {
     public enum Language
     {
-        None,
-        English,
-        Ukrainian,
-        Russian
+        en,
+        ru,
+        uk
     }
 }

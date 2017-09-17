@@ -9,9 +9,9 @@ using DictoServices.Data;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
-namespace DictoServices.Services
+namespace DictoServices.Services.Helpers
 {
-    public class GoogleTranslatore
+    public class GoogleTranslator
     {
         string _baseAddress = "https://clients5.google.com/translate_a/t?client=dict-chrome-ex&sl={0}&tl={1}&q={2}";
         string _soundUrl = "http://www.gstatic.com/dictionary/static/sounds/de/0/{0}.mp3";
@@ -23,7 +23,7 @@ namespace DictoServices.Services
         private string _query;
         
 
-        public GoogleTranslatore(ILogger logger, Language source, Language target, string query)
+        public GoogleTranslator(ILogger logger, Language source, Language target, string query)
         {
             _logger = logger;
             _source = source;

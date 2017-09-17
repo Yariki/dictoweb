@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
-using DictoDtos.Dtos;
+using AutoMapper;
+using DictoInfrasctructure.Core;
+using DictoInfrasctructure.Dtos;
 using DictoServices.Interfaces;
-using DictoWeb.Core;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -14,10 +15,12 @@ namespace DictoWeb.Controllers
     public class TranslateController : CoreController<TranslateController>
     {
         private ITranslationService _translationService;
+        private IMapper _mapper;
 
-        public TranslateController(ITranslationService translationService, ILogger<TranslateController> logger)
+        public TranslateController(ITranslationService translationService,IMapper mapper, ILogger<TranslateController> logger)
             :base(logger)
         {
+            _mapper = mapper;
             _translationService = translationService;
         }
 
@@ -31,13 +34,21 @@ namespace DictoWeb.Controllers
             try
             {
                 var result = await _translationService.Translate(translateQueryDto);
-                return Ok(result);
+                if (result == null)
+                {
+                    return BadRequest("There is no  translation.");
+                }
+                var mappedResult = _mapper.Map<TranslateDto>(result);
+                
+                return Ok(mappedResult);
             }
             catch (Exception e)
             {
                 return BadRequest();
             }
         }
+        
+        
         
 
     }

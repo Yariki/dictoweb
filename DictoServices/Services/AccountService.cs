@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using DictoData.Context;
 using DictoData.Model;
 using DictoData.UnitOfWork;
-using DictoServices.Core;
+using DictoInfrasctructure.Core;
 using DictoServices.Interfaces;
 using Microsoft.Extensions.Logging;
 

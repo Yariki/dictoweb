@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using DictoData.Model;
-using DictoDtos.Dtos;
+using DictoInfrasctructure.Dtos;
+using DictoServices.Data;
 
 namespace DictoWeb.Helper
 {
@@ -12,6 +13,7 @@ namespace DictoWeb.Helper
             CreateMap<UserDto, User>();
             CreateMap<Role, RoleDto>();
             CreateMap<RoleDto, Role>();
+            CreateMap<GoogleRequestResult, TranslateDto>();
         }
     }
 }

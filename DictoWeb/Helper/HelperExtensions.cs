@@ -9,6 +9,7 @@ namespace DictoWeb.Helper
         public static void AddServices(this IServiceCollection services)
         {
             services.AddScoped<IAccountService, AccountService>();
+            services.AddScoped<ITranslationService, TranslationService>();
         }
     }
 }

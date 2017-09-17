@@ -1,50 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using DictoInfrasctructure.Core;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+
 
 namespace DictoWeb.Controllers
 {
-    [Authorize]
-    [Route("api/[controller]")]
-    public class ValuesController : Controller
+    [Route("api/[controller]"), Authorize]
+    public class ValuesController : CoreController<ValuesController>
     {
-        // GET api/values
-        [HttpGet]
-        [AllowAnonymous]
-        public IEnumerable<string> Get()
+        public ValuesController(ILogger<ValuesController> logger)
+            :base(logger)
         {
-            var user = this.User;
-            var identity = user.Identity;
             
-            return new string[] { "value1", "value2" };
         }
 
-        // GET api/values/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpPost("getvalues")]
+        public IActionResult Get()
         {
-            return "value";
+            return Ok(new List<string> {"one", "two"});
         }
-
-        // POST api/values
-        [HttpPost]
-        public void Post([FromBody]string value)
-        {
-        }
-
-        // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
-        // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
+        
     }
 }

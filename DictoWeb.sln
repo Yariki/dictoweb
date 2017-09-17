@@ -7,9 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DictoData", "DictoData\Dict
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DictoWeb", "DictoWeb\DictoWeb.csproj", "{D81AB19F-0D09-464D-9A92-1B5E1903C9FE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DictoDtos", "DictoDtos\DictoDtos.csproj", "{8FA5AEA5-5994-46EE-8790-79FBA2C935E3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DictoInfrasctructure", "DictoDtos\DictoInfrasctructure.csproj", "{8FA5AEA5-5994-46EE-8790-79FBA2C935E3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DictoServices", "DictoServices\DictoServices.csproj", "{225786A3-54CD-43B5-9B3E-9FB2CE4306FE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DictoServices", "DictoServices\DictoServices.csproj", "{225786A3-54CD-43B5-9B3E-9FB2CE4306FE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

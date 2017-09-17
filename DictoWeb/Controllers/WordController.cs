@@ -1,14 +1,21 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DictoInfrasctructure.Core;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace DictoWeb.Controllers
 {
-    public class WordController : Controller
+    [Route("api/[controller]")]
+    [Authorize]
+    public class WordController : CoreController<TranslateController>
     {
-        // GET
-        public IActionResult Index()
+        public WordController(ILogger<TranslateController> logger) : base(logger)
         {
-            return
-            View();
         }
+        
+        
+        
+        
+        
     }
 }

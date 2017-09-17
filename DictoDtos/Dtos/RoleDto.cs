@@ -1,4 +1,4 @@
-﻿namespace DictoDtos.Dtos
+﻿namespace DictoInfrasctructure.Dtos
 {
     public class RoleDto
     {

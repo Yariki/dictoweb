@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -33,10 +34,13 @@ namespace Microsoft.AspNetCore.Authentication
             {
                 options.TokenValidationParameters = new TokenValidationParameters()
                 {
-                    ValidateIssuer = false,
+                    ValidateIssuer = true,
                     ValidateAudience = false,
-                    ValidateIssuerSigningKey = true
+                    ValidIssuer = _azureOptions.ClientId,
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_azureOptions.SecretKey))
                 };
+                options.Audience = _azureOptions.ClientId;
                 options.RequireHttpsMetadata = false;
             }
 
