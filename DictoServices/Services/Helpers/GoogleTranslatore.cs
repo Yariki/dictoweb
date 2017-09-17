@@ -2,78 +2,74 @@
 using System.IO;
 using System.Net;
 using System.Text;
+using System.Threading.Tasks;
 using Dictionary.Dict;
+using DictoData.Model;
 using DictoServices.Data;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
 namespace DictoServices.Services
 {
     public class GoogleTranslatore
     {
-                //string _baseAddress = "http://www.google.com/dictionary/json?callback=dict_api&q={0}&sl={1}&tl={2}&restrict=pr%2Cde&client=te";
         string _baseAddress = "https://clients5.google.com/translate_a/t?client=dict-chrome-ex&sl={0}&tl={1}&q={2}";
         string _soundUrl = "http://www.gstatic.com/dictionary/static/sounds/de/0/{0}.mp3";
-#region properties
-        public LanguageEnum SL
-        {
-            get;
-            set;
-        }
+        private ILogger _logger;
 
-        public LanguageEnum TL
-        {
-            get;
-            set;
-        }
 
-        public string Query
-        {
-            get;
-            set;
-        }
+        private Language _source;
+        private Language _target;
+        private string _query;
+        
 
-        public GoogleRequestResult Result
+        public GoogleTranslatore(ILogger logger, Language source, Language target, string query)
         {
-            get;
-            set;
-        }
+            _logger = logger;
+            _source = source;
+            _target = target;
+            _query = query;
 
-#endregion
+        }
 
 #region public method
-        public void Request()
+        public async Task<GoogleRequestResult> Request()
         {
-            string url = String.Format(_baseAddress, this.SL, this.TL, this.Query);
-
-            Result = null;
+            string url = String.Format(_baseAddress, _soundUrl, _target, _query);
+            GoogleRequestResult result = null;
             try
             {
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
                 if (request != null)
                 {
-                    HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-                    Stream resp = response.GetResponseStream();
+                    var response = await request.GetResponseAsync();
+                    var webResponse = (HttpWebResponse) response;
+                    if (webResponse == null)
+                    {
+                        return null;
+                    }
+                    Stream resp = webResponse.GetResponseStream();
                     if (resp != null)
                     {
-
-                        Encoding fromenc = Encoding.GetEncoding(response.CharacterSet);
+                        Encoding fromenc = Encoding.GetEncoding(webResponse.CharacterSet);
                         Encoding toenc = Encoding.Default;
                         
                         StreamReader reader = new StreamReader(resp,fromenc);
                         string resultRequest = reader.ReadToEnd();
-                       //resultRequest = ReEncode(fromenc, toenc, resultRequest);
                         
                         TTranslateDictionary dict = JsonConvert.DeserializeObject<TTranslateDictionary>(resultRequest);
-                        Result = (GoogleRequestResult)PasreJsonResult(dict, "utf-8");
+                        result  = (GoogleRequestResult)PasreJsonResult(dict, "utf-8");
                         reader.Close();
                         resp.Close();
                     }
                 }
+                return result;
             }
             catch (Exception ex)
             {
-                Result = null;
+                
             }
+            return null;
         }
 #endregion
 
