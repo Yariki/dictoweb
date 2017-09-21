@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Dictionary.Dict;
 using DictoData.Model;
+using DictoInfrasctructure.Enums;
 using DictoServices.Base;
 using DictoServices.Data;
 using Microsoft.Extensions.Logging;

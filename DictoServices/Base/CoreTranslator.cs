@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using DictoData.Model;
+using DictoInfrasctructure.Enums;
 using DictoServices.Data;
 using Microsoft.Extensions.Logging;
 

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Bing;
 using DictoData.Model;
+using DictoInfrasctructure.Enums;
 using DictoServices.Base;
 using DictoServices.Data;
 using Microsoft.Extensions.Logging;

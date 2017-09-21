@@ -1,4 +1,4 @@
-﻿namespace DictoData.Model
+﻿namespace DictoInfrasctructure.Enums
 {
     public enum LevelType
     {

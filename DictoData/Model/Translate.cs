@@ -1,4 +1,5 @@
 ﻿using DictoData.Core;
+using DictoInfrasctructure.Enums;
 
 namespace DictoData.Model
 {

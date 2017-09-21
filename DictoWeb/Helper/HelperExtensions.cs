@@ -1,4 +1,6 @@
-﻿using DictoServices.Interfaces;
+﻿using DictoData.Interfaces;
+using DictoData.UnitOfWork;
+using DictoServices.Interfaces;
 using DictoServices.Services;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -8,8 +10,10 @@ namespace DictoWeb.Helper
     {
         public static void AddServices(this IServiceCollection services)
         {
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<ITranslationService, TranslationService>();
+            services.AddScoped<IWordService, WordService>();
         }
     }
 }

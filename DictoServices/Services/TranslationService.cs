@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using DictoData.Model;
 using DictoInfrasctructure.Core;
 using DictoInfrasctructure.Dtos;
+using DictoInfrasctructure.Enums;
 using DictoServices.Data;
 using DictoServices.Interfaces;
 using DictoServices.Services.Helpers;

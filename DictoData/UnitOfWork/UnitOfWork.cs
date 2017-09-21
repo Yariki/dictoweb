@@ -7,7 +7,7 @@ using DictoData.Interfaces;
 
 namespace DictoData.UnitOfWork
 { 
-    public class UnitOfWork : IDisposable
+    public class UnitOfWork : IUnitOfWork
     {
         private DictoContext _context;
         protected Hashtable _repositories;

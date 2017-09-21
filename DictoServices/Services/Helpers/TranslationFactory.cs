@@ -1,6 +1,7 @@
 ﻿using System.Data.Common;
 using DictoData.Model;
 using DictoInfrasctructure.Const;
+using DictoInfrasctructure.Enums;
 using DictoServices.Base;
 using Microsoft.Extensions.Logging;
 
