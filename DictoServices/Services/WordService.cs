@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using AutoMapper;
 using DictoData.Interfaces;
 using DictoData.Model;
@@ -7,6 +8,7 @@ using DictoInfrasctructure.Dtos;
 using DictoInfrasctructure.Enums;
 using DictoInfrasctructure.Extensions;
 using DictoServices.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace DictoServices.Services
@@ -16,17 +18,22 @@ namespace DictoServices.Services
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public WordService(ILogger logger,IUnitOfWork unitOfWork, IMapper mapper) : base(logger)
+        public WordService(ILogger<WordService> logger,IUnitOfWork unitOfWork, IMapper mapper) : base(logger)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
 
-
-        public void AddNewWord(TranslateDto translate)
+        public async Task<IEnumerable<Word>> GetAllWords()
         {
-            var word = new Word(){Text = translate.Original,Level = LevelType.First,Phonetic = translate.Phonetic,SuperMemory = new SuperMemory(),UserId = 1};
-            foreach (var pair in translate.Translate)
+            var listWords = await _unitOfWork.Repository<Word>().Set.Include(w => w.Translates).ToListAsync();
+            return listWords;
+        }
+        
+        public void AddNewWord(TranslateResultDto translateResult)
+        {
+            var word = new Word(){Text = translateResult.Original,Level = LevelType.First,Phonetic = translateResult.Phonetic,SuperMemory = new SuperMemory(),UserId = 1, Translates = new List<Translate>()};
+            foreach (var pair in translateResult.Translate)
             {
                 WordType wordType = string.IsNullOrEmpty(pair.Key) ? WordType.None : pair.Key.GetEnumValue<WordType>();
 

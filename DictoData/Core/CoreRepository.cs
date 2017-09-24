@@ -22,6 +22,7 @@ namespace DictoData.Core
 
         public DbSet<TEntity> Set => _set;
 
+        
         public virtual async  Task<IEnumerable<TEntity>> GetAllAsync()
         {
             return await _set.ToListAsync();

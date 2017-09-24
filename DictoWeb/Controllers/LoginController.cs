@@ -71,6 +71,7 @@ namespace DictoWeb.Controllers
             // Serialize and return the response
             var response = new
             {
+                user = user.Email,
                 token = encodedJwt,
                 expiration = jwt.ValidTo
             };

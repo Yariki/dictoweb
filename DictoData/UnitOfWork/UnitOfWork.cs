@@ -73,6 +73,7 @@ namespace DictoData.UnitOfWork
                     _repositories = null;
                 }
             }
+            _isDisposed = true;
         }
         
     }

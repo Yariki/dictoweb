@@ -1,28 +1,18 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System;
+using DictoInfrasctructure.Enums;
 
 namespace DictoInfrasctructure.Dtos
 {
     public class TranslateDto
     {
-        public TranslateDto()
-        {
-            IsExisting = false;
-        }
+        public int Id { get; set; }
 
-        [Required]
-        public string Original { get; set; }
+        public DateTime Created { get; set; }
 
-        [Required]
-        public Dictionary<string,string[]> Translate { get; set; }
+        public string Text { get; set; }
+        public WordType WordType { get; set; }
 
-        public string Phonetic { get; set; }
-        
-        public string UrlSound { get; set; }
-
-        public string Encoding { get; set; }
-
-        public bool IsExisting { get; set; }
+        public int WordId { get; set; }
 
     }
 }

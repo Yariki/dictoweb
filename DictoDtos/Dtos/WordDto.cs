@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using DictoInfrasctructure.Enums;
 
@@ -6,6 +7,7 @@ namespace DictoInfrasctructure.Dtos
 {
     public class WordDto
     {
+        
         public int Id { get; set; }
 
         public DateTime Created { get; set; }
@@ -17,7 +19,8 @@ namespace DictoInfrasctructure.Dtos
         public string Phonetic { get; set; }
 
         public int UserId { get; set; }
-
+        
+        public List<TranslateDto> Translates { get; set; }
 
     }
 }

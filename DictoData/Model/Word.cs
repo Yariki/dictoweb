@@ -6,6 +6,7 @@ namespace DictoData.Model
 {
     public class Word : CoreEntity
     {
+        
         public string Text { get; set; }
 
         public LevelType Level { get; set; }
@@ -18,7 +19,7 @@ namespace DictoData.Model
 
         public User User { get; set; }
 
-        public List<Translate> Translates { get; set; }
+        public virtual List<Translate> Translates { get; set; }
         
     }
 }

@@ -38,7 +38,7 @@ namespace DictoWeb.Controllers
                 {
                     return BadRequest("There is no  translation.");
                 }
-                var mappedResult = _mapper.Map<TranslateDto>(result);
+                var mappedResult = _mapper.Map<TranslateResultDto>(result);
                 
                 return Ok(mappedResult);
             }
