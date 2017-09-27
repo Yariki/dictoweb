@@ -1,11 +1,11 @@
-'use strict;'
+'use strict';
 
 angular.module('app').controller('loginController',function ($scope, $location, loginService) {
     var _this = this;
     $scope.username = '';
     $scope.password = '';
 
-    this.login = function () {
+    $scope.login = function () {
         loginService.login($scope.username,$scope.password,loginCallback);
     }
 
