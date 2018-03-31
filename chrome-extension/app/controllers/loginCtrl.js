@@ -5,6 +5,9 @@ angular.module('app').controller('loginController',function ($scope, $location, 
     $scope.username = '';
     $scope.password = '';
 
+
+
+
     $scope.login = function () {
         loginService.login($scope.username,$scope.password,loginCallback);
     }

@@ -14,10 +14,9 @@
                 ng-model="password" required/>
             <span ng-show="form.password.$dirty && form.password.$error.required" class="help-block">Rassword is requried.</span>
         </div>
-        <div class="form-actios">
+        <div class="form-group">
             <button type="submit" class="btn btn-danger"
-                    ng-show="form.$invalid"
-            >Login</button>
+                    ng-disabled="form.$invalid">Login</button>
         </div>
     </form>
 </div>

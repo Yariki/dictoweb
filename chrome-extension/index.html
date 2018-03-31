@@ -6,21 +6,22 @@
     <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body>
-    <div class='container' >
-        <div ng-view></div>
+    <div class='container' ng-controller="homeController">
+        <ng-view></ng-view>
     </div>
     <script type="text/javascript" src="lib/jquery/jquery-3.2.0.min.js"></script>
     <script type="text/javascript" src="lib/angular/angular.js"></script>
     <script type="text/javascript" src="lib/angular/angular-route.js"></script>
     <script type="text/javascript" src="lib/angular/angular-cookies.js"></script>
-
     <script type="text/javascript" src="lib/bootstrap/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="app/app.js"></script>
     <script type="text/javascript" src="app/services/constStorage.js"></script>
     <script type="text/javascript" src="app/services/tokenStorage.js"></script>
     <script type="text/javascript" src="app/services/loginService.js"></script>
+    <script type="text/javascript" src="app/services/httpService.js"></script>
     <script type="text/javascript" src="app/controllers/loginCtrl.js"></script>
     <script type="text/javascript" src="app/controllers/homeCtrl.js"></script>
+
 
 </body>
 </html>

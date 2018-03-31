@@ -1,19 +1,19 @@
 'use strict';
 
 
-angular.module('app', [ 'ngRoute','ngCookies'])
-    .config(['$routeProvider',function ($routeProvider) {
+angular.module('app', [ 'ngRoute'])
+    .config(function ($routeProvider) {
         $routeProvider
             .when('/login',{
                 controller:'loginController',
-                templateUrl:'views/loginView.html'
+                templateUrl:'app/views/loginView.html'
             })
             .when('/',{
                 controller:'homeController',
-                templateUrl:'views/homeView.html'
+                templateUrl:'app/views/homeView.html'
             });
-    }])
-    .run(['$location'],function ($location){
-        $location.path('/login');
     })
+    .run(['$location',function ($location,tokenStorage){
+
+    }]);
 

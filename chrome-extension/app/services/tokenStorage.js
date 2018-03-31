@@ -1,4 +1,4 @@
-'use strict;'
+'use strict';
 
 angular.module('app').service('tokenStorage',function (){
 
@@ -8,13 +8,14 @@ angular.module('app').service('tokenStorage',function (){
     this.data = {};
 
     this.set = function (token) {
-        chrome.storage.sync.set({token:token},function (keys) {
-            _this.data = keys.token;
-        });
+        _this.data =  token.data;
+        chrome.storage.sync.set({token:token.data});
     }
 
-    this.isDataExist = function () {
-        return chrome.storage.sync.get('token') !== 'undefined';
+    this.isDataExist = function (callback) {
+        return chrome.storage.sync.get('token',function (items) {
+            callback(items);
+        });
     }
 
     this.clear = function (){

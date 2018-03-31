@@ -44,8 +44,16 @@ namespace DictoWeb
             services.AddDbContext<DictoContext>();
             services.AddLogging();
             services.AddRouting(options => options.LowercaseUrls = true);
-            services.AddMvc();
             services.AddAutoMapper();
+            services.AddCors(options =>
+            {
+                options.AddPolicy("ChromeExtensions",builder => builder
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .AllowAnyOrigin()
+                .AllowCredentials());
+            });
+            services.AddMvc();
 
             services.AddServices();
         }
@@ -57,9 +65,17 @@ namespace DictoWeb
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.Use( async (context, func) =>
+            {
+                context.Response.Headers.Add("Access-Control-Allow-Origin", "*");
+                await func();
+            });
+            
             loggerFactory.AddDebug();
             loggerFactory.AddFile("Logs/{Date}.log");
             app.UseAuthentication();
+            app.UseCors("ChromeExtensions");
             app.UseMvc();
         }
     }
