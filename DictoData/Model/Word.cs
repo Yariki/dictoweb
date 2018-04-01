@@ -20,6 +20,8 @@ namespace DictoData.Model
         public User User { get; set; }
 
         public virtual List<Translate> Translates { get; set; }
+
+        public int DeckId { get; set; }
         
     }
 }

@@ -18,6 +18,8 @@ namespace DictoData.Context
         public DbSet<Translate> Translates { get; set; }
 
         public DbSet<Transcription> Transcriptions { get; set; }
+
+        public DbSet<Deck> Decks { get; set; }
         
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
