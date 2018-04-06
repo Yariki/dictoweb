@@ -5,11 +5,27 @@
   "short_name"      : "W_S",
   "version"         : "0.1",
   "browser_action": {
-    "default_popup": "index.html"
+    "default_popup": "index.html",
+    "default_title": "Word Service"
   },
+  "background": {
+    "page": "app/background/background.html"
+  },
+  "content_scripts": [{
+    "matches": ["<all_urls>"],
+    "js":[
+      "lib/jquery/jquery-3.2.0.min.js",
+      "app/shared/shared.js",
+      "app/content/content.js"
+    ]
+  }],
   "permissions": [
     "debugger",
-    "storage"
-  ],
-  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
+    "storage",
+    "activeTab",
+    "tabs",
+    "<all_urls>",
+    "contextMenus",
+    "notifications"
+  ]
 }
