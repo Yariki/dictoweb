@@ -1,49 +1,21 @@
 
-
-
-var storage = (function(){
-
-    var data = {};
+var mediator = (function(){
 
     return {
-        getToken: function(callback){
-            return chrome.storage.sync.get('token',function (items) {
-                callback(items);
-            })  ;
+        send: function(request){
+            chrome.runtime.sendMessage(request);
         },
-    };
-})();
-
-var constRepository = (function () {
-
-    var baseUrl = "http://localhost:5000/api/";
-
-    return {
-        getBaseUrl: function () {
-            return baseUrl;
-        }
-    };
-
-})();
-
-var translateService = (function(storage, constRepo){
-
-    function internalTranslate(result, word, callback){
-        callback(new Status(StatusResult.OK,word,null));
-    }
-
-    return {
-        translate: function(word, callback){
-            storage.getToken(function (result) {
-                if(result !== null && result !== 'undefined'){
-                    internalTranslate(result,word,callback);
-                }else{
-                    callback(new Status(StatusResult.TokenMissed,null, 'Token is missed. Please, log in.'));
+        receive: function(id, callback){
+            chrome.runtime.onMessage.addListener(function (request, sender, sedResponse) {
+                debugger;
+                if(reque.path == MessagesDirections.BackgroundToContent && request.method == id){
+                    callback(request.data);
                 }
             });
         }
-    };
-})(storage, constRepository);
+    }
+})();
+
 
 function init(){
     console.log('Content is loaded');
@@ -55,5 +27,6 @@ if(window.top == window){
     window.addEventListener("DOMContentLoaded",init,false);
 }
 
-
+debugger;
+mediator.send(new Request(MessagesDirections.ContentToBackground,'test', 'test message'));
 
