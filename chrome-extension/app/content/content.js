@@ -6,9 +6,10 @@ var storage = (function(){
 
     return {
         getToken: function(callback){
+
             return chrome.storage.sync.get('token',function (items) {
                 callback(items);
-            })  ;
+            }) ;
         },
     };
 })();
@@ -28,17 +29,47 @@ var constRepository = (function () {
 var translateService = (function(storage, constRepo){
 
     function internalTranslate(result, word, callback){
-        callback(new Status(StatusResult.OK,word,null));
+
+        var auth = 'Bearer ' + result.token.token;
+        var u = constRepository.getBaseUrl()+"translate/translate";
+        $.ajax({
+            headers:{
+                'Authorization':auth,
+                'Content-Type':'application/json'
+            },
+            method: 'POST',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            url: u,
+            data: JSON.stringify({
+                original: word,
+                sourcelanguage:'en',
+                targetlanguage:'uk',
+                provider:'google'
+            }) ,
+            success: function(data){
+                callback(new Status(StatusResult.OK,data,null));
+            },
+            error: function (data,text,err) {
+                callback(new Status(StatusResult.Error,data,"Something wrong!"));
+            }
+        });
     }
 
     return {
         translate: function(word, callback){
             storage.getToken(function (result) {
-                if(result !== null && result !== 'undefined'){
-                    internalTranslate(result,word,callback);
-                }else{
+                if(result === null && result === 'undefined') {
                     callback(new Status(StatusResult.TokenMissed,null, 'Token is missed. Please, log in.'));
+                    return;
                 }
+                var expiration = new Date(result.token.expiration);
+                var current = new Date();
+                if(expiration <= current){
+                    callback(new Status(StatusResult.TokenMissed,null, 'Token is expired. Please, log in.'));
+                    return;
+                }
+                internalTranslate(result,word,callback);
             });
         }
     };
@@ -85,7 +116,8 @@ function init() {
     var isMouseOverTranslation = false;
     var allowMouseOverTranslation = true;
     var bubbleRGB = "rgb(222, 184, 135)";
-    var bubble, header, content, footer, bookmarks, voice, home, settings, faq;
+    var bubble, header, content, footer, bookmarks, voice, home, settings, faq, addBtn;
+    var currentTranslation;
 
     console.log('content is loaded...');
 
@@ -169,7 +201,11 @@ function init() {
         allowMouseOverTranslation = false;
 
         // translate word
-        requestBubbleTranslation.text
+        console.log('Need to translate: ' +  requestBubbleTranslation.text);
+        translateService.translate(requestBubbleTranslation.text,function(data){
+            processTranslatedWord(data)
+        });
+
     }
 
     var timeoutIconShow, timeoutIconHide;
@@ -223,13 +259,13 @@ function init() {
                 "class": "igtranslator-footer",
             }, bubble);
             /* Bookmarks */
-            bookmarks = html("td", {
-                style: "background-image: url(" + manifest.url + "data/icons/bookmarks.png)",
-                title: "Save to Phrasebook"
-            }, footer);
-            bookmarks.addEventListener("click", function () {
-
-            }, false);
+            // bookmarks = html("td", {
+            //     style: "background-image: url(" + manifest.url + "data/icons/bookmarks.png)",
+            //     title: "Save to Phrasebook"
+            // }, footer);
+            // bookmarks.addEventListener("click", function () {
+            //
+            // }, false);
             /* Voice Icon */
             voice = html("td", {
                 style: "background-image: url(" + manifest.url + "data/icons/voice.png)",
@@ -239,30 +275,38 @@ function init() {
                 var isVoice = voice.getAttribute("isVoice") == "true";
                 if (!isVoice) return;
             }, false);
-            /* Home Icon */
-            home = html("td", {
-                style: "background-image: url(" + manifest.url + "data/icons/home.png)",
-                title: "Open Google Translate"
-            }, footer);
-            home.addEventListener("click", function (e) {
-                ;
+            addBtn = html("td",{
+                style: "background-image: url(" + manifest.url + "data/icons/voice.png)",
+                    title: "Add new word"
+            },footer);
+            addBtn.addEventListener("click",function(){
+                alert("add new word");
             });
+
+            /* Home Icon */
+            // home = html("td", {
+            //     style: "background-image: url(" + manifest.url + "data/icons/home.png)",
+            //     title: "Open Google Translate"
+            // }, footer);
+            // home.addEventListener("click", function (e) {
+            //     ;
+            // });
             /* Settings Icon */
-            settings = html("td", {
-                style: "background-image: url(" + manifest.url + "data/icons/settings.png)",
-                title: "Open Settings"
-            }, footer);
-            settings.addEventListener("click", function () {
-
-            }, false);
+            // settings = html("td", {
+            //     style: "background-image: url(" + manifest.url + "data/icons/settings.png)",
+            //     title: "Open Settings"
+            // }, footer);
+            // settings.addEventListener("click", function () {
+            //
+            // }, false);
             /* FAQ Icon */
-            faq = html("td", {
-                style: "background-image: url(" + manifest.url + "data/icons/faq.png)",
-                title: "Open FAQ/Support Page"
-            }, footer);
-            faq.addEventListener("click", function () {
-
-            }, false);
+            // faq = html("td", {
+            //     style: "background-image: url(" + manifest.url + "data/icons/faq.png)",
+            //     title: "Open FAQ/Support Page"
+            // }, footer);
+            // faq.addEventListener("click", function () {
+            //
+            // }, false);
         }
         /* addEventListener for resize */
         if (iFrame.contentWindow) {
@@ -458,6 +502,132 @@ function init() {
                     requestBubbleTranslation(e);
                 }
             }
+        }
+    }
+
+
+    function processTranslatedWord(data){
+        mainDIV.style.width = "450px";
+        mainDIV.style.height = "300px";
+
+        if (typeof header === 'undefined') return
+        header.parentNode.style.backgroundImage = "none";
+        content.style.display = "block";
+        if (data.status == StatusResult.Error) {
+            header.textContent = data.message;
+            header.style.width = "388px";
+            header.style.textAlign = "center";
+            content.style.backgroundImage = "url(" + manifest.url + "data/icons/error.png)";
+            voice.style.backgroundImage = "url(" + manifest.url + "data/icons/novoice.png)";
+            voice.setAttribute("isVoice", "no");
+        } else if(data.status === StatusResult.TokenMissed){
+            header.textContent = data.message;
+            header.style.width = "388px";
+            header.style.textAlign = "center";
+            content.style.backgroundImage = "url(" + manifest.url + "data/icons/error.png)";
+            voice.style.backgroundImage = "url(" + manifest.url + "data/icons/novoice.png)";
+        }
+        else {
+
+            currentTranslation = data.data;
+
+            word = currentTranslation.original;
+            definition = currentTranslation.phonetic;
+
+            content.style.backgroundImage = "none";
+            var isSound = currentTranslation.urlSound !== '' || currentTranslation.urlSound !== 'undefined';
+            voice.style.backgroundImage = "url(" + manifest.url + "data/icons/" + (isSound ? "" : "no") + "voice.png)";
+            voice.setAttribute("isVoice", isSound);
+
+            var translated = currentTranslation.translate;
+            if(translated){
+                for (var item in translated){
+                    var translations = translated[item];
+                    if(translations && translations.length){
+                        var pos = html('td',{
+                            style: "color: #777; font-style: italic;"
+                        }, html("tr", {}, content)).textContent = item;
+                        var tr = html('tr',{class:""},content);
+                        var translationsCell = html('td',{dir:'auto'},tr);
+                        translationsCell.textContent = translations.join(", ");
+                        dir(translationsCell);
+                    }
+                }
+            }
+        }
+        /*
+          smart-select width and height for the floating bubble;
+          it is based on bubble and content width anf height;
+          note: may still have some bugs.
+        */
+        var wGCSB = window.getComputedStyle(bubble, null);
+        var wGCSC = window.getComputedStyle(content, null);
+        if (wGCSB && wGCSC) {
+            var mdWidth, mdHeight;
+            var Wb = wGCSB.getPropertyValue("width");
+            var Hb = wGCSB.getPropertyValue("height");
+            var Wc = wGCSC.getPropertyValue("width");
+            var Hc = wGCSC.getPropertyValue("height");
+            if (Wb.indexOf("px") === -1 || !parseInt(Wb)) {
+                if (Wc.indexOf("px") === -1 || !parseInt(Wc)) mdWidth = "auto";
+                else mdWidth = parseInt(Wc) + 40 + "px";
+            }
+            else mdWidth = Wb;
+            if (Hb.indexOf("px") === -1 || !parseInt(Hb)) {
+                if (Hc.indexOf("px") === -1 || !parseInt(Hc)) mdHeight = "auto";
+                else mdHeight = parseInt(Hc) + 80 + "px";
+            }
+            else mdHeight = Hb;
+            if (Wb.indexOf("px") !== -1 && Wc.indexOf("px") !== -1) {
+                if (parseInt(Wb) && parseInt(Wc)) {
+                    if (parseInt(Wb) > (parseInt(Wc) + 50) && !onlyHeader) mdWidth = parseInt(Wc) + 40 + "px";
+                }
+            }
+            if (Hb.indexOf("px") !== -1 && Hc.indexOf("px") !== -1) {
+                if (parseInt(Hb) && parseInt(Hc)) {
+                    if (parseInt(Hb) > (parseInt(Hc) + 90) && !onlyHeader) mdHeight = parseInt(Hc) + 80 + "px";
+                }
+            }
+            if (!onlyHeader) {
+                extraWidth = 0;
+                extraHeight = 100;
+                if (parseInt(mdWidth) > 450) mdWidth = "450px";
+                if (parseInt(mdWidth) < 300) mdWidth = "300px";
+                if (parseInt(mdHeight) > 300) mdHeight = "300px";
+                if (parseInt(mdHeight) < 80) mdHeight = "80px";
+            }
+            else {
+                header.style.width = (parseInt(mdWidth) + extraWidth - 35) + "px";
+            }
+            mainDIV.style.width = parseInt(mdWidth) + extraWidth + "px";
+            mainDIV.style.height = parseInt(mdHeight) + extraHeight + "px";
+            content.style.height = parseInt(mdHeight) - 80 + "px";
+
+            function smoothScrollTo(duration) {
+                var factor = 0, timer, start = Date.now();
+                if (timer) window.clearInterval(timer);
+                smoothScroll = {
+                    scrollTo: true,
+                    scrollX: window.scrollX,
+                    scrollY: window.scrollY
+                };
+                function step() {
+                    factor = (Date.now() - start) / duration;
+                    var left = mainDIV.offsetLeft;
+                    var width = mainDIV.offsetWidth;
+                    window.scrollTo(window.scrollX + factor * parseInt(mdWidth), window.scrollY);
+                    if (window.pageXOffset + window.innerWidth > left + width) {
+                        window.clearInterval(timer);
+                        factor = 1;
+                        return;
+                    }
+                }
+                timer = window.setInterval(step, 10);
+            }
+            if (!isMouseOverTranslation && mainDIV.offsetLeft > window.innerWidth - parseInt(mdWidth)) {
+                smoothScrollTo(800);
+            }
+            allowMouseOverTranslation = true;
         }
     }
 
