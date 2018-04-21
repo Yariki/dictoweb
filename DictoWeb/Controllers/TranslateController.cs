@@ -15,6 +15,7 @@ namespace DictoWeb.Controllers
     public class TranslateController : CoreController<TranslateController>
     {
         private ITranslationService _translationService;
+        private IWordService _wordService;
         private IMapper _mapper;
 
         public TranslateController(ITranslationService translationService,IMapper mapper, ILogger<TranslateController> logger)
@@ -39,7 +40,6 @@ namespace DictoWeb.Controllers
                     return BadRequest("There is no  translation.");
                 }
                 var mappedResult = _mapper.Map<TranslateResultDto>(result);
-                
                 return Ok(mappedResult);
             }
             catch (Exception e)

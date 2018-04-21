@@ -13,6 +13,9 @@
     "matches": ["<all_urls>"],
     "css": ["data/content/content.css"],
     "js":[
+      "lib/howler/howler.core.min.js",
+      "lib/howler/howler.min.js",
+      "lib/howler/howler.spatial.min.js",
       "lib/jquery/jquery-3.2.0.min.js",
       "app/shared/shared.js",
       "app/content/content.js"
@@ -28,5 +31,8 @@
     "contextMenus",
     "notifications",
     "background"
+  ],
+  "web_accessible_resources": [
+    "data/*"
   ]
 }

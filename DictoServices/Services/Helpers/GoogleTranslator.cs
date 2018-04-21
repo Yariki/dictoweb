@@ -16,7 +16,7 @@ namespace DictoServices.Services.Helpers
     public class GoogleTranslator : CoreTranslator
     {
         string _baseAddress = "https://clients5.google.com/translate_a/t?client=dict-chrome-ex&sl={0}&tl={1}&q={2}";
-        string _soundUrl = "http://www.gstatic.com/dictionary/static/sounds/de/0/{0}.mp3";
+        string _soundUrl = "https://www.gstatic.com/dictionary/static/sounds/de/0/{0}.mp3";
 
         public GoogleTranslator(ILogger logger, Language source, Language target, string query)
             :base(logger,source,target,query)

@@ -5,6 +5,10 @@
         None,
         Noun,
         Verb,
-        Adjective 
+        Adjective,
+        Preposition,
+        Pronoun,
+        Conjunction,
+        Adverb
     }
 }

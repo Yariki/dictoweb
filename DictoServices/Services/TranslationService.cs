@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
+using DictoData.Interfaces;
 using DictoData.Model;
 using DictoInfrasctructure.Core;
 using DictoInfrasctructure.Dtos;
@@ -13,15 +15,21 @@ using SQLitePCL;
 namespace DictoServices.Services
 {
     public class TranslationService : CoreService, ITranslationService
-    {   
-        public TranslationService(ILogger<TranslationService> logger) : base(logger)
+    {
+        private IUnitOfWork _unitOfWork;
+
+        public TranslationService(IUnitOfWork unitOfWork, ILogger<TranslationService> logger) : base(logger)
         {
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<TranslateRequestResult> Translate(TranslateQueryDto translateData)
         {
             var translator =  TranslationFactory.GetProvider(GetLogger(), GetLanguage(translateData.SourceLanguage), GetLanguage(translateData.TargetLanguage), translateData.Original,translateData.Provider);
             var result = await translator.Request();
+
+            result.IsExisting = (await _unitOfWork.Repository<Word>().GetFilteredAsync(w => w.Text == translateData.Original)).Any();
+
             return result;
         }
         

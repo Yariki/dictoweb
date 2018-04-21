@@ -26,7 +26,7 @@ var constRepository = (function () {
 
 })();
 
-var translateService = (function(storage, constRepo){
+var httpService = (function(storage, constRepo){
 
     function internalTranslate(result, word, callback){
 
@@ -56,6 +56,28 @@ var translateService = (function(storage, constRepo){
         });
     }
 
+    function sendData(token, data, callback) {
+        var auth = 'Bearer ' + token.token.token;
+        var u = constRepository.getBaseUrl()+"word/add";
+        $.ajax({
+            headers:{
+                'Authorization':auth,
+                'Content-Type':'application/json'
+            },
+            method: 'POST',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            url: u,
+            data: JSON.stringify(data) ,
+            success: function(data){
+                callback(new Status(StatusResult.OK,data,null));
+            },
+            error: function (data,text,err) {
+                callback(new Status(StatusResult.Error,data,"Something wrong!"));
+            }
+        });
+    }
+
     return {
         translate: function(word, callback){
             storage.getToken(function (result) {
@@ -70,6 +92,23 @@ var translateService = (function(storage, constRepo){
                     return;
                 }
                 internalTranslate(result,word,callback);
+            });
+        },
+        addWord: function(data,callback){
+            storage.getToken(function (result) {
+                if(result === null && result === 'undefined') {
+                    callback(new Status(StatusResult.TokenMissed,null, 'Token is missed. Please, log in.'));
+                    return;
+                }
+                var expiration = new Date(result.token.expiration);
+                var current = new Date();
+                if(expiration <= current){
+                    callback(new Status(StatusResult.TokenMissed,null, 'Token is expired. Please, log in.'));
+                    return;
+                }
+
+                sendData(result,data,callback);
+
             });
         }
     };
@@ -202,7 +241,7 @@ function init() {
 
         // translate word
         console.log('Need to translate: ' +  requestBubbleTranslation.text);
-        translateService.translate(requestBubbleTranslation.text,function(data){
+        httpService.translate(requestBubbleTranslation.text,function(data){
             processTranslatedWord(data)
         });
 
@@ -267,20 +306,40 @@ function init() {
             //
             // }, false);
             /* Voice Icon */
-            voice = html("td", {
-                style: "background-image: url(" + manifest.url + "data/icons/voice.png)",
-                title: "Listen"
-            }, footer);
-            voice.addEventListener("click", function () {
-                var isVoice = voice.getAttribute("isVoice") == "true";
-                if (!isVoice) return;
-            }, false);
+            var voiceCell = html("td", {}, footer);
+            voice = html('audio',{
+                src:'',
+                controls:''
+            },voiceCell);
+            // voice.addEventListener("click", function () {
+            //     var isVoice = voice.getAttribute("isVoice") == "true";
+            //     if (!isVoice) return;
+            //     if(currentTranslation && currentTranslation.urlsound){
+            //         // var audio = new Howl({
+            //         //     src: [currentTranslation.urlsound]
+            //         // });
+            //         // audio.play();
+            //         var audio = new Audio(currentTranslation.urlsound);
+            //         audio.Play();
+            //     }
+            // }, false);
+
             addBtn = html("td",{
-                style: "background-image: url(" + manifest.url + "data/icons/voice.png)",
+                style: "background-image: url(" + chrome.runtime.getURL("data/icons/voice.png") + ")",
                     title: "Add new word"
             },footer);
             addBtn.addEventListener("click",function(){
-                alert("add new word");
+
+                if(currentTranslation  && currentTranslation.isexisting){
+                    return;
+                }
+
+                if(currentTranslation){
+                    httpService.addWord(currentTranslation,function (result) {
+                        console.log(result);
+                    })
+                }
+
             });
 
             /* Home Icon */
@@ -535,9 +594,12 @@ function init() {
             definition = currentTranslation.phonetic;
 
             content.style.backgroundImage = "none";
-            var isSound = currentTranslation.urlSound !== '' || currentTranslation.urlSound !== 'undefined';
-            voice.style.backgroundImage = "url(" + manifest.url + "data/icons/" + (isSound ? "" : "no") + "voice.png)";
-            voice.setAttribute("isVoice", isSound);
+            // var isSound = currentTranslation.urlsound !== '' || currentTranslation.urlsound !== 'undefined';
+            // voice.style.backgroundImage = "url(" + chrome.runtime.getURL("data/icons/" + (isSound ? "" : "no") + "voice.png")  +")";
+            // voice.setAttribute("isVoice", isSound);
+
+            voice.src = currentTranslation.urlsound;
+            addBtn.style.backgroundImage = "url(" + chrome.runtime.getURL("data/icons/" + (!currentTranslation.isexisting ? "" : "no") +"add.png") + ")";
 
             var translated = currentTranslation.translate;
             if(translated){
@@ -580,25 +642,27 @@ function init() {
             else mdHeight = Hb;
             if (Wb.indexOf("px") !== -1 && Wc.indexOf("px") !== -1) {
                 if (parseInt(Wb) && parseInt(Wc)) {
-                    if (parseInt(Wb) > (parseInt(Wc) + 50) && !onlyHeader) mdWidth = parseInt(Wc) + 40 + "px";
+                    if (parseInt(Wb) > (parseInt(Wc) + 50)) mdWidth = parseInt(Wc) + 40 + "px";
                 }
             }
             if (Hb.indexOf("px") !== -1 && Hc.indexOf("px") !== -1) {
                 if (parseInt(Hb) && parseInt(Hc)) {
-                    if (parseInt(Hb) > (parseInt(Hc) + 90) && !onlyHeader) mdHeight = parseInt(Hc) + 80 + "px";
+                    if (parseInt(Hb) > (parseInt(Hc) + 90)) mdHeight = parseInt(Hc) + 80 + "px";
                 }
             }
-            if (!onlyHeader) {
-                extraWidth = 0;
-                extraHeight = 100;
-                if (parseInt(mdWidth) > 450) mdWidth = "450px";
-                if (parseInt(mdWidth) < 300) mdWidth = "300px";
-                if (parseInt(mdHeight) > 300) mdHeight = "300px";
-                if (parseInt(mdHeight) < 80) mdHeight = "80px";
-            }
-            else {
-                header.style.width = (parseInt(mdWidth) + extraWidth - 35) + "px";
-            }
+            // if (!onlyHeader) {
+            //     extraWidth = 0;
+            //     extraHeight = 100;
+            //     if (parseInt(mdWidth) > 450) mdWidth = "450px";
+            //     if (parseInt(mdWidth) < 300) mdWidth = "300px";
+            //     if (parseInt(mdHeight) > 300) mdHeight = "300px";
+            //     if (parseInt(mdHeight) < 80) mdHeight = "80px";
+            // }
+            // else {
+            //     header.style.width = (parseInt(mdWidth) + extraWidth - 35) + "px";
+            // }
+            extraWidth = 0;
+            extraHeight = 100;
             mainDIV.style.width = parseInt(mdWidth) + extraWidth + "px";
             mainDIV.style.height = parseInt(mdHeight) + extraHeight + "px";
             content.style.height = parseInt(mdHeight) - 80 + "px";

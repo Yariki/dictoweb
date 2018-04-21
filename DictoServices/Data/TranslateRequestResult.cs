@@ -39,5 +39,7 @@ namespace DictoServices.Data
             get;
             set;
         }
+
+        public bool IsExisting { get; set; }
     }
 }
