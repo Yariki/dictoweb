@@ -44,7 +44,7 @@ var httpService = (function(storage, constRepo){
             data: JSON.stringify({
                 original: word,
                 sourcelanguage:'en',
-                targetlanguage:'uk',
+                targetlanguage:' ',
                 provider:'google'
             }) ,
             success: function(data){
@@ -306,23 +306,14 @@ function init() {
             //
             // }, false);
             /* Voice Icon */
-            var voiceCell = html("td", {}, footer);
-            voice = html('audio',{
-                src:'',
-                controls:''
-            },voiceCell);
-            // voice.addEventListener("click", function () {
-            //     var isVoice = voice.getAttribute("isVoice") == "true";
-            //     if (!isVoice) return;
-            //     if(currentTranslation && currentTranslation.urlsound){
-            //         // var audio = new Howl({
-            //         //     src: [currentTranslation.urlsound]
-            //         // });
-            //         // audio.play();
-            //         var audio = new Audio(currentTranslation.urlsound);
-            //         audio.Play();
-            //     }
-            // }, false);
+            voice = html("td", {
+                style: "background-image: url(" + manifest.url + "data/icons/voice.png)",
+                title: "Listen"
+            }, footer);
+            voice.addEventListener("click", function () {
+                var isVoice = voice.getAttribute("isVoice") == "true";
+                if (!isVoice) return;
+            }, false);
 
             addBtn = html("td",{
                 style: "background-image: url(" + chrome.runtime.getURL("data/icons/voice.png") + ")",
@@ -336,10 +327,10 @@ function init() {
 
                 if(currentTranslation){
                     httpService.addWord(currentTranslation,function (result) {
-                        console.log(result);
+                        currentTranslation.isexisting = result.data.status == 200;
+                        addBtn.style.backgroundImage = "url(" + chrome.runtime.getURL("data/icons/" + (!currentTranslation.isexisting ? "" : "no") +"add.png") + ")";
                     })
                 }
-
             });
 
             /* Home Icon */
@@ -594,11 +585,10 @@ function init() {
             definition = currentTranslation.phonetic;
 
             content.style.backgroundImage = "none";
-            // var isSound = currentTranslation.urlsound !== '' || currentTranslation.urlsound !== 'undefined';
-            // voice.style.backgroundImage = "url(" + chrome.runtime.getURL("data/icons/" + (isSound ? "" : "no") + "voice.png")  +")";
-            // voice.setAttribute("isVoice", isSound);
+            var isSound = currentTranslation.urlsound !== '' || currentTranslation.urlsound !== 'undefined';
+            voice.style.backgroundImage = "url(" + chrome.runtime.getURL("data/icons/" + (isSound ? "" : "no") + "voice.png")  +")";
+            voice.setAttribute("isVoice", isSound);
 
-            voice.src = currentTranslation.urlsound;
             addBtn.style.backgroundImage = "url(" + chrome.runtime.getURL("data/icons/" + (!currentTranslation.isexisting ? "" : "no") +"add.png") + ")";
 
             var translated = currentTranslation.translate;
