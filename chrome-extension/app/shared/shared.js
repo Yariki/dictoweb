@@ -16,3 +16,26 @@ function Request(path, methodName, data){
     this.methodName = methodName;
     this.data = data;
 }
+
+var optionsStorage = (function(){
+
+    return {
+    	saveOptions: function(sourceLanguage, targetLanguage, provider){
+    		chrome.storage.sync.set({
+                sourceLanguage: sourceLanguage,
+                targetLanguage: targetLanguage,
+                provider: provider
+            });
+    	},
+
+        getOptions: function(){
+            return new Promise(function (resolve, reject) {
+                chrome.storage.sync.get({
+                    sourceLanguage: 'en',
+                    targetLanguage: '',
+                    provider: ''
+                },resolve);
+            });
+        }
+    };
+})();

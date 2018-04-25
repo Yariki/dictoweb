@@ -26,10 +26,16 @@ var constRepository = (function () {
 
 })();
 
-var httpService = (function(storage, constRepo){
+var httpService = (function(storage, constRepo, optStorage){
 
-    function internalTranslate(result, word, callback){
+    var _this = this;
+    var options = {};
 
+    optStorage.getOptions().then(function (promiseValue) {
+        options = promiseValue;
+    })
+
+    var internalTranslate = function(result, word, callback){
         var auth = 'Bearer ' + result.token.token;
         var u = constRepository.getBaseUrl()+"translate/translate";
         $.ajax({
@@ -43,9 +49,9 @@ var httpService = (function(storage, constRepo){
             url: u,
             data: JSON.stringify({
                 original: word,
-                sourcelanguage:'en',
-                targetlanguage:' ',
-                provider:'google'
+                sourcelanguage: options.sourceLanguage,
+                targetlanguage: options.targetLanguage,
+                provider: options.provider
             }) ,
             success: function(data){
                 callback(new Status(StatusResult.OK,data,null));
@@ -56,7 +62,7 @@ var httpService = (function(storage, constRepo){
         });
     }
 
-    function sendData(token, data, callback) {
+    var sendData =  function(token, data, callback) {
         var auth = 'Bearer ' + token.token.token;
         var u = constRepository.getBaseUrl()+"word/add";
         $.ajax({
@@ -112,7 +118,7 @@ var httpService = (function(storage, constRepo){
             });
         }
     };
-})(storage, constRepository);
+})(storage, constRepository,optionsStorage);
 
 
 var manifest = {

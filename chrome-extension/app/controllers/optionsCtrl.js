@@ -9,24 +9,18 @@ angular.module('app').controller('optionsController',function ($scope, $location
     $scope.optionsModel.provider = '';
 
     $scope.onSave = function(){
-        chrome.storage.sync.set({
-            sourceLanguage: $scope.optionsModel.sourceLanguage,
-            targetLanguage: $scope.optionsModel.targetLanguage,
-            provider: $scope.optionsModel.provider
-        },function () { console.log("Options has been saved!") });
-    }
 
-    chrome.storage.sync.get({
-        sourceLanguage:'en',
-        targetLanguage:'',
-        provider: ''
-    },function (items) {
-        $scope.optionsModel.sourceLanguage = items.sourceLanguage;
-        $scope.optionsModel.targetLanguage = items.targetLanguage;
-        $scope.optionsModel.provider = items.provider;
+        optionsStorage.saveOptions($scope.optionsModel.sourceLanguage,
+                                        $scope.optionsModel.targetLanguage,
+                                        $scope.optionsModel.provider);
+    };
+
+
+    optionsStorage.getOptions().then(function (promiseValue) {
+        $scope.optionsModel.sourceLanguage = promiseValue.sourceLanguage;
+        $scope.optionsModel.targetLanguage = promiseValue.targetLanguage;
+        $scope.optionsModel.provider = promiseValue.provider;
         $scope.$apply();
     });
-
-
 
 });
