@@ -92,7 +92,7 @@ namespace DictoServices.Services.Helpers
                 //res.Phonetic = dict.Sentences[0].Translit;
                 res.UrlSound = string.Format(_soundUrl, res.Original);
             }
-            if (dict.Dict.Length > 0)
+            if (dict.Dict != null && dict.Dict.Length > 0)
             {
                 foreach (TDictionaryItem item in dict.Dict)
                 {

@@ -312,14 +312,14 @@ function init() {
             //
             // }, false);
             /* Voice Icon */
-            voice = html("td", {
-                style: "background-image: url(" + manifest.url + "data/icons/voice.png)",
-                title: "Listen"
-            }, footer);
-            voice.addEventListener("click", function () {
-                var isVoice = voice.getAttribute("isVoice") == "true";
-                if (!isVoice) return;
-            }, false);
+            // voice = html("td", {
+            //     style: "background-image: url(" + manifest.url + "data/icons/voice.png)",
+            //     title: "Listen"
+            // }, footer);
+            // voice.addEventListener("click", function () {
+            //     var isVoice = voice.getAttribute("isVoice") == "true";
+            //     if (!isVoice) return;
+            // }, false);
 
             addBtn = html("td",{
                 style: "background-image: url(" + chrome.runtime.getURL("data/icons/voice.png") + ")",
@@ -574,14 +574,14 @@ function init() {
             header.style.width = "388px";
             header.style.textAlign = "center";
             content.style.backgroundImage = "url(" + manifest.url + "data/icons/error.png)";
-            voice.style.backgroundImage = "url(" + manifest.url + "data/icons/novoice.png)";
-            voice.setAttribute("isVoice", "no");
+            // voice.style.backgroundImage = "url(" + manifest.url + "data/icons/novoice.png)";
+            // voice.setAttribute("isVoice", "no");
         } else if(data.status === StatusResult.TokenMissed){
             header.textContent = data.message;
             header.style.width = "388px";
             header.style.textAlign = "center";
             content.style.backgroundImage = "url(" + manifest.url + "data/icons/error.png)";
-            voice.style.backgroundImage = "url(" + manifest.url + "data/icons/novoice.png)";
+            // voice.style.backgroundImage = "url(" + manifest.url + "data/icons/novoice.png)";
         }
         else {
 
@@ -592,13 +592,13 @@ function init() {
 
             content.style.backgroundImage = "none";
             var isSound = currentTranslation.urlsound !== '' || currentTranslation.urlsound !== 'undefined';
-            voice.style.backgroundImage = "url(" + chrome.runtime.getURL("data/icons/" + (isSound ? "" : "no") + "voice.png")  +")";
-            voice.setAttribute("isVoice", isSound);
+            // voice.style.backgroundImage = "url(" + chrome.runtime.getURL("data/icons/" + (isSound ? "" : "no") + "voice.png")  +")";
+            // voice.setAttribute("isVoice", isSound);
 
             addBtn.style.backgroundImage = "url(" + chrome.runtime.getURL("data/icons/" + (!currentTranslation.isexisting ? "" : "no") +"add.png") + ")";
 
             var translated = currentTranslation.translate;
-            if(translated){
+            if(!$.isEmptyObject(translated)){
                 for (var item in translated){
                     var translations = translated[item];
                     if(translations && translations.length){
@@ -611,6 +611,9 @@ function init() {
                         dir(translationsCell);
                     }
                 }
+            }else{
+                var pos = html('td',{style:'font-style: bold;'},html('tr',{},content));
+                pos.textContent = "There is no tranlation for word: " + word;
             }
         }
         /*

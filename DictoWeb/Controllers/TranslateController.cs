@@ -25,7 +25,7 @@ namespace DictoWeb.Controllers
             _translationService = translationService;
         }
 
-        [HttpPost("translate")]
+        [HttpPost("translate")] 
         public async Task<IActionResult> Translate([FromBody] TranslateQueryDto translateQueryDto)
         {
             if (!ModelState.IsValid)
