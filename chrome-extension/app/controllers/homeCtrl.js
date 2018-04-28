@@ -17,14 +17,4 @@ angular.module('app').controller('homeController',function ($scope,$location, $h
        }
     });
 
-    $scope.loadWords = function () {
-        httpService.get('word/list','',function (response) {
-            console.log(response);
-        },
-        function (error) {
-            console.log(error);
-        });
-    };
-
-
 });
