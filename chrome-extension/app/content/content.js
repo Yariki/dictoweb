@@ -123,7 +123,7 @@ function init() {
 
         // translate word
         console.log('Need to translate: ' +  requestBubbleTranslation.text);
-        httpService.translate(requestBubbleTranslation.text,function(data){
+        httpService.translate(requestBubbleTranslation.text,null,function(data){
             processTranslatedWord(data)
         });
 

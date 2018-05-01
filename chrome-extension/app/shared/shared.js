@@ -76,9 +76,11 @@ var httpService = (function(storage, constRepo, optStorage){
         options = promiseValue;
     })
 
-    var internalTranslate = function(result, word, callback){
+    var internalTranslate = function(result, word,outOptions, callback){
         var auth = 'Bearer ' + result.token.token;
         var u = constRepository.getBaseUrl()+"translate/translate";
+        var localOptions = outOptions != null ? outOptions : options;
+
         $.ajax({
             headers:{
                 'Authorization':auth,
@@ -126,7 +128,7 @@ var httpService = (function(storage, constRepo, optStorage){
     }
 
     return {
-        translate: function(word, callback){
+        translate: function(word, options, callback){
             storage.getToken(function (result) {
                 if(result === null && result === 'undefined') {
                     callback(new Status(StatusResult.TokenMissed,null, 'Token is missed. Please, log in.'));
@@ -138,7 +140,7 @@ var httpService = (function(storage, constRepo, optStorage){
                     callback(new Status(StatusResult.TokenMissed,null, 'Token is expired. Please, log in.'));
                     return;
                 }
-                internalTranslate(result,word,callback);
+                internalTranslate(result,word,options,callback);
             });
         },
         addWord: function(data,callback){
