@@ -39,5 +39,8 @@ export class AuthService {
     return this.token != null && this.token.token != null;
   }
 
+  getName() {
+    return this.token.user;
+  }
 
 }

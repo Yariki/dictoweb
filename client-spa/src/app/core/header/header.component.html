@@ -1,3 +1,20 @@
-<p>
-  header works!
-</p>
+<nav class="navbar navbar-expand navbar-light bg-light">
+    <div class="navbar-brand">
+      <a routerLink="/">Word Service</a>
+    </div>
+    <div class="collapse navbar-collapse" >
+      <ul class="navbar-nav mr-auto" >
+        <li routerLinkActive="active" class="nav-item"><a class="nav-link" routerLink="/">Home</a></li>
+      </ul>
+
+      <span class="navbar-text">
+      <ul class="navbar-nav">
+        <ng-template [ngIf]="!authService.isAuthenticated()">
+          <li class="nav-item"><a class="nav-link" routerLink="/signin">Sign In</a></li>
+          <li class="nav-item"><a class="nav-link" routerLink="/signup">Sign Up</a></li>
+        </ng-template>
+        <li> <a routerLink="/" *ngIf="authService.isAuthenticated()">{{ authService.getName() }}</a> </li>
+      </ul>
+      </span>
+    </div>
+</nav>
