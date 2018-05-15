@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using DictoData.Interfaces;
@@ -45,6 +46,28 @@ namespace DictoServices.Services
             }
             _unitOfWork.Repository<Word>().Insert(word);
             _unitOfWork.SaveChanges();
+        }
+
+        public async Task<UserWordsInfoDto> GetUserWordsInfo(string userName)
+        {
+            var users = await _unitOfWork.Repository<User>().GetFilteredAsync(user => user.Email == userName);
+            if (users == null || !users.Any())
+            {
+                throw new KeyNotFoundException($"User {userName} wasn't found");
+            }
+
+            var userId = users.First().Id;
+
+            var words = await _unitOfWork.Repository<Word>().GetFilteredAsync(w => w.UserId == userId);
+            var wordsInfo = new UserWordsInfoDto()
+            {
+                Count = words.Count(),
+                Level1 = words.Count(w => w.Level == LevelType.First),
+                Level2 = words.Count(w => w.Level == LevelType.Second),
+                Level3 = words.Count(w => w.Level == LevelType.Third),
+                Compleate = words.Count(w => w.Level == LevelType.Compleate)
+            };
+            return wordsInfo;
         }
         
     }

@@ -9,5 +9,6 @@ namespace DictoServices.Interfaces
     {
         void AddNewWord(TranslateResultDto translateResult);
         Task<IEnumerable<Word>> GetAllWords();
+        Task<UserWordsInfoDto> GetUserWordsInfo(string userName);
     }
 }

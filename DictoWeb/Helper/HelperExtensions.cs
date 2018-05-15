@@ -1,4 +1,6 @@
-﻿using DictoData.Interfaces;
+﻿using System;
+using System.Security.Claims;
+using DictoData.Interfaces;
 using DictoData.UnitOfWork;
 using DictoServices.Interfaces;
 using DictoServices.Services;
@@ -15,5 +17,7 @@ namespace DictoWeb.Helper
             services.AddScoped<ITranslationService, TranslationService>();
             services.AddScoped<IWordService, WordService>();
         }
+
+       
     }
 }

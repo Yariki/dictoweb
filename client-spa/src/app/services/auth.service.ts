@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpRequest} from '@angular/common/http';
-import {Token} from '../auth/Token';
+import {Token} from '../models/token';
 
 @Injectable()
 export class AuthService {
@@ -39,7 +39,11 @@ export class AuthService {
     return this.token != null && this.token.token != null;
   }
 
-  getName() {
+  getToken(): string {
+    return this.token.token;
+  }
+
+  getName(): string {
     return this.token.user;
   }
 

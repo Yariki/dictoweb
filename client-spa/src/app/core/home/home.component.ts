@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {WordService} from '../../services/wordservice';
+import {UserWordsInfo} from '../../models/userwordsinfo';
 
 @Component({
   selector: 'app-home',
@@ -7,9 +9,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  private info: UserWordsInfo;
+
+  constructor( private  wordService: WordService) { }
 
   ngOnInit() {
+    this.wordService.getWordsInfo().then(result => this.info = result);
   }
+
 
 }

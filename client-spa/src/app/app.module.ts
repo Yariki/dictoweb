@@ -9,9 +9,9 @@ import {AuthModule} from './auth/auth.module';
 import {AppRoutingModule} from './app-routing.module';
 import {AuthService} from './services/auth.service';
 import {HttpService} from './services/http.service';
-import {RouterModule} from '@angular/router';
 import {CommonModule} from '@angular/common';
 import {AuthGuardService} from './auth/auth-guard.service';
+import {WordService} from './services/wordservice';
 
 @NgModule({
   declarations: [
@@ -25,7 +25,7 @@ import {AuthGuardService} from './auth/auth-guard.service';
     AuthModule,
     AppRoutingModule,
   ],
-  providers: [AuthService, HttpService, AuthGuardService],
+  providers: [AuthService, HttpService, AuthGuardService,  WordService],
 
   bootstrap: [AppComponent]
 })

@@ -5,8 +5,10 @@ using System.Threading.Tasks;
 using AutoMapper;
 using DictoInfrasctructure.Core;
 using DictoInfrasctructure.Dtos;
+using DictoInfrasctructure.Extensions;
 using DictoServices.Interfaces;
 using DictoServices.Services;
+using DictoWeb.Helper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -69,6 +71,24 @@ namespace DictoWeb.Controllers
             }
             return Ok();
         }
-        
+
+        [HttpGet("wordsinfo")]
+        public async Task<IActionResult> GetWordsInfo()
+        {
+            var userName = this.User.GetUserName();
+            try
+            {
+
+                var info = await _wordService.GetUserWordsInfo(userName);
+
+                return Ok(info);
+            }
+            catch (Exception e)
+            {
+                Log(e.ToString());
+                return BadRequest(e.Message);
+            }
+            return NotFound();
+        }
     }
 }
