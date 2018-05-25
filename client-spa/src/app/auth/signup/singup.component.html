@@ -1,15 +1,46 @@
 <div  class="row">
-  <div class="col-xs-12 col-sm-10 col-md-8">
-    <form (ngSubmit)="onSuignUp(f)" #f="ngForm">
+  <div>
+    <form (ngSubmit)="onSignUp()" [formGroup]="registrationFormGroup">
+
       <div class="form-group">
-        <label for="email">Mail</label>
-        <input type="email" id="email" name="email" ngModel class="form-control">
+        <label for="firstname">First name</label>
+        <input type="text" id="firstname" name="firstname" class="form-control"
+          formControlName="firstname">
+        <span class="bg-danger" *ngIf="registrationFormGroup.controls.firstname.errors?.required && registrationFormGroup.controls.firstname.touched">First name is required</span>
       </div>
       <div class="form-group">
-        <label for="password">Password</label>
-        <input type="password" id="password" name="password" ngModel class="form-control">
+        <label for="lastname">Last name</label>
+        <input type="text" id="lastname" name="lastname" class="form-control"
+          formControlName="lastname">
+        <span class="bg-danger" *ngIf="registrationFormGroup.controls.lastname.errors?.required && registrationFormGroup.controls.lastname.touched">Last name is required</span>
       </div>
-      <button class="btn btn-primary" type="submit">Register</button>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" class="form-control"
+          formControlName="email">
+        <span class="bg-danger" *ngIf="!registrationFormGroup.controls.email.valid && registrationFormGroup.controls.email.touched">Email is required</span>
+      </div>
+      <div [formGroup]="passwordsGroup">
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password"
+                 class="form-control"
+                 formControlName="password" >
+          <span class="bg-danger" *ngIf="passwordsGroup.controls.password.errors?.required && passwordsGroup.controls.password.touched">Password is required</span>
+        </div>
+        <div class="form-group">
+          <label for="retypepassword">Retype Password</label>
+          <input type="password" id="retypepassword" name="retypepassword"
+                 class="form-control"
+            formControlName="retypepassword">
+          <span class="bg-danger" *ngIf="passwordsGroup.controls.retypepassword.errors?.required && passwordsGroup.controls.retypepassword.touched">Confirmatio is required</span>
+          <span class="bg-danger" *ngIf="passwordsGroup.errors?.doesMatchPassword">Passwords does not match</span>
+        </div>
+      </div>
+      <div class="form-group">
+        <button class="btn btn-primary" type="submit" [disabled]="!registrationFormGroup.valid">Register</button>
+      </div>
     </form>
   </div>
 </div>
+

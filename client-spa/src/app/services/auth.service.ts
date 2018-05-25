@@ -1,13 +1,14 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpRequest} from '@angular/common/http';
 import {Token} from '../models/token';
+import {User} from '../models/user';
 
 @Injectable()
 export class AuthService {
 
   private token: Token;
 
-  private baseUrlSignUp = 'http://localhost:5000/api/';
+  private baseUrlSignUp = 'http://localhost:5000/api/login/signup';
   private baseUrlSignIn = 'http://localhost:5000/api/login/token';
 
   constructor(private httpClient: HttpClient) {
@@ -32,7 +33,20 @@ export class AuthService {
   }
 
 
-  singup(email, password) {
+  singup(user: User): Promise<boolean> {
+    const serviceheaders = new HttpHeaders();
+    serviceheaders.append('Access-Control-Allow-Origin', '*');
+    const promise = new Promise<boolean>((resolve, reject) => {
+      this.httpClient.post<Token>(this.baseUrlSignUp, user, {headers: serviceheaders}).subscribe(response => {
+        if (response != null) {
+          resolve(true);
+        } else {
+          reject(false);
+        }
+      });
+    });
+    return promise;
+
   }
 
   isAuthenticated(): boolean {

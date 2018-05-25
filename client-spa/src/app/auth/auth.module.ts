@@ -5,6 +5,7 @@ import {FormsModule} from '@angular/forms';
 import {AuthRoutingModule} from './auth-routing.module';
 import {AuthGuardService} from './auth-guard.service';
 import {HttpClientModule} from '@angular/common/http';
+import {SharedModule} from '../shared/shared.module';
 
 @NgModule( {
   declarations: [
@@ -14,7 +15,8 @@ import {HttpClientModule} from '@angular/common/http';
   imports: [
     FormsModule,
     AuthRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    SharedModule
   ],
 })
 export class AuthModule {

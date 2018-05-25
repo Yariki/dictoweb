@@ -42,7 +42,24 @@ namespace DictoWeb.Controllers
             _mapper = mapper;
         }
 
-        
+        [HttpPost("signup")]
+        [AllowAnonymous]
+        public IActionResult SighUp([FromBody] UserDto userDto)
+        {
+            try
+            {
+                var user = _mapper.Map<UserDto, User>(userDto);
+                user = _accountService.Create(user,user.Password);
+                return new OkObjectResult(userDto);
+            }
+            catch (Exception e)
+            {
+                Log(e.ToString());
+                return BadRequest(e);
+            }
+        } 
+
+
         [HttpPost("token")]
         [AllowAnonymous]
         public async Task<IActionResult> Token([FromBody]UserDto user)

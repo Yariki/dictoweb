@@ -17,7 +17,7 @@ import {WordService} from './services/wordservice';
   declarations: [
     AppComponent,
     HeaderComponent,
-    HomeComponent
+    HomeComponent,
   ],
   imports: [
     BrowserModule,

@@ -45,6 +45,7 @@ namespace DictoServices.Services
 
             var passwordMd5 = CalculateMD5Hash(password);
             user.Password = passwordMd5;
+            user.RoleId = 1;
 
             _unitOfWork.Repository<User>().Insert(user);
             _unitOfWork.SaveChanges();
