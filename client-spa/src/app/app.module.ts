@@ -12,12 +12,17 @@ import {HttpService} from './services/http.service';
 import {CommonModule} from '@angular/common';
 import {AuthGuardService} from './auth/auth-guard.service';
 import {WordService} from './services/wordservice';
+import { Level1Component } from './levels/level1/level1.component';
+import { LeveltasklistComponent } from './levels/leveltasklist/leveltasklist.component';
+import {LevelsService} from './services/levels.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     HomeComponent,
+    Level1Component,
+    LeveltasklistComponent,
   ],
   imports: [
     BrowserModule,
@@ -25,7 +30,7 @@ import {WordService} from './services/wordservice';
     AuthModule,
     AppRoutingModule,
   ],
-  providers: [AuthService, HttpService, AuthGuardService,  WordService],
+  providers: [AuthService, HttpService, AuthGuardService,  WordService, LevelsService],
 
   bootstrap: [AppComponent]
 })

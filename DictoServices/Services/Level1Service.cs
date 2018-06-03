@@ -17,7 +17,7 @@ namespace DictoServices.Services
 {
     public class Level1Service : CoreLevelService, IFirstLevelService
     {
-        public Level1Service(ILogger logger, IUnitOfWork unitOfWork, IMapper mapper) : base(logger, unitOfWork, mapper)
+        public Level1Service(ILogger<Level1Service> logger, IUnitOfWork unitOfWork, IMapper mapper) : base(logger, unitOfWork, mapper)
         {
         }
 

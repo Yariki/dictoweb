@@ -26,7 +26,6 @@ namespace DictoWeb.Controllers
             _secondLevelService = secondLevelService;
         }
 
-        [Authorize]
         [HttpGet("level1")]
         public async Task<IActionResult> GenerateTasksForFirstLevel()
         {
@@ -42,7 +41,6 @@ namespace DictoWeb.Controllers
             }
         }
 
-        [Authorize]
         [HttpGet("level2")]
         public async Task<IActionResult> GenerateTaskForSecondLevel()
         {

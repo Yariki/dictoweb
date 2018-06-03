@@ -1,0 +1,8 @@
+<ul class="list-group">
+  <li class="list-group-item" *ngFor="let item of variants; let i = index"
+    [ngClass]="{'list-group-item-success': (item.iscorrect && selectedItem === item) || (selectedItem === item && isPreview), 'list-group-item-danger': !item.iscorrect && selectedItem === item }"
+      (click)="onSelect($event,item)"
+  >
+    {{ item.translation }}
+  </li>
+</ul>

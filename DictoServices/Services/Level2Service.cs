@@ -9,7 +9,7 @@ namespace DictoServices.Services
 {
     public class Level2Service : CoreLevelService, ISecondLevelService
     {
-        public Level2Service(ILogger logger, IUnitOfWork unitOfWork, IMapper mapper) : base(logger, unitOfWork, mapper)
+        public Level2Service(ILogger<Level2Service> logger, IUnitOfWork unitOfWork, IMapper mapper) : base(logger, unitOfWork, mapper)
         {
         }
 

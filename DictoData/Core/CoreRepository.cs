@@ -28,9 +28,17 @@ namespace DictoData.Core
             return await _set.ToListAsync();
         }
 
-        public virtual async Task<IEnumerable<TEntity>> GetFilteredAsync(Expression<Func<TEntity, bool>> filter)
+        public virtual async Task<IEnumerable<TEntity>> GetFilteredAsync(Expression<Func<TEntity, bool>> filter, params string[] includes )
         {
             IQueryable<TEntity> query = _set;
+
+            if (includes != null && includes.Length > 0)
+            {
+                foreach (var include in includes)
+                {
+                    query = query.Include(include);
+                }
+            }
 
             if (filter != null)
             {

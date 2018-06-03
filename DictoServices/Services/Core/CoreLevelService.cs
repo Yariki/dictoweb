@@ -42,7 +42,7 @@ namespace DictoServices.Services.Core
             }
             var userId = users.First().Id;
 
-            var levelList = await _unitOfWork.Repository<Word>().GetFilteredAsync(w => w.Level == Level && w.UserId == userId);
+            var levelList = await _unitOfWork.Repository<Word>().GetFilteredAsync(w => w.Level == Level && w.UserId == userId, "Translates");
             var listWords = levelList.ToList();
 
             var list = new List<TaskItemDto>();
