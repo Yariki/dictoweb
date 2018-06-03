@@ -4,18 +4,17 @@
   </div>
   <div class="row" *ngIf="!generateTask">
     <div class="col-md-2">
-      kjfdksj
-    </div>
-    <div class="col-md-8">
-
+      <label>{{ currentTask.origin }}</label>
     </div>
     <div class="col-md-2">
-      <button class="btn btn-default">Don't know</button>
+      <button class="btn btn-default" *ngIf="showNext" (click)="onNext()" >Next <span class="glyphicon glyphicon-menu-right"></span></button>
+      <button class="btn btn-default" *ngIf="!showNext" >Don't know</button>
     </div>
+
   </div>
 </div>
 <div class="row">
   <div class="col-xs-12">
-    <app-leveltasklist [variants]="currentTask.variants"></app-leveltasklist>
+    <app-leveltasklist [variants]="currentTask.variants" (selected)="onSelected($event)"></app-leveltasklist>
   </div>
 </div>

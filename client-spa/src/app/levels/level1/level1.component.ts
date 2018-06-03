@@ -11,8 +11,10 @@ export class Level1Component implements OnInit {
 
   generateTask = true;
   currentTask: TaskItem;
+  showNext = false;
 
   private tasks: TaskItem[];
+  private currentIndex = 0;
 
   constructor(private  levelService: LevelsService) { }
 
@@ -23,11 +25,31 @@ export class Level1Component implements OnInit {
 
     this.levelService.createTaskLevel1().then(result => {
       if (result != null) {
+        this.currentIndex = 0;
         this.generateTask = false;
         this.tasks = result;
-        this.currentTask = this.tasks[0];
+        this.currentTask = this.tasks[this.currentIndex];
       }
     });
+  }
+
+  onSelected(isCorrect: boolean) {
+    this.showNext = true;
+    if (isCorrect) {
+      // TODO: update word level
+    }
+  }
+
+  onNext() {
+    this.currentIndex++;
+    if (this.currentIndex < this.tasks.length) {
+      this.currentTask = this.tasks[this.currentIndex];
+      this.showNext = false;
+    } else {
+      this.currentTask = new TaskItem();
+      this.tasks = null ;
+      this.generateTask = true ;
+    }
   }
 
 }
