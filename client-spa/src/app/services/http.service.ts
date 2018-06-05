@@ -29,4 +29,22 @@ export class HttpService {
     });
     return promise;
   }
+
+  post<T>(action: string, data: any): Promise<T> {
+
+    const promise = new Promise<T>(resolve => {
+      const httpOptions = {
+        headers: new HttpHeaders({
+          'Access-Control-Allow-Origin': '*',
+          'Authorization': 'Bearer ' + this.authService.getToken()
+        })
+      };
+
+      this.httpClient.post<T>(this.baseUrl + action, data, httpOptions).subscribe(response => {
+        resolve(response);
+      });
+    });
+    return promise;
+  }
+
 }

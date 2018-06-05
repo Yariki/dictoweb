@@ -12,7 +12,7 @@ export class LeveltasklistComponent implements OnInit, OnChanges {
   @Output() selected = new EventEmitter<boolean>() ;
 
   selectedItem: VariantItem;
-  isPreview: boolean;
+  @Input() isPreview: boolean;
 
   constructor() { }
 
@@ -37,6 +37,7 @@ export class LeveltasklistComponent implements OnInit, OnChanges {
   private initialize(): void {
     this.selectedItem = null;
     this.isPreview = false;
+    this.isPreview = false ;
   }
 
 

@@ -14,7 +14,7 @@ namespace DictoInfrasctructure.Dtos
 
         public string Text { get; set; }
 
-        public LevelType LevelType { get; set; }
+        public LevelType Level { get; set; }
 
         public string Phonetic { get; set; }
 

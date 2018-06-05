@@ -69,6 +69,16 @@ namespace DictoServices.Services
             };
             return wordsInfo;
         }
+
+        public void UpdateWord(WordDto wordDto)
+        {
+            var word = _mapper.Map<Word>(wordDto);
+            _unitOfWork.Repository<Word>().Update(word);
+            _unitOfWork.SaveChanges();
+        }
+
+
+
         
     }
 }

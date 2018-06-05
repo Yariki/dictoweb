@@ -15,7 +15,9 @@ namespace DictoWeb.Helper
             CreateMap<RoleDto, Role>();
             CreateMap<TranslateRequestResult, TranslateResultDto>();
             CreateMap<Translate, TranslateDto>();
+            CreateMap<TranslateDto, Translate>();
             CreateMap<Word, WordDto>();
+            CreateMap<WordDto, Word>();
         }
     }
 }

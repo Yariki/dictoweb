@@ -1,6 +1,7 @@
 import {HttpService} from './http.service';
 import {Injectable} from '@angular/core';
 import {UserWordsInfo} from '../models/userwordsinfo';
+import {Word} from '../models/word';
 
 @Injectable()
 export class WordService {
@@ -16,5 +17,8 @@ export class WordService {
     return promise;
   }
 
+  updateWord(word: Word): void {
+    this.httpService.post('word/update', word);
+  }
 
 }

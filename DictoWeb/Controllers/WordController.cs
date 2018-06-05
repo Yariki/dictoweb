@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 using AutoMapper;
+using DictoData.Model;
 using DictoInfrasctructure.Core;
 using DictoInfrasctructure.Dtos;
 using DictoInfrasctructure.Extensions;
@@ -71,6 +72,27 @@ namespace DictoWeb.Controllers
             }
             return Ok();
         }
+
+
+        [HttpPost("update")]
+        public IActionResult Update([FromBody] WordDto word)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            try
+            {
+                _wordService.UpdateWord(word);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                Log(e.Message);
+                return BadRequest(e);
+            }
+        }
+
 
         [HttpGet("wordsinfo")]
         public async Task<IActionResult> GetWordsInfo()

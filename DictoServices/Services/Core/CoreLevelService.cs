@@ -65,14 +65,14 @@ namespace DictoServices.Services.Core
                     var varNum = rand.Next(listForVars.Count - 1);
                     var wordVariant = listForVars[varNum];
 
-                    var strvar = string.Join(",", wordVariant.Translates.Select(t => t.Text));
+                    var strvar = string.Join(", ", wordVariant.Translates.Select(t => t.Text));
                     var varItem = new VariantDto() { Translation = strvar };
                     variants.Add(varItem);
                 }
                 variants.Add(new VariantDto()
                 {
                     IsCorrect = true,
-                    Translation = string.Join(",", word.Translates.Select(t => t.Text))
+                    Translation = string.Join(", ", word.Translates.Select(t => t.Text))
                 });
                 variants.Sort((var1, var2) => string.Compare(var1.Translation, var2.Translation, true));
                 list.Add(new TaskItemDto()
