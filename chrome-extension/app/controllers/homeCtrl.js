@@ -12,7 +12,7 @@ angular.module('app').controller('homeController',function ($scope,$location,$ht
     $scope.needAdd = false;
 
     tokenStorage.isDataExist(function (result) {
-       if(result == 'undefined'){
+       if(result == 'undefined' || $.isEmptyObject(result)){
            $location.path('/login');
        } else{
            var expiration = new Date(result.token.expiration);
