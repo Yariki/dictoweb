@@ -12,14 +12,14 @@ using Microsoft.Extensions.Logging;
 
 namespace DictoServices.Services.Core
 {
-    public class CoreLevelService :  CoreService
+    public abstract class CoreLevelService :  CoreService
     {
         private const int MAX_GENERATE_LEVEL_1 = 10;
 
         private IUnitOfWork _unitOfWork;
         private IMapper _mapper;
 
-        public CoreLevelService(ILogger logger, IUnitOfWork unitOfWork, IMapper mapper) : base(logger)
+        protected CoreLevelService(ILogger logger, IUnitOfWork unitOfWork, IMapper mapper) : base(logger)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
@@ -65,19 +65,19 @@ namespace DictoServices.Services.Core
                     var varNum = rand.Next(listForVars.Count - 1);
                     var wordVariant = listForVars[varNum];
 
-                    var strvar = string.Join(", ", wordVariant.Translates.Select(t => t.Text));
+                    var strvar = GetVariantText(wordVariant);
                     var varItem = new VariantDto() { Translation = strvar };
                     variants.Add(varItem);
                 }
                 variants.Add(new VariantDto()
                 {
                     IsCorrect = true,
-                    Translation = string.Join(", ", word.Translates.Select(t => t.Text))
+                    Translation = GetVariantText(word)
                 });
                 variants.Sort((var1, var2) => string.Compare(var1.Translation, var2.Translation, true));
                 list.Add(new TaskItemDto()
                 {
-                    Origin = word.Text,
+                    Origin = GetOriginalText(word),
                     Variants = variants,
                     Word = _mapper.Map<WordDto>(word)
                 });
@@ -92,6 +92,9 @@ namespace DictoServices.Services.Core
             return pres;
         }
 
+        protected abstract string GetOriginalText(Word word);
+
+        protected abstract string GetVariantText(Word word);
 
     }
 }
