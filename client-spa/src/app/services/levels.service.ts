@@ -20,4 +20,16 @@ export class LevelsService {
     return promise;
   }
 
+
+  createTaskLevel2(): Promise<TaskItem[]> {
+    const promise = new Promise<TaskItem[]>( resolve => {
+      this.httpService.get<TaskItem[]>('level/level2',null).then(result => {
+        resolve(result);
+      });
+    });
+
+    return promise;
+  }
+
+
 }

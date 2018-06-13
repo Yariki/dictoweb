@@ -14,7 +14,7 @@ namespace DictoServices.Services.Core
 {
     public abstract class CoreLevelService :  CoreService
     {
-        private const int MAX_GENERATE_LEVEL_1 = 10;
+        private const int MAX_GENERATE_LEVEL = 10;
 
         private IUnitOfWork _unitOfWork;
         private IMapper _mapper;
@@ -49,7 +49,9 @@ namespace DictoServices.Services.Core
             var count = listWords.Count;
             var rand = new Random(count);
 
-            for (int i = 0; i < MAX_GENERATE_LEVEL_1; i++)
+            var generatedCount = levelList.Count() >= MAX_GENERATE_LEVEL ? MAX_GENERATE_LEVEL : levelList.Count();
+
+            for (int i = 0; i < generatedCount; i++)
             {
                 var newRand = rand.Next(count);
                 var word = listWords[newRand];

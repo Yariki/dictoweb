@@ -15,6 +15,7 @@ import {WordService} from './services/wordservice';
 import { Level1Component } from './levels/level1/level1.component';
 import { LeveltasklistComponent } from './levels/leveltasklist/leveltasklist.component';
 import {LevelsService} from './services/levels.service';
+import { Level2Component } from './levels/level2/level2.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import {LevelsService} from './services/levels.service';
     HomeComponent,
     Level1Component,
     LeveltasklistComponent,
+    Level2Component,
   ],
   imports: [
     BrowserModule,
