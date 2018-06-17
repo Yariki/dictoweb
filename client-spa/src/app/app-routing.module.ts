@@ -4,11 +4,13 @@ import {HomeComponent} from './core/home/home.component';
 import {AuthGuardService} from './auth/auth-guard.service';
 import {Level1Component} from './levels/level1/level1.component';
 import {Level2Component} from './levels/level2/level2.component';
+import {Level3Component} from './levels/level3/level3.component';
 
 const appRoutes: Routes = [
   {path: '', component: HomeComponent, canActivate: [AuthGuardService]},
   {path: 'level1', component: Level1Component, canActivate: [AuthGuardService]},
   {path: 'level2', component: Level2Component, canActivate: [AuthGuardService]},
+  {path: 'level3', component: Level3Component, canActivate: [AuthGuardService]},
 
 ];
 
