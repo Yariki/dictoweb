@@ -15,6 +15,13 @@ namespace DictoInfrasctructure.Dtos
 
         public int WordId { get; set; }
 
+        public int Current { get; set; }
+
+        public PazzleItemDto()
+        {
+            Current = 1;
+        }
+
 
         public static CharItemDto[] GenerateOriginal(string original)
         {

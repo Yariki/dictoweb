@@ -1,12 +1,27 @@
 <div class="row" style="margin-top: 10px; width: 100%">
-  <div class="btn-group">
-
-    <button class="btn btn-outline-success" *ngFor="let item of words; let i = index">{{ item.letter }}</button>
-
+  <div class="row" *ngIf="generateTask">
+    <button type="button" class="btn btn-primary" (click)="onGenerate()">Generate task</button>
   </div>
-  <div class="btn-group">
+  <div style="width: 100%" *ngIf="!generateTask">
+    <h3 class="float-left text-primary" >{{ pazzle.translate }}</h3>
 
-    <button class="btn btn-primary" *ngFor="let item of letters; let i = index" (click)="onItemCLick($event, i)">{{ item.letter }}</button>
-
+    <button class="btn btn-secondary float-right" *ngIf="showNext" (click)="onNext()" >Next <span class="glyphicon glyphicon-menu-right"></span></button>
+    <button class="btn btn-secondary float-right" *ngIf="!showNext" (click)="dontKnow()">Don't know</button>
   </div>
 </div>
+
+  <div class="row" *ngIf="!generateTask">
+    <div class="btn-group">
+      <button class="btn btn-pazzle"
+              [ngClass]="{'btn-outline-warning': item.iserror, 'btn-outline-success': !item.iserror}"
+              *ngFor="let item of pazzle.original; let i = index"><span *ngIf="item.show">{{ item.char }}</span></button>
+    </div>
+  </div>
+
+  <div class="row" *ngIf="!generateTask">
+    <div class="btn-group">
+      <button class="btn btn-pazzle"
+              [ngClass]="{'btn-danger': item.iserror, 'btn-primary': !item.iserror}"
+              *ngFor="let item of pazzle.pazzle; let i = index" (click)="onItemClick($event, i)"><span *ngIf="item.show">{{ item.char }}</span></button>
+    </div>
+  </div>

@@ -28,7 +28,7 @@ namespace DictoServices.Services
             _mapper = mapper;
         }
 
-        public async Task<PazzleItemDto[]> GenerateTasks(string userName)
+        public async Task<PazzleItemDto[]> GenerateTasksAsync(string userName)
         {
             var user = await GetUser(userName);
             var userId = user.First().Id;
@@ -49,7 +49,7 @@ namespace DictoServices.Services
             {
                 var newRand = rand.Next(count);
                 var word = wordsList[newRand];
-                var trans = string.Concat(", ", word.Translates);
+                var trans = string.Join(", ", word.Translates.Select(t => t.Text));
                 var origin = PazzleItemDto.GenerateOriginal(word.Text);
                 var pazzle = PazzleItemDto.GeneratePazzle(origin);
 

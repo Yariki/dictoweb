@@ -30,16 +30,7 @@ namespace DictoServices.Services.Core
 
         public async Task<List<TaskItemDto>> GenerateDataLevelAsync(string userName)
         {
-            if (string.IsNullOrEmpty(userName))
-            {
-                throw new ArgumentNullException("userName");
-            }
-
-            var users = await _unitOfWork.Repository<User>().GetFilteredAsync(user => user.Email == userName);
-            if (users == null || !users.Any())
-            {
-                throw new KeyNotFoundException($"User {userName} wasn't found");
-            }
+            var users = await GetUser(userName);
             var userId = users.First().Id;
 
             var levelList = await _unitOfWork.Repository<Word>().GetFilteredAsync(w => w.Level == Level && w.UserId == userId, "Translates");
@@ -86,6 +77,22 @@ namespace DictoServices.Services.Core
             }
 
             return list;
+        }
+
+        private async Task<IEnumerable<User>> GetUser(string userName)
+        {
+            if (string.IsNullOrEmpty(userName))
+            {
+                throw new ArgumentNullException("userName");
+            }
+
+            var users = await _unitOfWork.Repository<User>().GetFilteredAsync(user => user.Email == userName);
+            if (users == null || !users.Any())
+            {
+                throw new KeyNotFoundException($"User {userName} wasn't found");
+            }
+
+            return users;
         }
 
         private bool CheckIsTaskPresent(List<TaskItemDto> tasks, Word word)

@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {LetterItem} from '../../models/letteritem';
+import {LevelsService} from '../../services/levels.service';
+import {WordService} from '../../services/wordservice';
+import {Pazzleitem} from '../../models/pazzleitem';
 
 @Component({
   selector: 'app-level3',
@@ -8,23 +11,15 @@ import {LetterItem} from '../../models/letteritem';
 })
 export class Level3Component implements OnInit {
 
-  letters: LetterItem[] = [
-    new LetterItem('e', 5),
-    new LetterItem('h', 1),
-    new LetterItem('c', 0),
-    new LetterItem('r', 2),
-    new LetterItem('o', 3),
-    new LetterItem('m', 4),
-  ];
+  generateTask = true;
+  showNext = false;
 
-  words: LetterItem[] = [] ;
+  pazzle: Pazzleitem;
 
-  private currentCorrectIndex = 0;
+  private tasks: Pazzleitem[];
+  private currentPazzleIndex: number;
 
-
-  constructor() {
-    // chrome
-    //  c-0 h-1 r-2 o-3 m-4 e-5
+  constructor(private levelService: LevelsService, private wordService: WordService) {
 
   }
 
@@ -32,27 +27,58 @@ export class Level3Component implements OnInit {
   }
 
 
-  onItemCLick(obj: any, index: number) {
-    const item = this.letters[index];
-    if (item.order === this.currentCorrectIndex) {
-      this.words.push(item);
-      this.currentCorrectIndex++;
-      this.letters[index] = new LetterItem('', -1);
-    } else {
-      this.letters.sort((l, r): number => {
-        if (l.order < r.order) {return -1; }
-        if (l.order > r.order) {return 1; }
-        return 0;
-      });
-
-      for (let i = 0; i < this.letters.length; i++ ) {
-        if (this.letters[i].order === -1) {continue; }
-        this.words.push(this.letters[i]);
+  onItemClick(obj: any, index: number) {
+    const item = this.pazzle.pazzle[index];
+    const ind = item.order.indexOf(this.pazzle.current);
+    if (ind > -1) {
+      item.show = false;
+      this.pazzle.original[this.pazzle.current - 1].show = true;
+      this.pazzle.current++;
+      let correct = false;
+      for (let i = 0; i < this.pazzle.original.length; i++) {
+        correct = this.pazzle.original[i].show;
       }
-
-
-
+      if (correct) {
+        this.showNext = true;
+      }
+    } else {
+      this.pazzle.pazzle.forEach(p => {
+        p.iserror = true;
+      });
+      this.pazzle.original.forEach(o => {
+        o.iserror = o.show = true;
+      });
+      this.showNext = true;
     }
+  }
+
+  onGenerate() {
+    this.levelService.createTaskLevel3().then(result => {
+      this.tasks = result;
+      this.generateTask = false;
+      if (this.tasks.length > 0) {
+        this.currentPazzleIndex = 0;
+        this.pazzle = this.tasks[this.currentPazzleIndex];
+      }
+    });
+  }
+
+  onNext() {
+    this.currentPazzleIndex++;
+    if (this.currentPazzleIndex < this.tasks.length) {
+      this.pazzle = this.tasks[this.currentPazzleIndex];
+    } else {
+      this.generateTask = true;
+    }
+    this.showNext = false;
+  }
+
+  dontKnow() {
+    this.pazzle.original.forEach(o => {
+      o.iserror = true;
+      o.show = true;
+    });
+    this.showNext = true;
   }
 
 }
