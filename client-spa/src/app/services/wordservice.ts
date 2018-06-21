@@ -1,7 +1,7 @@
 import {HttpService} from './http.service';
 import {Injectable} from '@angular/core';
 import {UserWordsInfo} from '../models/userwordsinfo';
-import {Word} from '../models/word';
+import {LevelType, Word} from '../models/word';
 
 @Injectable()
 export class WordService {
@@ -19,6 +19,10 @@ export class WordService {
 
   updateWord(word: Word): void {
     this.httpService.post('word/update', word);
+  }
+
+  updateLevel(id: number, wordLevel: LevelType) {
+    this.httpService.post('word/updatelevel', {wordId: id, level: wordLevel });
   }
 
 }

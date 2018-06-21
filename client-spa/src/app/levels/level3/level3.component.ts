@@ -3,6 +3,7 @@ import {LetterItem} from '../../models/letteritem';
 import {LevelsService} from '../../services/levels.service';
 import {WordService} from '../../services/wordservice';
 import {Pazzleitem} from '../../models/pazzleitem';
+import {LevelType} from '../../models/word';
 
 @Component({
   selector: 'app-level3',
@@ -40,6 +41,7 @@ export class Level3Component implements OnInit {
       }
       if (correct) {
         this.showNext = true;
+        this.wordService.updateLevel(this.pazzle.wordid, LevelType.Compleate);
       }
     } else {
       this.pazzle.pazzle.forEach(p => {

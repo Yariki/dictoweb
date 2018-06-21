@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -74,6 +75,19 @@ namespace DictoServices.Services
         {
             var word = _mapper.Map<Word>(wordDto);
             _unitOfWork.Repository<Word>().Update(word);
+            _unitOfWork.SaveChanges();
+        }
+
+        public async void UpdateWordLevel(WordLevelInfoDto wordLevelInfoDto)
+        {
+            var words = await _unitOfWork.Repository<Word>().GetFilteredAsync(w => w.Id == wordLevelInfoDto.WordId);
+            var word = words.FirstOrDefault();
+            if (word.IsNull())
+            {
+                throw new NullReferenceException();
+            }
+
+            word.Level = wordLevelInfoDto.Level;
             _unitOfWork.SaveChanges();
         }
 

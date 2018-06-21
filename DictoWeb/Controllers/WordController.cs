@@ -6,6 +6,7 @@ using AutoMapper;
 using DictoData.Model;
 using DictoInfrasctructure.Core;
 using DictoInfrasctructure.Dtos;
+using DictoInfrasctructure.Enums;
 using DictoInfrasctructure.Extensions;
 using DictoServices.Interfaces;
 using DictoServices.Services;
@@ -84,6 +85,20 @@ namespace DictoWeb.Controllers
             try
             {
                 _wordService.UpdateWord(word);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                Log(e.Message);
+                return BadRequest(e);
+            }
+        }
+
+        [HttpPost("updatelevel")]
+        public IActionResult UpdateWordLevel([FromBody]WordLevelInfoDto wordInfoDto)
+        {
+            try
+            {
                 return Ok();
             }
             catch (Exception e)
