@@ -99,6 +99,7 @@ namespace DictoWeb.Controllers
         {
             try
             {
+                _wordService.UpdateWordLevel(wordInfoDto);
                 return Ok();
             }
             catch (Exception e)
