@@ -15,7 +15,7 @@ namespace DictoServices.Services
 {
     public class DeckService : CoreCrudService<Deck,DeckDto>, IDeckService
     {
-        public DeckService(IUnitOfWork unitOfWork, IMapper mapper, ILogger logger) : base(unitOfWork, mapper, logger)
+        public DeckService(IUnitOfWork unitOfWork, IMapper mapper, ILogger<DeckService> logger) : base(unitOfWork, mapper, logger)
         {
         }
 

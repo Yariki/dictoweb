@@ -17,6 +17,7 @@ namespace DictoWeb.Controllers
 
         public DeckController(IDeckService deckService, ILogger<DeckController> logger) : base(logger)
         {
+            _deckService = deckService;
         }
 
         [HttpGet("list")]
@@ -48,6 +49,7 @@ namespace DictoWeb.Controllers
             return Ok();
         }
 
+        [HttpPost("edit")]
         public IActionResult UpdateDeck([FromBody] DeckDto deck)
         {
             try

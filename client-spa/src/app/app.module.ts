@@ -17,6 +17,8 @@ import { LeveltasklistComponent } from './levels/leveltasklist/leveltasklist.com
 import {LevelsService} from './services/levels.service';
 import { Level2Component } from './levels/level2/level2.component';
 import { Level3Component } from './levels/level3/level3.component';
+import {DeckModule} from './decks/deck.module';
+import {DeckService} from './services/deck.service';
 
 @NgModule({
   declarations: [
@@ -26,15 +28,16 @@ import { Level3Component } from './levels/level3/level3.component';
     Level1Component,
     LeveltasklistComponent,
     Level2Component,
-    Level3Component,
+    Level3Component
   ],
   imports: [
     BrowserModule,
     CommonModule,
     AuthModule,
     AppRoutingModule,
+    DeckModule
   ],
-  providers: [AuthService, HttpService, AuthGuardService,  WordService, LevelsService],
+  providers: [AuthService, HttpService, AuthGuardService,  WordService, LevelsService, DeckService],
 
   bootstrap: [AppComponent]
 })
