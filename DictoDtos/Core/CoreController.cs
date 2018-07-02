@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DictoInfrasctructure.Extensions;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
 namespace DictoInfrasctructure.Core
@@ -11,8 +12,8 @@ namespace DictoInfrasctructure.Core
         {
             _logger = logger;
         }
-        
-        protected void Log(string message,LogLevel level = LogLevel.Error)
+
+        protected void Log(string message, LogLevel level = LogLevel.Error)
         {
             if (_logger == null)
             {
@@ -37,6 +38,11 @@ namespace DictoInfrasctructure.Core
                     break;
             }
         }
-        
+
+        protected string GetUserName()
+        {
+            return this.User.GetUserName();
+        }
+
     }
 }

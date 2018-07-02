@@ -31,7 +31,11 @@ namespace DictoData.Migrations
 
                     b.Property<string>("Name");
 
+                    b.Property<int>("UserId");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Decks");
                 });
@@ -174,9 +178,19 @@ namespace DictoData.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("DeckId");
+
                     b.HasIndex("UserId");
 
                     b.ToTable("Words");
+                });
+
+            modelBuilder.Entity("DictoData.Model.Deck", b =>
+                {
+                    b.HasOne("DictoData.Model.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("DictoData.Model.SuperMemory", b =>
@@ -205,6 +219,11 @@ namespace DictoData.Migrations
 
             modelBuilder.Entity("DictoData.Model.Word", b =>
                 {
+                    b.HasOne("DictoData.Model.Deck", "Deck")
+                        .WithMany()
+                        .HasForeignKey("DeckId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("DictoData.Model.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")

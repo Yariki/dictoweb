@@ -12,14 +12,34 @@ using System;
 namespace DictoData.Migrations
 {
     [DbContext(typeof(DictoContext))]
-    [Migration("20180401203339_AddedDecks")]
-    partial class AddedDecks
+    [Migration("20180701090450_AddObjects")]
+    partial class AddObjects
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.0.0-rtm-26452");
+
+            modelBuilder.Entity("DictoData.Model.Deck", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("Created");
+
+                    b.Property<string>("Description");
+
+                    b.Property<string>("Name");
+
+                    b.Property<int>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Decks");
+                });
 
             modelBuilder.Entity("DictoData.Model.Role", b =>
                 {
@@ -159,9 +179,19 @@ namespace DictoData.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("DeckId");
+
                     b.HasIndex("UserId");
 
                     b.ToTable("Words");
+                });
+
+            modelBuilder.Entity("DictoData.Model.Deck", b =>
+                {
+                    b.HasOne("DictoData.Model.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("DictoData.Model.SuperMemory", b =>
@@ -190,6 +220,11 @@ namespace DictoData.Migrations
 
             modelBuilder.Entity("DictoData.Model.Word", b =>
                 {
+                    b.HasOne("DictoData.Model.Deck", "Deck")
+                        .WithMany()
+                        .HasForeignKey("DeckId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("DictoData.Model.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")

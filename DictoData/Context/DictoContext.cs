@@ -23,7 +23,7 @@ namespace DictoData.Context
         
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite("Data Source=dictodb.db");
+            optionsBuilder.UseSqlite("Data Source=..\\DictoWeb\\dictodb.db");
         }
     }
 }

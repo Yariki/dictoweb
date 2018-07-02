@@ -19,6 +19,7 @@ namespace DictoWeb.Helper
             services.AddScoped<IFirstLevelService, Level1Service>();
             services.AddScoped<ISecondLevelService, Level2Service>();
             services.AddScoped<IThirdLevelService, Level3Service>();
+            services.AddScoped<IDeckService, DeckService>();
         }
 
        

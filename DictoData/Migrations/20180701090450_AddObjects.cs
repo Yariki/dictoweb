@@ -4,10 +4,32 @@ using System.Collections.Generic;
 
 namespace DictoData.Migrations
 {
-    public partial class TranslateObjects : Migration
+    public partial class AddObjects : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Decks",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Created = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    Description = table.Column<string>(type: "TEXT", nullable: true),
+                    Name = table.Column<string>(type: "TEXT", nullable: true),
+                    UserId = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Decks", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Decks_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Settings",
                 columns: table => new
@@ -46,6 +68,7 @@ namespace DictoData.Migrations
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Created = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    DeckId = table.Column<int>(type: "INTEGER", nullable: false),
                     Level = table.Column<int>(type: "INTEGER", nullable: false),
                     Phonetic = table.Column<string>(type: "TEXT", nullable: true),
                     Text = table.Column<string>(type: "TEXT", nullable: true),
@@ -54,6 +77,12 @@ namespace DictoData.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Words", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Words_Decks_DeckId",
+                        column: x => x.DeckId,
+                        principalTable: "Decks",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Words_Users_UserId",
                         column: x => x.UserId,
@@ -110,6 +139,11 @@ namespace DictoData.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Decks_UserId",
+                table: "Decks",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_SuperMemories_WordId",
                 table: "SuperMemories",
                 column: "WordId",
@@ -119,6 +153,11 @@ namespace DictoData.Migrations
                 name: "IX_Translates_WordId",
                 table: "Translates",
                 column: "WordId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Words_DeckId",
+                table: "Words",
+                column: "DeckId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Words_UserId",
@@ -142,6 +181,9 @@ namespace DictoData.Migrations
 
             migrationBuilder.DropTable(
                 name: "Words");
+
+            migrationBuilder.DropTable(
+                name: "Decks");
         }
     }
 }

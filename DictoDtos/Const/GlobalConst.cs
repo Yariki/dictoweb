@@ -5,5 +5,7 @@
         public const string GoogleTranslator = "google";
 
         public const string BingTranslator = "bing";
+
+        public const int DefaultDeckId = 0;
     }
 }

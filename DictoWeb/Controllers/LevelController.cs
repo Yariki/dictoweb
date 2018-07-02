@@ -74,11 +74,7 @@ namespace DictoWeb.Controllers
             }
         }
 
-        private string GetUserName()
-        {
-            return this.User.GetUserName();
-        }
-
+        
 
     }
 }
