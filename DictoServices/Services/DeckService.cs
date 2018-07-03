@@ -21,15 +21,23 @@ namespace DictoServices.Services
 
         public override async Task<IEnumerable<Deck>> Get(string userName)
         {
-            var user = GetUser(userName);
-            if (user.IsNull())
+            var result = GetUser(userName).Result;
+            if (result.IsNull())
             {
                 throw new  NotFoundItemException($"Couldn't find user with name '{userName}'");
             }
-
-            var list = await UnitOfWork.Repository<Deck>().GetFilteredAsync(d => d.UserId == user.Id);
+            
+            var list = await UnitOfWork.Repository<Deck>().GetFilteredAsync(d => d.UserId == result.Id);
 
             return list;
+        }
+
+        protected override void UpdateItem(User user, Deck model, DeckDto transportModel)
+        {
+            if (user != null && model != null)
+            {
+                model.UserId = user.Id;
+            }
         }
     }
 }

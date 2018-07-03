@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using DictoInfrasctructure.Core;
 using DictoInfrasctructure.Dtos;
 using DictoServices.Interfaces;
@@ -21,11 +23,12 @@ namespace DictoWeb.Controllers
         }
 
         [HttpGet("list")]
-        public IActionResult GetDeckList()
+        public async Task<IActionResult> GetDeckList()
         {
             try
             {
-                var list = _deckService.Get(GetUserName());
+                var list = await _deckService.Get(GetUserName());
+                list = list.Where(d => d.Id != 0).ToList();
                 return Ok(list);
             }
             catch (Exception e)

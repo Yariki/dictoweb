@@ -45,11 +45,16 @@ namespace DictoServices.Services.Core
                 throw new NotMappedItemException($"Object with type {typeof(M).Name} could not be mapped.");
             }
 
+            UpdateItem(user, model, modelDto);
             UnitOfWork.Repository<M>().Insert(model);
             UnitOfWork.SaveChanges();
 
             return true;
         }
+
+        protected abstract void UpdateItem(User user, M model, T transportModel);
+        
+        
 
         public bool UpdateItem(T modelDto)
         {

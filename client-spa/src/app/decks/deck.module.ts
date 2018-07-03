@@ -10,6 +10,7 @@ import {DeckRoutingModule} from './deck.routing-module';
 import {DeckStartComponent} from './deck-start/deck-start.component';
 import {DeckDetailsComponent} from './deck-details/deck-details.component';
 import { DeckItemComponent } from './deck-list/deck-item/deck-item.component';
+import { DeckEditComponent } from './deck-edit/deck-edit.component';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { DeckItemComponent } from './deck-list/deck-item/deck-item.component';
     DeckComponent,
     DeckStartComponent,
     DeckDetailsComponent,
-    DeckItemComponent
+    DeckItemComponent,
+    DeckEditComponent
   ],
   imports: [
     FormsModule,
