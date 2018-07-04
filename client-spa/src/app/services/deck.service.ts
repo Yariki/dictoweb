@@ -33,8 +33,13 @@ export class DeckService {
     return promise;
   }
 
-  edit(deck: Deck) {
-    this.httpService.post<any>('deck/edit', deck);
+  edit(deck: Deck): Promise<any>  {
+    const promise = new Promise<any>(resolve => {
+      this.httpService.post<any>('deck/edit', deck).then(result => {
+        resolve(result);
+      });
+    });
+    return promise;
   }
 
   getDeck(id: number): Deck {

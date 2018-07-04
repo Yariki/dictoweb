@@ -10,7 +10,8 @@ const decksRoutes: Routes = [
   {path: 'decks',  component: DeckComponent, canActivate: [AuthGuardService], children: [
       {path: '', component: DeckStartComponent, canActivate: [AuthGuardService]},
       {path: 'new', component: DeckEditComponent, canActivate: [AuthGuardService]},
-      {path: ':id', component: DeckDetailsComponent, canActivate: [AuthGuardService]}
+      {path: ':id', component: DeckDetailsComponent, canActivate: [AuthGuardService]},
+      {path: ':id/edit', component: DeckEditComponent, canActivate: [AuthGuardService]}
     ]}
 ]
 
