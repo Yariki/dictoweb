@@ -18,8 +18,13 @@
           <a class="dropdown-item" routerLink="/level3">Level 3</a>
         </div>
       </li>
-      <li class="nav-item active" *ngIf="authService.isAuthenticated()">
-        <a class="nav-link" routerLink="/decks">Decks</a>
+      <li class="nav-item dropdown" *ngIf="authService.isAuthenticated()" >
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLinkDeck" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Decks</a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLinkDeck">
+          <a class="dropdown-item" routerLink="/decks">Decks Handling</a>
+          <a class="dropdown-item" routerLink="/deckwords">Edit Words and Decks</a>
+        </div>
+
       </li>
     </ul>
 

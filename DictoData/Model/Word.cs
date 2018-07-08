@@ -6,6 +6,11 @@ namespace DictoData.Model
 {
     public class Word : CoreEntity
     {
+
+        public Word()
+        {
+            DeckId = 0;
+        }
         
         public string Text { get; set; }
 

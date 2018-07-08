@@ -13,6 +13,7 @@ using DictoServices.Services;
 using DictoWeb.Helper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis;
 using Microsoft.Extensions.Logging;
 
 namespace DictoWeb.Controllers
@@ -55,6 +56,49 @@ namespace DictoWeb.Controllers
             return BadRequest();
         }
 
+        [HttpGet("words")]
+        public async Task<IActionResult> GetWordsWithoutDeck()
+        {
+            try
+            {
+                var list = await _wordService.GetWordWithoutDeck();
+                var words = new List<WordDto>();
+                foreach (var word in list)
+                {
+                    words.Add(_mapper.Map<WordDto>(word));
+                }
+
+                return Ok(words);
+            }
+            catch (Exception e)
+            {
+                Log(e.ToString());
+            }
+
+            return BadRequest();
+        }
+
+        [HttpGet("wordsdeck")]
+        public async Task<IActionResult> GetDeckWords(int deckId)
+        {
+            try
+            {
+                var list = await _wordService.GetDeckWords(deckId);
+                var words = new List<WordDto>();
+                foreach (var word in list)
+                {
+                    words.Add(_mapper.Map<WordDto>(word));
+                }
+                return Ok(words);
+            }
+            catch (Exception e)
+            {
+                Log(e.ToString());
+            }
+
+            return BadRequest();
+        }
+        
         [HttpPost("add")]
         public IActionResult Add([FromBody] TranslateResultDto translateResult)
         {
@@ -64,7 +108,7 @@ namespace DictoWeb.Controllers
             }
             try
             {
-                _wordService.AddNewWord(translateResult);
+                _wordService.AddNewWord(translateResult,GetUserName());
             }
             catch (Exception e)
             {
@@ -109,7 +153,43 @@ namespace DictoWeb.Controllers
             }
         }
 
+        [HttpPost("addwordtodeck")]
+        public IActionResult UpdateWordsDeck([FromBody] DeckWordsDto deckWordsDto)
+        {
+            try
+            {
+                _wordService.UpdateWordsDesk(deckWordsDto);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                Log(e.ToString());
+            }
 
+            return BadRequest();
+        }
+        
+        [HttpPost("deletewordtodeck")]
+        public IActionResult DeleteWordsDeck([FromBody] DeckWordsDto deckWordsDto)
+        {
+            try
+            {
+                if (deckWordsDto.IsNotNull())
+                {
+                    deckWordsDto.DeckId = 0;
+                    _wordService.UpdateWordsDesk(deckWordsDto);
+                }
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                Log(e.ToString());
+            }
+            return BadRequest();
+        }
+        
+        
+        
         [HttpGet("wordsinfo")]
         public async Task<IActionResult> GetWordsInfo()
         {

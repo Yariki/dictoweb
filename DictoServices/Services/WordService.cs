@@ -31,10 +31,24 @@ namespace DictoServices.Services
             var listWords = await _unitOfWork.Repository<Word>().Set.Include(w => w.Translates).ToListAsync();
             return listWords;
         }
-        
-        public void AddNewWord(TranslateResultDto translateResult)
+
+        public async Task<IEnumerable<Word>> GetWordWithoutDeck()
         {
-            var word = new Word(){Text = translateResult.Original,Level = LevelType.First,Phonetic = translateResult.Phonetic,SuperMemory = new SuperMemory(),UserId = 1, Translates = new List<Translate>()};
+            var listWords = await _unitOfWork.Repository<Word>().GetFilteredAsync(w => w.DeckId == 0);
+            return listWords;
+        }
+        
+        public async Task<IEnumerable<Word>> GetDeckWords(int DeckId)
+        {
+            var listWords = await _unitOfWork.Repository<Word>().GetFilteredAsync(w => w.DeckId == DeckId);
+            return listWords;
+        }
+        
+        public async void AddNewWord(TranslateResultDto translateResult, string userName)
+        {
+            var userID = await GetUserId(userName);
+            
+            var word = new Word(){Text = translateResult.Original,Level = LevelType.First,Phonetic = translateResult.Phonetic,SuperMemory = new SuperMemory(),UserId = userID, Translates = new List<Translate>()};
             foreach (var pair in translateResult.Translate)
             {
                 WordType wordType = string.IsNullOrEmpty(pair.Key) ? WordType.None : pair.Key.GetEnumValue<WordType>();
@@ -51,13 +65,7 @@ namespace DictoServices.Services
 
         public async Task<UserWordsInfoDto> GetUserWordsInfo(string userName)
         {
-            var users = await _unitOfWork.Repository<User>().GetFilteredAsync(user => user.Email == userName);
-            if (users == null || !users.Any())
-            {
-                throw new KeyNotFoundException($"User {userName} wasn't found");
-            }
-
-            var userId = users.First().Id;
+            var userId = await GetUserId(userName);
 
             var words = await _unitOfWork.Repository<Word>().GetFilteredAsync(w => w.UserId == userId);
             var wordsInfo = new UserWordsInfoDto()
@@ -70,6 +78,8 @@ namespace DictoServices.Services
             };
             return wordsInfo;
         }
+
+       
 
         public void UpdateWord(WordDto wordDto)
         {
@@ -91,7 +101,32 @@ namespace DictoServices.Services
             _unitOfWork.SaveChanges();
         }
 
+        public async void UpdateWordsDesk(DeckWordsDto deckWordsDto)
+        {
+            var words = await _unitOfWork.Repository<Word>()
+                .GetFilteredAsync(w => deckWordsDto.WordIds.Any(dw => dw == w.Id));
+            foreach (var word in words)
+            {
+                word.DeckId = deckWordsDto.DeckId;
+            }
 
+            _unitOfWork.SaveChanges();
+        }
+
+        private async Task<int> GetUserId(string userName)
+        {
+            var users = await _unitOfWork.Repository<User>().GetFilteredAsync(user => user.Email == userName);
+            if (users == null || !users.Any())
+            {
+                throw new KeyNotFoundException($"User {userName} wasn't found");
+            }
+
+            var userId = users.First().Id;
+            return userId;
+        }
+        
+        
+        
 
         
     }

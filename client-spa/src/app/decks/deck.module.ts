@@ -11,6 +11,7 @@ import {DeckStartComponent} from './deck-start/deck-start.component';
 import {DeckDetailsComponent} from './deck-details/deck-details.component';
 import { DeckItemComponent } from './deck-list/deck-item/deck-item.component';
 import { DeckEditComponent } from './deck-edit/deck-edit.component';
+import { DeckWordsComponent } from './deck-words/deck-words.component';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { DeckEditComponent } from './deck-edit/deck-edit.component';
     DeckStartComponent,
     DeckDetailsComponent,
     DeckItemComponent,
-    DeckEditComponent
+    DeckEditComponent,
+    DeckWordsComponent
   ],
   imports: [
     FormsModule,
