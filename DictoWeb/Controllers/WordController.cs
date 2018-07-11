@@ -56,6 +56,23 @@ namespace DictoWeb.Controllers
             return BadRequest();
         }
 
+        [HttpPost("page")]
+        public async Task<IActionResult> GetPageAndFilterList([FromBody] WordPaginationDto wordPaginationDto)
+        {
+            try
+            {
+                var result = _wordService.GetPagedAndFilteredList(wordPaginationDto);
+                return Ok(result);
+            }
+            catch (Exception e)
+            {
+                Log(e.ToString());
+            }
+
+            return BadRequest();
+        }
+        
+
         [HttpGet("words")]
         public async Task<IActionResult> GetWordsWithoutDeck()
         {

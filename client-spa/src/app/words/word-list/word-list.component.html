@@ -1,0 +1,32 @@
+<div class="container">
+  <div class="row">
+    <label for="letters">Filter by Letter:</label>
+    <select id="letters" name="letters" class="form-control">
+      <option  *ngFor="let l of letters; let i = index"
+        value="{{i}}" label="{{l}}"></option>
+    </select>
+  </div>
+  <div class="row w-100" style="overflow-y: scroll; height: 500px">
+    <table class="table table-striped" >
+      <thead>
+        <tr>
+          <th class="col">Id</th>
+          <th class="col">Text</th>
+          <th class="col">Level</th>
+          <th class="col">Deck</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let word of words">
+          <td>{{word.id}}</td>
+          <td>{{word.text}}</td>
+          <td>{{word.level}}</td>
+          <td>{{word.deck.name}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="row">
+
+  </div>
+</div>

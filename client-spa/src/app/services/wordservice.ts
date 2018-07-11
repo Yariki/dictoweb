@@ -3,6 +3,8 @@ import {Injectable} from '@angular/core';
 import {UserWordsInfo} from '../models/userwordsinfo';
 import {LevelType, Word} from '../models/word';
 import {DeckWords} from '../models/deckwords';
+import {WordPagination} from '../models/wordpagination';
+import {WordPaginationResult} from '../models/wordpaginationresult';
 
 @Injectable()
 export class WordService {
@@ -63,6 +65,13 @@ export class WordService {
     return promise;
   }
 
-
+  getPage(data: WordPagination): Promise<WordPaginationResult> {
+    const promise = new Promise<WordPaginationResult>( resolve =>  {
+      this.httpService.post<WordPaginationResult>('word/page', data).then(result => {
+        resolve(result);
+      });
+    });
+    return promise;
+  }
 
 }

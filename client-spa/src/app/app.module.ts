@@ -19,6 +19,7 @@ import { Level2Component } from './levels/level2/level2.component';
 import { Level3Component } from './levels/level3/level3.component';
 import {DeckModule} from './decks/deck.module';
 import {DeckService} from './services/deck.service';
+import { WordListComponent } from './words/word-list/word-list.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import {DeckService} from './services/deck.service';
     Level1Component,
     LeveltasklistComponent,
     Level2Component,
-    Level3Component
+    Level3Component,
+    WordListComponent
   ],
   imports: [
     BrowserModule,

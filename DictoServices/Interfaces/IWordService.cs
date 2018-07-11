@@ -15,5 +15,6 @@ namespace DictoServices.Interfaces
         Task<IEnumerable<Word>> GetWordWithoutDeck();
         Task<IEnumerable<Word>> GetDeckWords(int DeckId);
         void UpdateWordsDesk(DeckWordsDto deckWordsDto);
+        Task<WordPaginationResultDto> GetPagedAndFilteredList(WordPaginationDto wordPaginationDto);
     }
 }

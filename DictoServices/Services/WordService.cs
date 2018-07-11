@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using DictoData.Interfaces;
 using DictoData.Model;
+using DictoInfrasctructure.Const;
 using DictoInfrasctructure.Core;
 using DictoInfrasctructure.Dtos;
 using DictoInfrasctructure.Enums;
@@ -43,6 +44,28 @@ namespace DictoServices.Services
             var listWords = await _unitOfWork.Repository<Word>().GetFilteredAsync(w => w.DeckId == DeckId);
             return listWords;
         }
+
+        public async Task<WordPaginationResultDto> GetPagedAndFilteredList(WordPaginationDto wordPaginationDto)
+        {
+            var wordPaginationResultDto = new WordPaginationResultDto();
+            IEnumerable<Word> list = null;
+            
+            if (string.IsNullOrEmpty(wordPaginationDto.Letter))
+            {
+                list = await _unitOfWork.Repository<Word>().GetAllAsync();
+            }
+            else
+            {
+                list = await _unitOfWork.Repository<Word>().GetFilteredAsync(w =>
+                    w.Text.StartsWith(wordPaginationDto.Letter, StringComparison.InvariantCultureIgnoreCase));
+            }
+            wordPaginationResultDto.PagesCount = list.Count() / GlobalConst.DefaultPageSize;
+            wordPaginationResultDto.Words = list.Skip((wordPaginationDto.Page - 1) * wordPaginationDto.PageSize)
+                .Take(wordPaginationDto.PageSize).Select(w => _mapper.Map<WordDto>(w));
+
+            return wordPaginationResultDto;
+        }
+        
         
         public async void AddNewWord(TranslateResultDto translateResult, string userName)
         {
