@@ -52,16 +52,21 @@ namespace DictoServices.Services
             
             if (string.IsNullOrEmpty(wordPaginationDto.Letter))
             {
-                list = await _unitOfWork.Repository<Word>().GetAllAsync();
+                list = await _unitOfWork.Repository<Word>().GetFilteredAsync(null,"Deck");
             }
             else
             {
                 list = await _unitOfWork.Repository<Word>().GetFilteredAsync(w =>
-                    w.Text.StartsWith(wordPaginationDto.Letter, StringComparison.InvariantCultureIgnoreCase));
+                    w.Text.StartsWith(wordPaginationDto.Letter, StringComparison.InvariantCultureIgnoreCase),"Deck");
             }
-            wordPaginationResultDto.PagesCount = list.Count() / GlobalConst.DefaultPageSize;
+            wordPaginationResultDto.PagesCount = (int)Math.Ceiling((double)list.Count() / (double)GlobalConst.DefaultPageSize);
             wordPaginationResultDto.Words = list.Skip((wordPaginationDto.Page - 1) * wordPaginationDto.PageSize)
-                .Take(wordPaginationDto.PageSize).Select(w => _mapper.Map<WordDto>(w));
+                .Take(wordPaginationDto.PageSize).Select(w =>
+                {
+                    var wordDto = _mapper.Map<WordDto>(w);
+                    wordDto.Deck = _mapper.Map<DeckDto>(w.Deck);
+                    return wordDto;
+                });
 
             return wordPaginationResultDto;
         }

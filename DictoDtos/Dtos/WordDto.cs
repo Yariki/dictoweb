@@ -22,5 +22,9 @@ namespace DictoInfrasctructure.Dtos
         
         public List<TranslateDto> Translates { get; set; }
 
+        public int DeckId { get; set; }
+
+        public DeckDto Deck { get; set; }
+
     }
 }

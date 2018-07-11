@@ -61,7 +61,7 @@ namespace DictoWeb.Controllers
         {
             try
             {
-                var result = _wordService.GetPagedAndFilteredList(wordPaginationDto);
+                var result = await _wordService.GetPagedAndFilteredList(wordPaginationDto);
                 return Ok(result);
             }
             catch (Exception e)

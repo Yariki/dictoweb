@@ -8,7 +8,7 @@
 
         public const int DefaultDeckId = 0;
 
-        public const int DefaultPageSize = 50;
+        public const int DefaultPageSize = 10;
 
     }
 }

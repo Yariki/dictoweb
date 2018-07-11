@@ -1,7 +1,7 @@
 <div class="container">
   <div class="row">
     <label for="letters">Filter by Letter:</label>
-    <select id="letters" name="letters" class="form-control">
+    <select id="letters" name="letters" class="form-control" (change)="onChange($event.target.value)">
       <option  *ngFor="let l of letters; let i = index"
         value="{{i}}" label="{{l}}"></option>
     </select>
@@ -10,15 +10,15 @@
     <table class="table table-striped" >
       <thead>
         <tr>
-          <th class="col">Id</th>
-          <th class="col">Text</th>
-          <th class="col">Level</th>
-          <th class="col">Deck</th>
+          <th scope="col">Id</th>
+        <th scope="col">Text</th>
+        <th scope="col">Level</th>
+        <th scope="col">Deck</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let word of words">
-          <td>{{word.id}}</td>
+          <th scope="row">{{word.id}}</th>
           <td>{{word.text}}</td>
           <td>{{word.level}}</td>
           <td>{{word.deck.name}}</td>
@@ -27,6 +27,8 @@
     </table>
   </div>
   <div class="row">
-
+    <ul class="pagination">
+      <li class="page-item" [ngClass]="{'active': currentPage == name }" *ngFor="let name of pages; let i=index"><a class="page-link" (click)="onPageClick(name)">{{name}}</a></li>
+    </ul>
   </div>
 </div>
