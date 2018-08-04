@@ -2,6 +2,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
     <UserSecretsId>aspnet-DictoWeb-A616AB90-4613-4392-8712-F4D358C1A95A</UserSecretsId>
+    <StartupObject>DictoWeb.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="wwwroot\" />

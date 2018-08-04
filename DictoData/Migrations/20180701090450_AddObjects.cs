@@ -12,12 +12,12 @@ namespace DictoData.Migrations
                 name: "Decks",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Created = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    Description = table.Column<string>(type: "TEXT", nullable: true),
-                    Name = table.Column<string>(type: "TEXT", nullable: true),
-                    UserId = table.Column<int>(type: "INTEGER", nullable: false)
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Autoincrement", true),
+                    Created = table.Column<DateTime>( nullable: false),
+                    Description = table.Column<string>( nullable: true),
+                    Name = table.Column<string>(nullable: true),
+                    UserId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -34,12 +34,12 @@ namespace DictoData.Migrations
                 name: "Settings",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    CountNew = table.Column<int>(type: "INTEGER", nullable: false),
-                    Created = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    LastUsedSM2 = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    Minute = table.Column<int>(type: "INTEGER", nullable: false)
+                    Id = table.Column<int>( nullable: false)
+                        .Annotation("Autoincrement", true),
+                    CountNew = table.Column<int>( nullable: false),
+                    Created = table.Column<DateTime>( nullable: false),
+                    LastUsedSM2 = table.Column<DateTime>( nullable: false),
+                    Minute = table.Column<int>( nullable: false)
                 },
                 constraints: table =>
                 {
@@ -50,11 +50,11 @@ namespace DictoData.Migrations
                 name: "Transcriptions",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Created = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    Original = table.Column<string>(type: "TEXT", nullable: true),
-                    Phonetic = table.Column<string>(type: "TEXT", nullable: true)
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Autoincrement", true),
+                    Created = table.Column<DateTime>( nullable: false),
+                    Original = table.Column<string>( nullable: true),
+                    Phonetic = table.Column<string>( nullable: true)
                 },
                 constraints: table =>
                 {
@@ -65,14 +65,14 @@ namespace DictoData.Migrations
                 name: "Words",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Created = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    DeckId = table.Column<int>(type: "INTEGER", nullable: false),
-                    Level = table.Column<int>(type: "INTEGER", nullable: false),
-                    Phonetic = table.Column<string>(type: "TEXT", nullable: true),
-                    Text = table.Column<string>(type: "TEXT", nullable: true),
-                    UserId = table.Column<int>(type: "INTEGER", nullable: false)
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Autoincrement", true),
+                    Created = table.Column<DateTime>(nullable: false),
+                    DeckId = table.Column<int>( nullable: false),
+                    Level = table.Column<int>( nullable: false),
+                    Phonetic = table.Column<string>(nullable: true),
+                    Text = table.Column<string>( nullable: true),
+                    UserId = table.Column<int>( nullable: false)
                 },
                 constraints: table =>
                 {
@@ -88,22 +88,23 @@ namespace DictoData.Migrations
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction,
+                        onUpdate: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
                 name: "SuperMemories",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Created = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    EF = table.Column<double>(type: "REAL", nullable: false),
-                    LastRepetition = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    NextRepetition = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    Repetition = table.Column<int>(type: "INTEGER", nullable: false),
-                    RepetitionInterval = table.Column<int>(type: "INTEGER", nullable: false),
-                    WordId = table.Column<int>(type: "INTEGER", nullable: false)
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Autoincrement", true),
+                    Created = table.Column<DateTime>( nullable: false),
+                    EF = table.Column<double>(nullable: false),
+                    LastRepetition = table.Column<DateTime>( nullable: false),
+                    NextRepetition = table.Column<DateTime>( nullable: false),
+                    Repetition = table.Column<int>( nullable: false),
+                    RepetitionInterval = table.Column<int>( nullable: false),
+                    WordId = table.Column<int>( nullable: false)
                 },
                 constraints: table =>
                 {
@@ -120,12 +121,12 @@ namespace DictoData.Migrations
                 name: "Translates",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Created = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    Text = table.Column<string>(type: "TEXT", nullable: true),
-                    WordId = table.Column<int>(type: "INTEGER", nullable: false),
-                    WordType = table.Column<int>(type: "INTEGER", nullable: false)
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Autoincrement", true),
+                    Created = table.Column<DateTime>( nullable: false),
+                    Text = table.Column<string>( nullable: true),
+                    WordId = table.Column<int>( nullable: false),
+                    WordType = table.Column<int>( nullable: false)
                 },
                 constraints: table =>
                 {

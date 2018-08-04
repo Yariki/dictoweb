@@ -13,9 +13,9 @@ namespace DictoData.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Created = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    Name = table.Column<string>(type: "TEXT", nullable: true)
+                        .Annotation("Autoincrement", true),
+                    Created = table.Column<DateTime>( nullable: false),
+                    Name = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -27,13 +27,13 @@ namespace DictoData.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Created = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    Email = table.Column<string>(type: "TEXT", nullable: true),
-                    FirstName = table.Column<string>(type: "TEXT", nullable: true),
-                    LastName = table.Column<string>(type: "TEXT", nullable: true),
-                    Password = table.Column<string>(type: "TEXT", nullable: true),
-                    RoleId = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Autoincrement", true),
+                    Created = table.Column<DateTime>(nullable: false),
+                    Email = table.Column<string>( nullable: true),
+                    FirstName = table.Column<string>( nullable: true),
+                    LastName = table.Column<string>( nullable: true),
+                    Password = table.Column<string>( nullable: true),
+                    RoleId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
