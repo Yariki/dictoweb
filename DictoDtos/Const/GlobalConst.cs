@@ -6,6 +6,8 @@
 
         public const string BingTranslator = "bing";
 
+        public const string CambridgeTranslator = "cambridge";
+
         public const int DefaultDeckId = 0;
 
         public const int DefaultPageSize = 10;

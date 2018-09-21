@@ -8,7 +8,7 @@ using Microsoft.Extensions.Logging;
 
 namespace DictoServices.Services.Helpers
 {
-    public static class TranslationFactory    
+    public static class TranslationFactory
     {
         public static CoreTranslator GetProvider(ILogger logger, Language source, Language target, string query,
             string provider = "google")
@@ -16,12 +16,15 @@ namespace DictoServices.Services.Helpers
             CoreTranslator result = null;
             switch (provider)
             {
-                    case GlobalConst.GoogleTranslator:
-                        result = new GoogleTranslator(logger,source,target,query);
-                        break;
-                    case GlobalConst.BingTranslator:
-                        result = new BingTranslator(logger,source,target,query);
-                        break;
+                case GlobalConst.GoogleTranslator:
+                    result = new GoogleTranslator(logger, source, target, query);
+                    break;
+                case GlobalConst.BingTranslator:
+                    result = new BingTranslator(logger, source, target, query);
+                    break;
+                case GlobalConst.CambridgeTranslator:
+                    result = new CambridgeDictionaryTranslator(logger, source, target, query);
+                    break;
             }
             return result;
         }

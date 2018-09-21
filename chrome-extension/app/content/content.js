@@ -483,7 +483,7 @@ function init() {
                         }, html("tr", {}, content)).textContent = item;
                         var tr = html('tr',{class:""},content);
                         var translationsCell = html('td',{dir:'auto'},tr);
-                        translationsCell.textContent = translations.join(", ");
+                        translationsCell.textContent = translations.join(",\n");
                         dir(translationsCell);
                     }
                 }
