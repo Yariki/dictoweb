@@ -9,6 +9,7 @@
         Preposition,
         Pronoun,
         Conjunction,
-        Adverb
+        Adverb,
+        Definition
     }
 }

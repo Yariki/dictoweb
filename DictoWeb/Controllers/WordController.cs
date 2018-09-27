@@ -117,7 +117,7 @@ namespace DictoWeb.Controllers
         }
         
         [HttpPost("add")]
-        public IActionResult Add([FromBody] TranslateResultDto translateResult)
+        public async Task<IActionResult> Add([FromBody] TranslateResultDto translateResult)
         {
             if (!ModelState.IsValid)
             {
@@ -125,7 +125,7 @@ namespace DictoWeb.Controllers
             }
             try
             {
-                _wordService.AddNewWord(translateResult,GetUserName());
+                 await _wordService.AddNewWord(translateResult,GetUserName());
             }
             catch (Exception e)
             {

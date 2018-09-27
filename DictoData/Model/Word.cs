@@ -9,7 +9,6 @@ namespace DictoData.Model
 
         public Word()
         {
-            DeckId = 0;
         }
         
         public string Text { get; set; }
@@ -26,7 +25,7 @@ namespace DictoData.Model
 
         public virtual List<Translate> Translates { get; set; }
 
-        public int DeckId { get; set; }
+        public int? DeckId { get; set; }
 
         public Deck Deck { get; set; }
         

@@ -12,9 +12,10 @@ using System;
 namespace DictoData.Migrations
 {
     [DbContext(typeof(DictoContext))]
-    partial class DictoContextModelSnapshot : ModelSnapshot
+    [Migration("20180926213755_initseed")]
+    partial class initseed
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -167,7 +168,7 @@ namespace DictoData.Migrations
 
                     b.Property<DateTime>("Created");
 
-                    b.Property<int?>("DeckId");
+                    b.Property<int>("DeckId");
 
                     b.Property<int>("Level");
 
@@ -222,7 +223,8 @@ namespace DictoData.Migrations
                 {
                     b.HasOne("DictoData.Model.Deck", "Deck")
                         .WithMany()
-                        .HasForeignKey("DeckId");
+                        .HasForeignKey("DeckId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("DictoData.Model.User", "User")
                         .WithMany()

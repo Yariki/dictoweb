@@ -18,7 +18,7 @@ namespace DictoData.UnitOfWork
         {
             _context = context;
         }
-        
+
         public void Dispose()
         {
             Dispose(true);
@@ -53,7 +53,7 @@ namespace DictoData.UnitOfWork
         {
             return await _context.SaveChangesAsync();
         }
-        
+
         private void Dispose(bool isDisposing)
         {
             if (_isDisposed)
@@ -75,6 +75,6 @@ namespace DictoData.UnitOfWork
             }
             _isDisposed = true;
         }
-        
+
     }
 }

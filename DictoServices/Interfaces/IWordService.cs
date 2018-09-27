@@ -7,7 +7,7 @@ namespace DictoServices.Interfaces
 {
     public interface IWordService
     {
-        void AddNewWord(TranslateResultDto translateResult, string userName);
+        Task<int> AddNewWord(TranslateResultDto translateResult, string userName);
         Task<IEnumerable<Word>> GetAllWords();
         Task<UserWordsInfoDto> GetUserWordsInfo(string userName);
         void UpdateWord(WordDto wordDto);

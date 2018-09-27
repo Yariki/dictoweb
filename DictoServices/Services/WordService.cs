@@ -72,14 +72,14 @@ namespace DictoServices.Services
         }
         
         
-        public async void AddNewWord(TranslateResultDto translateResult, string userName)
+        public async Task<int> AddNewWord(TranslateResultDto translateResult, string userName)
         {
             var userID = await GetUserId(userName);
             
             var word = new Word(){Text = translateResult.Original,Level = LevelType.First,Phonetic = translateResult.Phonetic,SuperMemory = new SuperMemory(),UserId = userID, Translates = new List<Translate>()};
             foreach (var pair in translateResult.Translate)
             {
-                WordType wordType = string.IsNullOrEmpty(pair.Key) ? WordType.None : pair.Key.GetEnumValue<WordType>();
+                WordType wordType = string.IsNullOrEmpty(pair.Key) ? WordType.Definition : pair.Key.GetEnumValue<WordType>();
 
                 foreach (var translation in pair.Value)
                 {
@@ -88,7 +88,7 @@ namespace DictoServices.Services
                 }
             }
             _unitOfWork.Repository<Word>().Insert(word);
-            _unitOfWork.SaveChanges();
+            return await _unitOfWork.SaveChangesAsync();
         }
 
         public async Task<UserWordsInfoDto> GetUserWordsInfo(string userName)

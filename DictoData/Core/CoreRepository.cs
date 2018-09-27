@@ -45,7 +45,7 @@ namespace DictoData.Core
                 query = query.Where(filter);
             }
 
-            return await query.ToListAsync();
+            return await query.ToListAsync(); 
         }
 
         public virtual async Task<TEntity> GetByIdAsync(int id)

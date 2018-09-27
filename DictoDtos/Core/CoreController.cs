@@ -44,5 +44,9 @@ namespace DictoInfrasctructure.Core
             return this.User.GetUserName();
         }
 
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+        }
     }
 }

@@ -12,14 +12,15 @@ using System;
 namespace DictoData.Migrations
 {
     [DbContext(typeof(DictoContext))]
-    [Migration("20180701090450_AddObjects")]
-    partial class AddObjects
+    [Migration("20180926213729_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.0.0-rtm-26452");
+                .HasAnnotation("ProductVersion", "2.0.0-rtm-26452")
+                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("DictoData.Model.Deck", b =>
                 {
