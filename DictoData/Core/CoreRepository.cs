@@ -22,7 +22,18 @@ namespace DictoData.Core
 
         public DbSet<TEntity> Set => _set;
 
-        
+
+        public IEnumerable<TEntity> GetAll()
+        {
+            return _set.ToList();
+        }
+
+        public IEnumerable<TEntity> GetFiltered(Expression<Func<TEntity, bool>> filter, params string[] includes)
+        {
+            var query = GetQuery(filter, includes);
+            return query.ToList();
+        }
+
         public virtual async  Task<IEnumerable<TEntity>> GetAllAsync()
         {
             return await _set.ToListAsync();
@@ -30,24 +41,12 @@ namespace DictoData.Core
 
         public virtual async Task<IEnumerable<TEntity>> GetFilteredAsync(Expression<Func<TEntity, bool>> filter, params string[] includes )
         {
-            IQueryable<TEntity> query = _set;
+            var query = GetQuery(filter, includes);
 
-            if (includes != null && includes.Length > 0)
-            {
-                foreach (var include in includes)
-                {
-                    query = query.Include(include);
-                }
-            }
-
-            if (filter != null)
-            {
-                query = query.Where(filter);
-            }
-
-            return await query.ToListAsync(); 
+            return await query.ToListAsync();
         }
 
+        
         public virtual async Task<TEntity> GetByIdAsync(int id)
         {
             return await _set.FindAsync(id);
@@ -82,6 +81,28 @@ namespace DictoData.Core
             _set.Update(entity);
             _context.Entry(entity).State = EntityState.Modified;
         }
+
+        private IQueryable<TEntity> GetQuery(Expression<Func<TEntity, bool>> filter, string[] includes)
+        {
+            IQueryable<TEntity> query = _set;
+
+            if (includes != null && includes.Length > 0)
+            {
+                foreach (var include in includes)
+                {
+                    query = query.Include(include);
+                }
+            }
+
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
+
+            return query;
+        }
+
+
 
     }
 }
