@@ -52,6 +52,14 @@ export class WordListComponent implements OnInit {
     this.getPage(dto);
   }
 
+  onRefresh() {
+    const dto = new WordPagination();
+    dto.letter = '';
+    this.currentPage = dto.page = 1;
+    dto.pagesize = this.DefaultPageSize;
+    this.getPage(dto);
+  }
+
   private getPage(dto: WordPagination) {
     this.wordService.getPage(dto).then(result => {
       this.words = result.words;

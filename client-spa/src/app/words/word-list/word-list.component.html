@@ -1,10 +1,14 @@
 <div class="container">
-  <div class="row">
-    <label for="letters">Filter by Letter:</label>
-    <select id="letters" name="letters" class="form-control" (change)="onChange($event.target.value)">
+  <div class="input-group">
+    <select id="letters" name="letters" style="width: 40px" (change)="onChange($event.target.value)">
       <option  *ngFor="let l of letters; let i = index"
         value="{{i}}" label="{{l}}"></option>
     </select>
+    <div class="input-group-btn">
+      <button type="button" class="btn btn-default btn-sm" (click)="onRefresh()">
+        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> Refresh
+      </button>
+    </div>
   </div>
   <div class="row w-100" style="overflow-y: scroll; height: 500px">
     <table class="table table-striped" >
