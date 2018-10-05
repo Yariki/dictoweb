@@ -21,7 +21,7 @@
           <th scope="row">{{word.id}}</th>
           <td>{{word.text}}</td>
           <td>{{word.level}}</td>
-          <td>{{word.deck.name}}</td>
+          <td>{{word.deck !== null ? word.deck.name : 'n/a'}}</td>
         </tr>
       </tbody>
     </table>

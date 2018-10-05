@@ -35,7 +35,7 @@ namespace DictoServices.Services
 
         public async Task<IEnumerable<Word>> GetWordWithoutDeck()
         {
-            var listWords = await _unitOfWork.Repository<Word>().GetFilteredAsync(w => w.DeckId == 0);
+            var listWords = await _unitOfWork.Repository<Word>().GetFilteredAsync(w => w.DeckId == 0 || !w.DeckId.HasValue);
             return listWords;
         }
         
@@ -129,7 +129,7 @@ namespace DictoServices.Services
             _unitOfWork.SaveChanges();
         }
 
-        public async void UpdateWordsDesk(DeckWordsDto deckWordsDto)
+        public async Task<int> UpdateWordsDesk(DeckWordsDto deckWordsDto)
         {
             var words = await _unitOfWork.Repository<Word>()
                 .GetFilteredAsync(w => deckWordsDto.WordIds.Any(dw => dw == w.Id));
@@ -138,7 +138,7 @@ namespace DictoServices.Services
                 word.DeckId = deckWordsDto.DeckId;
             }
 
-            _unitOfWork.SaveChanges();
+            return _unitOfWork.SaveChanges();
         }
 
         private async Task<int> GetUserId(string userName)

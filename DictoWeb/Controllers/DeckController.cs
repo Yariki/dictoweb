@@ -39,11 +39,11 @@ namespace DictoWeb.Controllers
 
 
         [HttpPost("add")]
-        public IActionResult AddDeck([FromBody]DeckDto deck)
+        public async Task<IActionResult> AddDeck([FromBody]DeckDto deck)
         {
             try
             {
-                _deckService.AddItem(GetUserName(),deck);
+                await _deckService.AddItem(GetUserName(),deck);
             }
             catch (Exception e)
             {

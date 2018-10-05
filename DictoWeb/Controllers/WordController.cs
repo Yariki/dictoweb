@@ -171,11 +171,11 @@ namespace DictoWeb.Controllers
         }
 
         [HttpPost("addwordtodeck")]
-        public IActionResult UpdateWordsDeck([FromBody] DeckWordsDto deckWordsDto)
+        public async Task<IActionResult> UpdateWordsDeck([FromBody] DeckWordsDto deckWordsDto)
         {
             try
             {
-                _wordService.UpdateWordsDesk(deckWordsDto);
+                await _wordService.UpdateWordsDesk(deckWordsDto);
                 return Ok();
             }
             catch (Exception e)
@@ -187,14 +187,14 @@ namespace DictoWeb.Controllers
         }
         
         [HttpPost("deletewordtodeck")]
-        public IActionResult DeleteWordsDeck([FromBody] DeckWordsDto deckWordsDto)
+        public async Task<IActionResult> DeleteWordsDeck([FromBody] DeckWordsDto deckWordsDto)
         {
             try
             {
                 if (deckWordsDto.IsNotNull())
                 {
                     deckWordsDto.DeckId = 0;
-                    _wordService.UpdateWordsDesk(deckWordsDto);
+                    await _wordService.UpdateWordsDesk(deckWordsDto);
                 }
                 return Ok();
             }
