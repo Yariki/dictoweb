@@ -193,7 +193,6 @@ namespace DictoWeb.Controllers
             {
                 if (deckWordsDto.IsNotNull())
                 {
-                    deckWordsDto.DeckId = 0;
                     await _wordService.UpdateWordsDesk(deckWordsDto);
                 }
                 return Ok();

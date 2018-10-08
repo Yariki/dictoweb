@@ -71,7 +71,7 @@ export class DeckWordsComponent implements OnInit {
 
     if (this.deletedWords.length > 0) {
       const deleteWords = new DeckWords();
-      deleteWords.deckid = 0;
+      deleteWords.deckid = null;
       deleteWords.wordids =  [];
       this.deletedWords.forEach(w => deleteWords.wordids.push(w.id));
       this.wordService.deleteWordDeck(deleteWords).then(result => {
