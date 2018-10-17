@@ -11,17 +11,23 @@ import {LevelType} from '../../models/word';
 })
 export class Level2Component implements OnInit {
 
+  level: string;
   generateTask = true;
   currentTask: TaskItem;
   showNext = false;
   preview: boolean;
 
+  currentIndex = 0;
+  countOfTasks = 0;
+
   private tasks: TaskItem[];
-  private currentIndex = 0;
+
 
   constructor(private  levelService: LevelsService, private wordService: WordService) { }
 
   ngOnInit() {
+    this.level = 'Level 2';
+    this.currentTask = new TaskItem();
   }
 
   onGenerateTask() {
@@ -33,6 +39,7 @@ export class Level2Component implements OnInit {
         this.tasks = result;
         this.preview = false;
         this.currentTask = this.tasks[this.currentIndex];
+        this.countOfTasks = this.tasks.length;
       }
     });
   }

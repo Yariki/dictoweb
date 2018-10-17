@@ -1,9 +1,14 @@
+<div class="row">
+  <p>{{ level }}</p>
+</div>
 <div class="row" style="margin-top: 10px; width: 100%">
+
   <div class="row" *ngIf="generateTask">
     <button type="button" class="btn btn-primary" (click)="onGenerateTask()">Generate task</button>
   </div>
   <div style="width: 100%" *ngIf="!generateTask">
     <h3 class="float-left text-primary" >{{ currentTask.origin }}</h3>
+    <h6 class="float-left ml-2">{{ (currentIndex + 1)}} / {{countOfTasks}} </h6>
 
     <button class="btn btn-secondary float-right" *ngIf="showNext" (click)="onNext()" >Next <span class="glyphicon glyphicon-menu-right"></span></button>
     <button class="btn btn-secondary float-right" *ngIf="!showNext" (click)="dontKnow()">Don't know</button>

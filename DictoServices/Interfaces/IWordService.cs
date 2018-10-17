@@ -11,7 +11,7 @@ namespace DictoServices.Interfaces
         Task<IEnumerable<Word>> GetAllWords();
         Task<UserWordsInfoDto> GetUserWordsInfo(string userName);
         void UpdateWord(WordDto wordDto);
-        void UpdateWordLevel(WordLevelInfoDto wordLevelInfoDto);
+        Task<int> UpdateWordLevel(WordLevelInfoDto wordLevelInfoDto);
         Task<IEnumerable<Word>> GetWordWithoutDeck();
         Task<IEnumerable<Word>> GetDeckWords(int DeckId);
         Task<int> UpdateWordsDesk(DeckWordsDto deckWordsDto);

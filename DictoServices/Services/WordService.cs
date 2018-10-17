@@ -116,7 +116,7 @@ namespace DictoServices.Services
             _unitOfWork.SaveChanges();
         }
 
-        public async void UpdateWordLevel(WordLevelInfoDto wordLevelInfoDto)
+        public async Task<int> UpdateWordLevel(WordLevelInfoDto wordLevelInfoDto)
         {
             var words = await _unitOfWork.Repository<Word>().GetFilteredAsync(w => w.Id == wordLevelInfoDto.WordId);
             var word = words.FirstOrDefault();
@@ -126,7 +126,7 @@ namespace DictoServices.Services
             }
 
             word.Level = wordLevelInfoDto.Level;
-            _unitOfWork.SaveChanges();
+            return _unitOfWork.SaveChanges();
         }
 
         public async Task<int> UpdateWordsDesk(DeckWordsDto deckWordsDto)

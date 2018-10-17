@@ -12,13 +12,17 @@ import {LevelType} from '../../models/word';
 })
 export class Level3Component implements OnInit {
 
+  level = 'Level 3';
   generateTask = true;
   showNext = false;
 
   pazzle: Pazzleitem;
 
+  currentPazzleIndex = 0;
+  countOfPazzles = 0;
+
   private tasks: Pazzleitem[];
-  private currentPazzleIndex: number;
+
 
   constructor(private levelService: LevelsService, private wordService: WordService) {
 
@@ -61,6 +65,7 @@ export class Level3Component implements OnInit {
       if (this.tasks.length > 0) {
         this.currentPazzleIndex = 0;
         this.pazzle = this.tasks[this.currentPazzleIndex];
+        this.countOfPazzles = this.tasks.length;
       }
     });
   }

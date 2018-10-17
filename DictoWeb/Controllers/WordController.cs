@@ -156,11 +156,11 @@ namespace DictoWeb.Controllers
         }
 
         [HttpPost("updatelevel")]
-        public IActionResult UpdateWordLevel([FromBody]WordLevelInfoDto wordInfoDto)
+        public async Task<IActionResult> UpdateWordLevel([FromBody]WordLevelInfoDto wordInfoDto)
         {
             try
             {
-                _wordService.UpdateWordLevel(wordInfoDto);
+                await _wordService.UpdateWordLevel(wordInfoDto);
                 return Ok();
             }
             catch (Exception e)
