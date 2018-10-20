@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row mt-2">
   <div class="form-group">
     <label for="selectedDeck">Selec Deck: </label>
     <select id="selectedDeck" name="selectedDeck" class="form-control" (change)="onChange($event.target.value)">
@@ -7,18 +7,26 @@
   </div>
 </div >
 <div class="row">
-  <div class="col-md-6">
-    <div class="row">Free Words</div>
+  <div class="col-md-6 p-md-4">
+    <div class="row">
+      <p class="font-weight-bold">Free Words</p>
+    </div>
     <div class="row">
       <div class="list-group w-100 h-100" style="overflow-y: scroll;">
         <a class="list-group-item list-group-item-action w-100" *ngFor="let word of freeWords; let i = index" (click)="onAddWordToDeck(i)">{{ word.text }}</a>
       </div>
     </div>
   </div>
-
-  <div class="col-md-6">
-    <div class="row">Deck Words</div>
-    <div class="row"> <button type="button" class="btn btn-outline-success" [disabled]="!isChanged" (click)="onSave()">Save</button> </div>
+  <div class="col-md-6 p-md-4">
+    <div class="row">
+      <div class="col">
+        <p class="font-weight-bold">Deck Words</p>
+      </div>
+      <div class="col-6"></div>
+      <div class="col">
+        <button type="button" class="btn btn-outline-success" [disabled]="!isChanged" (click)="onSave()">Save</button>
+      </div>
+    </div>
     <div class="row">
       <ul class="list-group w-100 h-100" style="overflow-y: scroll;">
         <li class="list-group-item list-group-item-action w-100"  *ngFor="let word of selectedWords; let i = index" (click)="onRemoveWordFromDeck(i)">{{ word.text }}</li>

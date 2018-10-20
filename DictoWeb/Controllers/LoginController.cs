@@ -67,7 +67,7 @@ namespace DictoWeb.Controllers
             var identity = await GetClaimsIdentity(user);
             if (identity == null)
             {
-                return new BadRequestObjectResult($"There is no user with name {user.Email}");
+                return new BadRequestObjectResult($"There is/are wrong email ({user.Email}) or/and password.");
             }
 
             var claims = new[]

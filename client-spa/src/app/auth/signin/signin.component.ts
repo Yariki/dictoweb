@@ -10,6 +10,9 @@ import {Router} from '@angular/router';
 })
 export class SigninComponent implements OnInit {
 
+  IsError = false;
+  message = '';
+
   constructor( private authService: AuthService, private router: Router) {
   }
 
@@ -21,9 +24,14 @@ export class SigninComponent implements OnInit {
     const password = form.value.password;
 
     this.authService.singin(email, password).then((response) => {
+      this.IsError = false;
       console.log(response);
       this.router.navigate(['']);
     }).catch(response => {
+      this.IsError = true;
+      if ( response.error) {
+        this.message = response.error;
+      }
       console.log(response);
     });
   }

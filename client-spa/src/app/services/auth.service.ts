@@ -14,20 +14,23 @@ export class AuthService {
   constructor(private httpClient: HttpClient) {
   }
 
-  singin(email, password): Promise<boolean> {
+  singin(email, password): Promise<any> {
     const serviceheaders = new HttpHeaders();
     serviceheaders.append('Access-Control-Allow-Origin', '*');
 
 
-    const promise = new Promise<boolean>((resolve, reject) => {
-      this.httpClient.post<Token>(this.baseUrlSignIn,{ email: email, password: password}, {headers: serviceheaders}).subscribe(response => {
-        if (response != null) {
-          this.token = response;
+    const promise = new Promise<any>((resolve, reject) => {
+      this.httpClient.post(this.baseUrlSignIn,{ email: email, password: password}, {headers: serviceheaders}).subscribe(response => {
+          const t = new Token()
+          t.expiration = response.expiration;
+          t.token = response.token;
+          t.user = response.user;
+          this.token = t;
           resolve(true);
-        } else {
-          reject(false);
-        }
-      });
+      },
+        error => {
+          reject(error);
+        });
     });
     return promise;
   }

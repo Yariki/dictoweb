@@ -23,7 +23,7 @@ export class DeckDetailsComponent implements OnInit {
   }
 
   onEdit() {
-    this.router.navigate(['edit'],{relativeTo: this.route});
+    this.router.navigate(['edit'],{ relativeTo: this.route});
   }
 
 }
