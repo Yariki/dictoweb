@@ -20,12 +20,8 @@ export class AuthService {
 
 
     const promise = new Promise<any>((resolve, reject) => {
-      this.httpClient.post(this.baseUrlSignIn,{ email: email, password: password}, {headers: serviceheaders}).subscribe(response => {
-          const t = new Token()
-          t.expiration = response.expiration;
-          t.token = response.token;
-          t.user = response.user;
-          this.token = t;
+      this.httpClient.post<Token>(this.baseUrlSignIn,{ email: email, password: password}, {headers: serviceheaders}).subscribe(response => {
+          this.token = response;
           resolve(true);
       },
         error => {

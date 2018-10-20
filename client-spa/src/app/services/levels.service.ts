@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpService} from './http.service';
 import {TaskItem} from '../models/taskitem';
 import {Pazzleitem} from '../models/pazzleitem';
+import {LevelType} from '../models/word';
 
 @Injectable()
 export class LevelsService {
@@ -38,6 +39,16 @@ export class LevelsService {
         resolve(result);
       });
     });
+    return promise;
+  }
+
+  getLevelCount(level: LevelType): Promise<number> {
+    const promise = new Promise<number>(resolve => {
+      this.httpService.get<number>('level/levelcount', {level: level}).then(result => {
+        resolve(result);
+      });
+    });
+
     return promise;
   }
 

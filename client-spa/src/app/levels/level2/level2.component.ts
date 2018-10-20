@@ -16,6 +16,7 @@ export class Level2Component implements OnInit {
   currentTask: TaskItem;
   showNext = false;
   preview: boolean;
+  wordsCount: number;
 
   currentIndex = 0;
   countOfTasks = 0;
@@ -28,6 +29,7 @@ export class Level2Component implements OnInit {
   ngOnInit() {
     this.level = 'Level 2';
     this.currentTask = new TaskItem();
+    this.levelService.getLevelCount(LevelType.Second).then(value => this.wordsCount = value);
   }
 
   onGenerateTask() {

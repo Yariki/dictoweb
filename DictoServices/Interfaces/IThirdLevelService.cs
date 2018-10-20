@@ -3,7 +3,7 @@ using DictoInfrasctructure.Dtos;
 
 namespace DictoServices.Interfaces
 {
-    public interface IThirdLevelService
+    public interface IThirdLevelService : ILevelCount
     {
         Task<PazzleItemDto[]> GenerateTasksAsync(string userName);
     }

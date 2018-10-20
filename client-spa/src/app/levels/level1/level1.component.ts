@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {LevelsService} from '../../services/levels.service';
 import {TaskItem} from '../../models/taskitem';
 import {WordService} from '../../services/wordservice';
-import {LevelType } from '../../models/word';
+import {LevelType} from '../../models/word';
 
 
 @Component({
@@ -17,6 +17,7 @@ export class Level1Component implements OnInit {
   currentTask: TaskItem;
   showNext = false;
   preview: boolean;
+  wordsCount: number;
 
 
   currentIndex = 0;
@@ -29,6 +30,7 @@ export class Level1Component implements OnInit {
   ngOnInit() {
     this.level = 'Level 1';
     this.currentTask = new TaskItem();
+    this.levelService.getLevelCount(LevelType.First).then(value => this.wordsCount = value);
   }
 
   onGenerateTask() {

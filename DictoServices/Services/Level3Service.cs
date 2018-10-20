@@ -60,6 +60,17 @@ namespace DictoServices.Services
             return result.ToArray();
         }
 
+        public async Task<int> GetCount(string userName)
+        {
+            var user = await GetUser(userName);
+            var userId = user.First().Id;
+
+            var words = await _unitOfWork.Repository<Word>()
+                .GetFilteredAsync(w => w.Level == LevelType.Third && w.UserId == userId, "Translates");
+
+            return words.Count();
+        }
+
 
         private async Task<IEnumerable<User>> GetUser(string userName)
         {

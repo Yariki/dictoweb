@@ -20,6 +20,7 @@ export class Level3Component implements OnInit {
 
   currentPazzleIndex = 0;
   countOfPazzles = 0;
+  wordsCount: number;
 
   private tasks: Pazzleitem[];
 
@@ -29,6 +30,7 @@ export class Level3Component implements OnInit {
   }
 
   ngOnInit() {
+    this.levelService.getLevelCount(LevelType.Third).then(value => this.wordsCount = value);
   }
 
 

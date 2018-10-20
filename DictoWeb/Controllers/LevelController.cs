@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using DictoInfrasctructure.Core;
 using DictoInfrasctructure.Dtos;
+using DictoInfrasctructure.Enums;
 using DictoInfrasctructure.Extensions;
 using DictoServices.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -66,6 +67,37 @@ namespace DictoWeb.Controllers
             {
                 var result = await _thirdLevelService.GenerateTasksAsync(GetUserName());
                 return Ok(result);
+            }
+            catch (Exception e)
+            {
+                Log(e.Message);
+                return BadRequest(e);
+            }
+        }
+
+        [HttpGet("levelcount")]
+        public async Task<IActionResult> GetWordLevelCount(LevelType level)
+        {
+            try
+            {
+
+                LevelType levelType = LevelType.None;
+                LevelType.TryParse(level.ToString(), out levelType);
+                int count = 0;
+                switch (level)
+                {
+                    case LevelType.First:
+                        count = await _firstLevelService.GetCount(GetUserName());
+                        break;
+                    case LevelType.Second:
+                        count = await _secondLevelService.GetCount(GetUserName());
+                        break;
+                    case LevelType.Third:
+                        count = await _thirdLevelService.GetCount(GetUserName());
+                        break;
+                }
+
+                return Ok(count);
             }
             catch (Exception e)
             {

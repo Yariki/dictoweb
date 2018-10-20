@@ -4,7 +4,7 @@ using DictoInfrasctructure.Dtos;
 
 namespace DictoServices.Interfaces
 {
-    public interface IFirstLevelService
+    public interface IFirstLevelService : ILevelCount
     {
         Task<List<TaskItemDto>> GenerateDataLevelAsync(string userName);
     }
