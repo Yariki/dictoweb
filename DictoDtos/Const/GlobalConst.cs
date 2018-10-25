@@ -8,6 +8,8 @@
 
         public const string CambridgeTranslator = "cambridge";
 
+        public const string OxfordTranslator = "oxford";
+
         public const int DefaultDeckId = 0;
 
         public const int DefaultPageSize = 10;

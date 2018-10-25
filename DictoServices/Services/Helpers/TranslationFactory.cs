@@ -25,6 +25,9 @@ namespace DictoServices.Services.Helpers
                 case GlobalConst.CambridgeTranslator:
                     result = new CambridgeDictionaryTranslator(logger, source, target, query);
                     break;
+                case GlobalConst.OxfordTranslator:
+                    result = new OxfordDictionaryTranslator(logger, source,target,query);
+                    break;
             }
             return result;
         }
