@@ -25,6 +25,8 @@ namespace DictoData.Model
 
         public virtual List<Translate> Translates { get; set; }
 
+        public virtual List<Example> Examples { get; set; }
+
         public int? DeckId { get; set; }
 
         public Deck Deck { get; set; }

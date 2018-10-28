@@ -427,6 +427,7 @@ function init() {
             if (selectedText && selectedText.length >= minimumNumberOfCharacters) {
                 requestBubbleTranslation.text = selectedText;
                 requestBubbleTranslation.rect = getSelectedRect(window.getSelection());
+                requestBubbleTranslation.sentence = getSentence(target);
                 if (isTranslateIcon && mainDIV.style.display == 'none') {
                     showTranslateIcon(e);
                 }
@@ -437,6 +438,21 @@ function init() {
         }
     }
 
+    function getSentence(el){
+        var re = window.getSelection();
+        var result = '';
+        var val = el.textContent;
+        var start = re.baseOffset;
+        var end =  re.extentOffset;
+        if(val){
+            while(val.charAt(start--) !== '.' && start >=0){}
+            while(val.charAt(end++) !== '.' && end <= val.length){}
+            start = start < 0 ? 0 : (start+2);
+
+            result = val.substring(start,end);
+        }
+        return result;
+    }
 
     function processTranslatedWord(data){
         mainDIV.style.width = "450px";
@@ -462,6 +478,7 @@ function init() {
         else {
 
             currentTranslation = data.data;
+            currentTranslation.sentence = requestBubbleTranslation.sentence;
 
             word = currentTranslation.original;
             definition = currentTranslation.phonetic;

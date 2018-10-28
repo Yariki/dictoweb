@@ -76,7 +76,7 @@ namespace DictoServices.Services
         {
             var userID = await GetUserId(userName);
             
-            var word = new Word(){Text = translateResult.Original,Level = LevelType.First,Phonetic = translateResult.Phonetic,SuperMemory = new SuperMemory(),UserId = userID, Translates = new List<Translate>()};
+            var word = new Word(){Text = translateResult.Original,Level = LevelType.First,Phonetic = translateResult.Phonetic,SuperMemory = new SuperMemory(),UserId = userID, Translates = new List<Translate>(), Examples = new List<Example>()};
             foreach (var pair in translateResult.Translate)
             {
                 WordType wordType = string.IsNullOrEmpty(pair.Key) ? WordType.Definition : pair.Key.GetEnumValue<WordType>();
@@ -87,6 +87,9 @@ namespace DictoServices.Services
                     word.Translates.Add(t);
                 }
             }
+            word.Examples.Add(new Example() { Text = translateResult.Sentence });
+
+
             _unitOfWork.Repository<Word>().Insert(word);
             return await _unitOfWork.SaveChangesAsync();
         }

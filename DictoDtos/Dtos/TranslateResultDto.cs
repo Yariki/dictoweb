@@ -24,5 +24,7 @@ namespace DictoInfrasctructure.Dtos
 
         public bool IsExisting { get; set; }
 
+        public string Sentence { get; set; }
+
     }
 }
