@@ -108,6 +108,7 @@ var httpService = (function(storage, constRepo, optStorage){
     var sendData =  function(token, data, callback) {
         var auth = 'Bearer ' + token.token.token;
         var u = constRepository.getBaseUrl()+"word/add";
+        data.provider = options.provider;
         $.ajax({
             headers:{
                 'Authorization':auth,

@@ -179,23 +179,6 @@ function init() {
             footer = html("tr", {
                 "class": "igtranslator-footer",
             }, bubble);
-            /* Bookmarks */
-            // bookmarks = html("td", {
-            //     style: "background-image: url(" + manifest.url + "data/icons/bookmarks.png)",
-            //     title: "Save to Phrasebook"
-            // }, footer);
-            // bookmarks.addEventListener("click", function () {
-            //
-            // }, false);
-            /* Voice Icon */
-            // voice = html("td", {
-            //     style: "background-image: url(" + manifest.url + "data/icons/voice.png)",
-            //     title: "Listen"
-            // }, footer);
-            // voice.addEventListener("click", function () {
-            //     var isVoice = voice.getAttribute("isVoice") == "true";
-            //     if (!isVoice) return;
-            // }, false);
 
             addBtn = html("td",{
                 style: "background-image: url(" + chrome.runtime.getURL("data/icons/voice.png") + ")",
@@ -214,31 +197,6 @@ function init() {
                     })
                 }
             });
-
-            /* Home Icon */
-            // home = html("td", {
-            //     style: "background-image: url(" + manifest.url + "data/icons/home.png)",
-            //     title: "Open Google Translate"
-            // }, footer);
-            // home.addEventListener("click", function (e) {
-            //     ;
-            // });
-            /* Settings Icon */
-            // settings = html("td", {
-            //     style: "background-image: url(" + manifest.url + "data/icons/settings.png)",
-            //     title: "Open Settings"
-            // }, footer);
-            // settings.addEventListener("click", function () {
-            //
-            // }, false);
-            /* FAQ Icon */
-            // faq = html("td", {
-            //     style: "background-image: url(" + manifest.url + "data/icons/faq.png)",
-            //     title: "Open FAQ/Support Page"
-            // }, footer);
-            // faq.addEventListener("click", function () {
-            //
-            // }, false);
         }
         /* addEventListener for resize */
         if (iFrame.contentWindow) {

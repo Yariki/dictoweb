@@ -10,7 +10,9 @@ using DictoInfrasctructure.Core;
 using DictoInfrasctructure.Dtos;
 using DictoInfrasctructure.Enums;
 using DictoInfrasctructure.Extensions;
+using DictoServices.Base;
 using DictoServices.Interfaces;
+using DictoServices.Services.Helpers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
@@ -88,7 +90,15 @@ namespace DictoServices.Services
                 }
             }
             word.Examples.Add(new Example() { Text = translateResult.Sentence });
-
+            CoreExamplesProvider examplesProvider = null;
+            if(!string.IsNullOrEmpty(translateResult.Provider) && (examplesProvider = ExampleFactory.GetProvider(translateResult.Original,translateResult.Provider,GetLogger())) != null)
+            {
+                var examples = await examplesProvider.GetExamples();
+                if (examples != null && examples.Examples.Any())
+                {
+                    examples.Examples.ForEach(e => word.Examples.Add(new Example(){Text = e}));
+                }
+            }
 
             _unitOfWork.Repository<Word>().Insert(word);
             return await _unitOfWork.SaveChangesAsync();

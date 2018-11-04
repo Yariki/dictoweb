@@ -10,24 +10,24 @@ using Microsoft.Extensions.Logging;
 
 namespace DictoServices.Services.Helpers
 {
-    public class OxfordDictionaryTranslator : CoreTranslator
+    public class CambridgeDictionaryTranslator : CoreTranslator
     {
-        private readonly string DICTIONARY_URL = "https://en.oxforddictionaries.com/definition/{0}";
+        readonly string DICTIONARY_URL = "https://dictionary.cambridge.org/dictionary/english/{0}";
 
-        public OxfordDictionaryTranslator(ILogger logger, Language source, Language target, string query) : base(logger, source, target, query)
+        public CambridgeDictionaryTranslator(ILogger logger, Language source, Language target, string query) : base(logger, source, target, query)
         {
         }
 
-        public override async Task<TranslateRequestResult> Request()
+        public  override async Task<TranslateRequestResult> Request()
         {
             try
             {
                 var web = new HtmlWeb();
-                var doc = await web.LoadFromWebAsync(string.Format(DICTIONARY_URL, Query));
-                var spans = doc.DocumentNode.SelectNodes("//span[contains(@class, 'ind')]");
+                var doc = await web.LoadFromWebAsync(string.Format(DICTIONARY_URL,Query));
+                var defs = doc.DocumentNode.SelectNodes("//b[contains(@class, 'def')]");
                 var result = new TranslateRequestResult() { Original = Query };
                 result.Translate = new Dictionary<string, string[]>();
-                result.Translate.Add("", spans.Select(n => n.InnerText.Replace('\n', ' ').Trim()).Take(5).ToArray());
+                result.Translate.Add("", defs.Take(5).Select(n => n.InnerText.Replace('\n', ' ').Trim()).ToArray());
                 return result;
             }
             catch (Exception e)

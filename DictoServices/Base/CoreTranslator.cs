@@ -30,7 +30,7 @@ namespace DictoServices.Base
 
         protected void Log(string message)
         {
-            
+            _logger.Log(LogLevel.Critical,message);
         }
         
     }

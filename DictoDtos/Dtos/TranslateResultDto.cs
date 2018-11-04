@@ -26,5 +26,7 @@ namespace DictoInfrasctructure.Dtos
 
         public string Sentence { get; set; }
 
+        public string Provider { get; set; }
+
     }
 }
