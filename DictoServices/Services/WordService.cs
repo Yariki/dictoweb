@@ -29,6 +29,12 @@ namespace DictoServices.Services
             _mapper = mapper;
         }
 
+        public async Task<Word> GetWord(int id)
+        {
+            var word = await _unitOfWork.Repository<Word>().GetByIdAsync(id);
+            return word;
+        }
+
         public async Task<IEnumerable<Word>> GetAllWords()
         {
             var listWords = await _unitOfWork.Repository<Word>().Set.Include(w => w.Translates).ToListAsync();

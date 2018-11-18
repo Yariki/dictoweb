@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Word} from '../../models/word';
 import {WordService} from '../../services/wordservice';
 import {WordPagination} from '../../models/wordpagination';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-word-list',
@@ -18,7 +19,7 @@ export class WordListComponent implements OnInit {
   private DefaultPageSize: number = 10;
   private currentLetter: string;
 
-  constructor( private wordService: WordService ) {
+  constructor( private wordService: WordService, private router: Router, private activeRoute: ActivatedRoute ) {
   }
 
   ngOnInit() {

@@ -28,7 +28,7 @@
           <td>{{word.level}}</td>
           <td>{{word.deck !== null ? word.deck.name : 'n/a'}}</td>
           <td>
-            <button class="btn btn-outline-info" (click)="onDetails(word.id)"><span class="fas fa-info"></span></button>
+            <a class="btn btn-outline-info" [routerLink]="['/words', word.id]" ><span class="fas fa-info"></span></a>
             <button class="btn btn-outline-danger" (click)="onDelete(word.id)"><span class="fas fa-trash"></span></button>
           </td>
         </tr>

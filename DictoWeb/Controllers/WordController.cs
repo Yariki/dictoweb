@@ -31,6 +31,24 @@ namespace DictoWeb.Controllers
             _mapper = mapper;
         }
 
+        [HttpGet("word")]
+        public async Task<IActionResult> GetWord(int id)
+        {
+            try
+            {
+                var result = await _wordService.GetWord(id);
+                var resultDto = _mapper.Map<WordDto>(result);
+
+                return Ok(resultDto);
+            }
+            catch (Exception e)
+            {
+                Log(e.ToString());
+            }
+
+            return NotFound(id);
+        }
+
         [HttpGet("list")]
         public async Task<IActionResult> GetList()
         {
