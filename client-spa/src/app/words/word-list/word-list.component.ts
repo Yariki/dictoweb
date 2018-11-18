@@ -60,6 +60,14 @@ export class WordListComponent implements OnInit {
     this.getPage(dto);
   }
 
+  onDetails(id: number) {
+
+  }
+
+  onDelete(id: number) {
+
+  }
+
   private getPage(dto: WordPagination) {
     this.wordService.getPage(dto).then(result => {
       this.words = result.words;
@@ -74,5 +82,6 @@ export class WordListComponent implements OnInit {
       this.pages.push(i + 1);
     }
   }
+
 
 }

@@ -11,12 +11,13 @@
     </div>
   </div>
   <div class="row w-100" style="overflow-y: scroll; height: 500px">
-    <table class="table table-striped" >
+    <table class="table table-striped table-hover" >
       <thead>
         <tr>
           <th scope="col">Id</th>
         <th scope="col">Text</th>
         <th scope="col">Level</th>
+        <th scope="col">Deck</th>
         <th scope="col">Deck</th>
         </tr>
       </thead>
@@ -26,6 +27,10 @@
           <td>{{word.text}}</td>
           <td>{{word.level}}</td>
           <td>{{word.deck !== null ? word.deck.name : 'n/a'}}</td>
+          <td>
+            <button class="btn btn-outline-info" (click)="onDetails(word.id)"><span class="fas fa-info"></span></button>
+            <button class="btn btn-outline-danger" (click)="onDelete(word.id)"><span class="fas fa-trash"></span></button>
+          </td>
         </tr>
       </tbody>
     </table>
