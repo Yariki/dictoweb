@@ -18,7 +18,7 @@ namespace DictoData.Interfaces
 
         Task<IEnumerable<T>> GetFilteredAsync(Expression<Func<T, bool>> filter, params string[] includes);
 
-        Task<T> GetByIdAsync(int id);
+        Task<T> GetByIdAsync(int id, params string[] includes);
 
         void Insert(T entity);
 

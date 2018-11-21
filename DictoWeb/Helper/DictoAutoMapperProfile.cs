@@ -20,6 +20,8 @@ namespace DictoWeb.Helper
             CreateMap<WordDto, Word>();
             CreateMap<DeckDto, Deck>();
             CreateMap<Deck, DeckDto>();
+            CreateMap<Example, ExampleDto>();
+            CreateMap<ExampleDto, Example>();
         }
     }
 }

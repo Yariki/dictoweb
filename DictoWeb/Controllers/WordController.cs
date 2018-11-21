@@ -36,9 +36,8 @@ namespace DictoWeb.Controllers
         {
             try
             {
-                var result = await _wordService.GetWord(id);
+                var result = await _wordService.GetWord(id, "Translates", "Examples", "Deck");
                 var resultDto = _mapper.Map<WordDto>(result);
-
                 return Ok(resultDto);
             }
             catch (Exception e)

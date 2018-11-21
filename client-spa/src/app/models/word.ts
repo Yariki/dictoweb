@@ -1,5 +1,6 @@
 import {Translate} from './translate';
 import {Deck} from './deck';
+import {Example} from './example';
 
 
 
@@ -20,6 +21,7 @@ export class Word {
   public phonetic: string;
   public userid: number;
   public translated: Translate[];
+  public examples: Example[];
   public deckid: number;
   public deck: Deck;
 }

@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using DictoData.Context;
 using DictoData.Interfaces;
+using DictoInfrasctructure.Extensions;
 using Microsoft.EntityFrameworkCore;
 
 namespace DictoData.Core
@@ -47,9 +48,24 @@ namespace DictoData.Core
         }
 
         
-        public virtual async Task<TEntity> GetByIdAsync(int id)
+        public virtual async Task<TEntity> GetByIdAsync(int id, params string[] includes)
         {
-            return await _set.FindAsync(id);
+            var result = await _set.FindAsync(id);
+            if (includes.IsNotNull() && includes.Length > 0)
+            {
+                foreach (var include in includes)
+                {
+                    if (result.IsPropertyList(include))
+                    {
+                        _context.Entry(result).Collection(include).Load();
+                    }
+                    else
+                    {
+                        _context.Entry(result).Reference(include).Load();
+                    }
+                }
+            }
+            return result;
         }
 
         public virtual void Insert(TEntity entity)
