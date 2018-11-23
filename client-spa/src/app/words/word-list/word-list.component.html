@@ -28,7 +28,7 @@
           <td>{{word.level}}</td>
           <td>{{word.deck !== null ? word.deck.name : 'n/a'}}</td>
           <td>
-            <a class="btn btn-outline-info" [routerLink]="['/words', word.id]" ><span class="fas fa-info"></span></a>
+            <a class="btn btn-outline-info" (click)="onDetails(wordDetails, word.id)" ><span class="fas fa-info"></span></a>
             <button class="btn btn-outline-danger" (click)="onDelete(word.id)"><span class="fas fa-trash"></span></button>
           </td>
         </tr>
@@ -41,3 +41,36 @@
     </ul>
   </div>
 </div>
+
+<ng-template #wordDetails let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Word <span class="bg-info">"{{word.text}}"</span></h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('close')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="form-group" *ngIf="word.phonetic != null">
+      <label>Phonetic:</label> {{word.phonetic}}
+    </div>
+    <div class="form-group">
+      <label>Level:</label> {{word.level}}
+    </div>
+    <div class="form-group" *ngIf="word.translates !== null && word.translates.length > 0">
+      <label>Translation:</label>
+      <ul>
+        <li *ngFor="let trans of word.translates">{{ trans.text }}</li>
+      </ul>
+    </div>
+    <div class="form-group" *ngIf="word.examples !== null && word.examples.length > 0">
+      <label>Examples:</label>
+      <ul>
+        <li *ngFor="let example of word.examples">{{ example.text }}</li>
+      </ul>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('close')">Close</button>
+  </div>
+</ng-template>
+

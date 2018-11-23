@@ -18,7 +18,7 @@ export class WordDetailComponent implements OnInit {
     this.route.params.subscribe((qP: Params) => {
       const id = +qP['id'];
       console.log(id);
-      this.wordService.getWWord(id).then(value => {
+      this.wordService.getWord(id).then(value => {
         this.word = value;
         console.log(this.word);
       });

@@ -22,6 +22,8 @@ import {DeckService} from './services/deck.service';
 import { WordListComponent } from './words/word-list/word-list.component';
 import { WordDetailComponent } from './words/word-detail/word-detail.component';
 
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -37,6 +39,7 @@ import { WordDetailComponent } from './words/word-detail/word-detail.component';
   imports: [
     BrowserModule,
     CommonModule,
+    NgbModule,
     AuthModule,
     AppRoutingModule,
     DeckModule

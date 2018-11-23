@@ -20,7 +20,7 @@ export class Word {
   public level: LevelType;
   public phonetic: string;
   public userid: number;
-  public translated: Translate[];
+  public translates: Translate[];
   public examples: Example[];
   public deckid: number;
   public deck: Deck;

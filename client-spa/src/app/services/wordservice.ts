@@ -28,7 +28,7 @@ export class WordService {
     this.httpService.post('word/updatelevel', {wordId: id, level: wordLevel });
   }
 
-  getWWord(id: number): Promise<Word> {
+  getWord(id: number): Promise<Word> {
     const promise = new Promise<Word>(resolve => {
       this.httpService.get<Word>('word/word',{ id: id}).then(result => {
         resolve(result);

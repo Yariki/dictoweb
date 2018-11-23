@@ -3,6 +3,7 @@ import {Word} from '../../models/word';
 import {WordService} from '../../services/wordservice';
 import {WordPagination} from '../../models/wordpagination';
 import {ActivatedRoute, Router} from '@angular/router';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-word-list',
@@ -15,11 +16,12 @@ export class WordListComponent implements OnInit {
   letters: string[] = [];
   pages: number[] = [];
   currentPage: number;
+  word: Word;
 
   private DefaultPageSize: number = 10;
   private currentLetter: string;
 
-  constructor( private wordService: WordService, private router: Router, private activeRoute: ActivatedRoute ) {
+  constructor( private wordService: WordService, private router: Router, private activeRoute: ActivatedRoute, private modalService: NgbModal ) {
   }
 
   ngOnInit() {
@@ -61,8 +63,17 @@ export class WordListComponent implements OnInit {
     this.getPage(dto);
   }
 
-  onDetails(id: number) {
+  onDetails(content: any, id: number) {
 
+    this.wordService.getWord(id).then(value => {
+      this.word = value;
+      this.modalService.open(content).result.then((res) => {
+
+      },
+        (reason) => {
+
+        });
+    });
   }
 
   onDelete(id: number) {
