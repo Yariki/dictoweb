@@ -30,7 +30,7 @@ export class Level3Component implements OnInit {
   }
 
   ngOnInit() {
-    this.levelService.getLevelCount(LevelType.Third).then(value => this.wordsCount = value);
+    this.updateWordCount();
   }
 
 
@@ -78,6 +78,7 @@ export class Level3Component implements OnInit {
       this.pazzle = this.tasks[this.currentPazzleIndex];
     } else {
       this.generateTask = true;
+      this.updateWordCount();
     }
     this.showNext = false;
   }
@@ -88,6 +89,10 @@ export class Level3Component implements OnInit {
       o.show = true;
     });
     this.showNext = true;
+  }
+
+  private updateWordCount() {
+    this.levelService.getLevelCount(LevelType.Third).then(value => this.wordsCount = value);
   }
 
 }

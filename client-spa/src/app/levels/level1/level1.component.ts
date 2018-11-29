@@ -30,7 +30,7 @@ export class Level1Component implements OnInit {
   ngOnInit() {
     this.level = 'Level 1';
     this.currentTask = new TaskItem();
-    this.levelService.getLevelCount(LevelType.First).then(value => this.wordsCount = value);
+    this.updateWordCount();
   }
 
   onGenerateTask() {
@@ -65,12 +65,18 @@ export class Level1Component implements OnInit {
       this.currentTask = new TaskItem();
       this.tasks = null ;
       this.generateTask = true ;
+      this.updateWordCount();
+
     }
   }
 
   dontKnow() {
     this.preview = true ;
     this.showNext = true;
+  }
+
+  private updateWordCount() {
+    this.levelService.getLevelCount(LevelType.First).then(value => this.wordsCount = value);
   }
 
 }
