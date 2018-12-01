@@ -67,7 +67,7 @@ export class WordListComponent implements OnInit {
 
     this.wordService.getWord(id).then(value => {
       this.word = value;
-      this.modalService.open(content).result.then((res) => {
+      this.modalService.open(content,{size: 'lg'}).result.then((res) => {
 
       },
         (reason) => {

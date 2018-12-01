@@ -15,6 +15,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
 namespace DictoWeb
@@ -58,7 +59,11 @@ namespace DictoWeb
             });
             services
                 .AddMvc()
-                .AddJsonOptions(o => o.SerializerSettings.ContractResolver = new LowerCaseContractResolver());
+                .AddJsonOptions(o =>
+                {
+                    o.SerializerSettings.ContractResolver = new LowerCaseContractResolver();
+                    o.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                });
 
             services.AddServices();
         }
