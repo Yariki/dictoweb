@@ -24,4 +24,5 @@ export class Word {
   public examples: Example[];
   public deckid: number;
   public deck: Deck;
+  public sound: string;
 }

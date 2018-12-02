@@ -30,6 +30,8 @@ namespace DictoData.Model
         public int? DeckId { get; set; }
 
         public Deck Deck { get; set; }
+
+        public string Sound { get; set; }
         
     }
 }

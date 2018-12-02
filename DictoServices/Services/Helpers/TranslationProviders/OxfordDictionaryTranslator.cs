@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DictoInfrasctructure.Enums;
+using DictoInfrasctructure.Extensions;
 using DictoServices.Base;
 using DictoServices.Data;
 using HtmlAgilityPack;
@@ -25,9 +26,14 @@ namespace DictoServices.Services.Helpers
                 var web = new HtmlWeb();
                 var doc = await web.LoadFromWebAsync(string.Format(DICTIONARY_URL, Query));
                 var spans = doc.DocumentNode.SelectNodes("//span[contains(@class, 'ind')]");
+                var sounds = doc.DocumentNode.SelectNodes("//audio");
                 var result = new TranslateRequestResult() { Original = Query };
                 result.Translate = new Dictionary<string, string[]>();
                 result.Translate.Add("", spans.Take(5).Select(n => n.InnerText.Replace('\n', ' ').Trim()).ToArray());
+                if (sounds.IsNotNull() && sounds.Count > 0)
+                {
+                    result.UrlSound = sounds[0].GetAttributeValue("src", null);
+                }
                 return result;
             }
             catch (Exception e)

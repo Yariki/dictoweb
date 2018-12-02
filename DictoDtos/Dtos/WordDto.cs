@@ -27,6 +27,8 @@ namespace DictoInfrasctructure.Dtos
         public int DeckId { get; set; }
 
         public DeckDto Deck { get; set; }
+        
+        public string Sound { get; set; }
 
     }
 }
