@@ -37,7 +37,7 @@ function init() {
     var isMouseOverTranslation = false;
     var allowMouseOverTranslation = true;
     var bubbleRGB = "rgb(222, 184, 135)";
-    var bubble, header, content, footer, bookmarks, voice, home, settings, faq, addBtn;
+    var bubble, header, content, footer, bookmarks, voice, home, settings, faq, addBtn, soundButton;
     var currentTranslation;
 
     console.log('content is loaded...');
@@ -181,7 +181,7 @@ function init() {
             }, bubble);
 
             addBtn = html("td",{
-                style: "background-image: url(" + chrome.runtime.getURL("data/icons/voice.png") + ")",
+                style: "background-image: url(" + chrome.runtime.getURL("data/icons/add.png") + ")",
                     title: "Add new word"
             },footer);
             addBtn.addEventListener("click",function(){
@@ -197,6 +197,16 @@ function init() {
                     })
                 }
             });
+
+            soundButton = html("td",{style: "background-image: url(" + chrome.runtime.getURL("data/icons/voice.png") + ")"},footer);
+
+            soundButton.addEventListener("click",function(){
+                if(currentTranslation && currentTranslation.urlsound != null && currentTranslation.urlsound != undefined){
+                    var audio = new Audio(currentTranslation.urlsound);
+                    audio.play();
+                }
+            });
+
         }
         /* addEventListener for resize */
         if (iFrame.contentWindow) {
@@ -447,6 +457,7 @@ function init() {
             // voice.setAttribute("isVoice", isSound);
 
             addBtn.style.backgroundImage = "url(" + chrome.runtime.getURL("data/icons/" + (!currentTranslation.isexisting ? "" : "no") +"add.png") + ")";
+            soundButton.disabled = currentTranslation.urlsound == null || currentTranslation.urlsound == undefined;
 
             var translated = currentTranslation.translate;
             if(!$.isEmptyObject(translated)){
