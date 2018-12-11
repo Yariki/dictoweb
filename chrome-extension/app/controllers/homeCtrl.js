@@ -47,6 +47,13 @@ angular.module('app').controller('homeController',function ($scope,$location,$ht
         });
     };
 
+    $scope.playSound = function () {
+        if($scope.data != undefined && $scope.data != null && $scope.data.urlsound != null){
+            var audio = new Audio($scope.data.urlsound);
+            audio.play();
+        }
+    };
+
 
 
 });
