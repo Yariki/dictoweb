@@ -37,7 +37,7 @@ export class LevelBase implements  OnInit {
   onSelected(isCorrect: boolean) {
     this.showNext = true;
     if (isCorrect) {
-      this.currentTask.word.level = LevelType.Second;
+      this.currentTask.word.level = this.getNextLevel();
       this.wordService.updateWord(this.currentTask.word);
     }
   }
