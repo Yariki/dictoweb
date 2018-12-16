@@ -44,7 +44,7 @@
 
 <ng-template #wordDetails let-modal>
   <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Word <span class="bg-info">"{{word.text}}"</span><a *ngIf="word.sound != null" onclick="this.firstElementChild.play()"><audio src="{{word.sound}}"></audio><span class="fas fa-audio-description"></span></a></h4>
+    <h4 class="modal-title" id="modal-basic-title">Word <span class="bg-info">"{{word.text}}"</span><a *ngIf="word.sound != null" onclick="this.firstElementChild.play()"><audio src="{{word.sound}}"></audio><span class="fas fa-file-audio-o"></span></a></h4>
     <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('close')">
       <span aria-hidden="true">&times;</span>
     </button>
@@ -65,7 +65,7 @@
     <div class="form-group" *ngIf="word.examples !== null && word.examples.length > 0">
       <label>Examples:</label>
       <ul>
-        <li *ngFor="let example of word.examples">{{ example.text }}</li>
+        <li *ngFor="let example of word.examples" appHighlight [template]="word.text" [text]="example.text"></li>
       </ul>
     </div>
   </div>

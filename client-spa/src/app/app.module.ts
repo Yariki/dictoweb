@@ -23,6 +23,7 @@ import { WordListComponent } from './words/word-list/word-list.component';
 import { WordDetailComponent } from './words/word-detail/word-detail.component';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {SharedModule} from './shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     BrowserModule,
     CommonModule,
     NgbModule,
+    SharedModule,
     AuthModule,
     AppRoutingModule,
     DeckModule
