@@ -8,6 +8,14 @@
     "default_popup": "index.html",
     "default_title": "Word Service"
   },
+  "background": {
+    "scripts": [
+      "lib/jquery/jquery-3.4.0.js",
+      "app/shared/shared.js",
+      "app/background/background.js"
+    ],
+    "persistent": false
+  },
   "content_scripts": [{
     "all_frames": true,
     "matches": ["<all_urls>"],
@@ -16,7 +24,7 @@
       "lib/howler/howler.core.min.js",
       "lib/howler/howler.min.js",
       "lib/howler/howler.spatial.min.js",
-      "lib/jquery/jquery-3.2.0.min.js",
+      "lib/jquery/jquery-3.4.0.js",
       "app/shared/shared.js",
       "app/content/content.js"
     ],

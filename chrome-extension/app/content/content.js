@@ -123,9 +123,13 @@ function init() {
 
         // translate word
         console.log('Need to translate: ' +  requestBubbleTranslation.text);
-        httpService.translate(requestBubbleTranslation.text,null,function(data){
+
+        chrome.runtime.sendMessage(new Message(Messages.translate,requestBubbleTranslation.text),function(data){
             processTranslatedWord(data)
         });
+        // httpService.translate(requestBubbleTranslation.text,null,function(data){
+        //     processTranslatedWord(data)
+        // });
 
     }
 
@@ -191,10 +195,15 @@ function init() {
                 }
 
                 if(currentTranslation){
-                    httpService.addWord(currentTranslation,function (result) {
+
+                    chrome.runtime.sendMessage(new Message(Messages.addword,currentTranslation),function (result) {
                         currentTranslation.isexisting = result.data.status == 200;
                         addBtn.style.backgroundImage = "url(" + chrome.runtime.getURL("data/icons/" + (!currentTranslation.isexisting ? "" : "no") +"add.png") + ")";
-                    })
+                    });
+                    // httpService.addWord(currentTranslation,function (result) {
+                    //     currentTranslation.isexisting = result.data.status == 200;
+                    //     addBtn.style.backgroundImage = "url(" + chrome.runtime.getURL("data/icons/" + (!currentTranslation.isexisting ? "" : "no") +"add.png") + ")";
+                    // })
                 }
             });
 

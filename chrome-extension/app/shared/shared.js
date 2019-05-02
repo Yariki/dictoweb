@@ -2,8 +2,13 @@
 var StatusResult = {OK: 0, Error: 1, TokenMissed: 2};
 Object.freeze(StatusResult);
 
-var MessagesDirections = {BackgroundToContent:'BackgroundToContent', ContentToBackground:'ContentToBackground'}
-Object.freeze(MessagesDirections);
+var Messages = {translate:'translate', addword:'addword'};
+Object.freeze(Messages);
+
+function Message(message, payload) {
+    this.message = message;
+    this.payload = payload;
+}
 
 function Status(status, data, message) {
     this.status = status;
@@ -51,7 +56,7 @@ var storage = (function(){
             return chrome.storage.sync.get('token',function (items) {
                 callback(items);
             }) ;
-        },
+        }
     };
 })();
 
@@ -74,7 +79,7 @@ var httpService = (function(storage, constRepo, optStorage){
 
     optStorage.getOptions().then(function (promiseValue) {
         options = promiseValue;
-    })
+    });
 
     var internalTranslate = function(result, word,outOptions, callback){
         var auth = 'Bearer ' + result.token.token;
@@ -84,26 +89,31 @@ var httpService = (function(storage, constRepo, optStorage){
         $.ajax({
             headers:{
                 'Authorization':auth,
-                'Content-Type':'application/json'
+                'Content-Type':'application/json; charset=utf-8'
             },
             method: 'POST',
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             url: u,
+            crossDomain: true,
+            beforeSend: function(xhr){
+                xhr.withCredentials = true;
+                xhr.setRequestHeader('Origin','');
+            },
             data: JSON.stringify({
                 original: word,
                 sourcelanguage: options.sourceLanguage,
                 targetlanguage: options.targetLanguage,
                 provider: options.provider
-            }) ,
-            success: function(data){
+            })
+        })
+            .done(function (data, textStatus, jqXHR) {
                 callback(new Status(StatusResult.OK,data,null));
-            },
-            error: function (data,text,err) {
-                callback(new Status(StatusResult.Error,data,"Something wrong!"));
-            }
-        });
-    }
+            })
+            .fail(function (jqXHR, textStatus, errorThrown) {
+                callback(new Status(StatusResult.Error,errorThrown,"Something wrong!"));
+            })
+    };
 
     var sendData =  function(token, data, callback) {
         var auth = 'Bearer ' + token.token.token;
@@ -126,7 +136,7 @@ var httpService = (function(storage, constRepo, optStorage){
                 callback(new Status(StatusResult.Error,data,"Something wrong!"));
             }
         });
-    }
+    };
 
     return {
         translate: function(word, options, callback){

@@ -4,9 +4,11 @@ using AutoMapper;
 using DictoInfrasctructure.Core;
 using DictoInfrasctructure.Dtos;
 using DictoServices.Interfaces;
+using DictoWeb.Helper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 
 namespace DictoWeb.Controllers
 {
@@ -40,7 +42,7 @@ namespace DictoWeb.Controllers
                     return BadRequest("There is no  translation.");
                 }
                 var mappedResult = _mapper.Map<TranslateResultDto>(result);
-                return Ok(mappedResult);
+                return Json(mappedResult);
             }
             catch (Exception e)
             {
