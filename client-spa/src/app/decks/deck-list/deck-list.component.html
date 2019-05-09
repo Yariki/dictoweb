@@ -3,8 +3,7 @@
     <button class="btn btn-outline-primary" (click)="onNewDeck()">New Deck</button>
   </div>
 </div>
-<hr>
-<div class="row">
+<div class="row" style="padding-top: 15px">
   <div class="col-xs-12">
     <app-deck-item *ngFor="let item of decks"
                    [deck]="item">

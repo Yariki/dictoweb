@@ -1,45 +1,46 @@
-<div class="container">
-  <div class="input-group">
-    <select id="letters" name="letters" style="width: 40px" (change)="onChange($event.target.value)">
+<div class="form-inline">
+  <div class="form-group mb-2">
+    <label>Select letter or leave empty for showing all words: </label>
+    <select id="letters" name="letters" style="width: 40px" (change)="onChange($event.target.value)" class="form-control">
       <option  *ngFor="let l of letters; let i = index"
-        value="{{i}}" label="{{l}}"></option>
+               value="{{i}}" label="{{l}}"></option>
     </select>
-    <div class="input-group-btn">
-      <button type="button" class="btn btn-default btn-sm" (click)="onRefresh()">
-        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> Refresh
-      </button>
-    </div>
   </div>
-  <div class="row w-100" style="overflow-y: scroll; height: 500px">
-    <table class="table table-striped table-hover" >
-      <thead>
-        <tr>
-          <th scope="col">Id</th>
-        <th scope="col">Text</th>
-        <th scope="col">Level</th>
-        <th scope="col">Deck</th>
-        <th scope="col">Deck</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let word of words">
-          <th scope="row">{{word.id}}</th>
-          <td>{{word.text}}</td>
-          <td>{{word.level}}</td>
-          <td>{{word.deck !== null ? word.deck.name : 'n/a'}}</td>
-          <td>
-            <a class="btn btn-outline-info" (click)="onDetails(wordDetails, word.id)" ><span class="fas fa-info"></span></a>
-            <button class="btn btn-outline-danger" (click)="onDelete(word.id)"><span class="fas fa-trash"></span></button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+  <div class="form-group mx-sm-3 mb-2">
+    <button type="button" class="btn btn-default" (click)="onRefresh()">
+      <span class="glyphicon glyphicon-refresh" aria-hidden="false"></span> Refresh
+    </button>
   </div>
-  <div class="row">
-    <ul class="pagination">
-      <li class="page-item" [ngClass]="{'active': currentPage == name }" *ngFor="let name of pages; let i=index"><a class="page-link" (click)="onPageClick(name)">{{name}}</a></li>
-    </ul>
-  </div>
+</div>
+<div class="row w-100" style="overflow-y: scroll; height: 500px">
+  <table class="table table-striped table-hover" >
+    <thead>
+      <tr>
+        <th scope="col">Id</th>
+      <th scope="col">Text</th>
+      <th scope="col">Level</th>
+      <th scope="col">Deck</th>
+      <th scope="col">Deck</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let word of words">
+        <th scope="row">{{word.id}}</th>
+        <td>{{word.text}}</td>
+        <td>{{word.level}}</td>
+        <td>{{word.deck !== null ? word.deck.name : 'n/a'}}</td>
+        <td>
+          <a class="btn btn-outline-info" (click)="onDetails(wordDetails, word.id)" ><span class="fas fa-info"></span></a>
+          <button class="btn btn-outline-danger" (click)="onDelete(word.id)"><span class="fas fa-trash"></span></button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div class="row">
+  <ul class="pagination">
+    <li class="page-item" [ngClass]="{'active': currentPage == name }" *ngFor="let name of pages; let i=index"><a class="page-link" (click)="onPageClick(name)">{{name}}</a></li>
+  </ul>
 </div>
 
 <ng-template #wordDetails let-modal>
