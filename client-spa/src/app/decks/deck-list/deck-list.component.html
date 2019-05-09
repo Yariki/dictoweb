@@ -1,12 +1,8 @@
 <div class="row mt-2">
-  <div class="col-xs-12">
-    <button class="btn btn-outline-primary" (click)="onNewDeck()">New Deck</button>
-  </div>
+    <button class="btn btn-outline-info" (click)="onNewDeck()">New Deck</button>
 </div>
-<div class="row" style="padding-top: 15px">
-  <div class="col-xs-12">
-    <app-deck-item *ngFor="let item of decks"
-                   [deck]="item">
-    </app-deck-item>
-  </div>
+<div class="list-group" style="padding-top: 15px">
+  <app-deck-item *ngFor="let item of decks"
+                 [deck]="item">
+  </app-deck-item>
 </div>

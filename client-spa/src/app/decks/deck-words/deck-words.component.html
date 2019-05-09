@@ -1,5 +1,5 @@
-<div class="row mt-2">
-  <div class="form-group">
+<div class="row">
+  <div class="form-inline">
     <label for="selectedDeck">Selec Deck: </label>
     <select id="selectedDeck" name="selectedDeck" class="form-control" (change)="onChange($event.target.value)">
       <option *ngFor="let d of decks; let i = index" value="{{d.id}}" label="{{d.name}}" ></option>
@@ -22,9 +22,8 @@
       <div class="col">
         <p class="font-weight-bold">Deck Words</p>
       </div>
-      <div class="col-6"></div>
-      <div class="col">
-        <button type="button" class="btn btn-outline-success" [disabled]="!isChanged" (click)="onSave()">Save</button>
+      <div class="form-group">
+        <button type="button" class="btn btn-outline-success float-right" [disabled]="!isChanged" (click)="onSave()">Save</button>
       </div>
     </div>
     <div class="row">
