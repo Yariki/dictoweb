@@ -30,16 +30,24 @@ export class HighlightDirective implements  OnInit {
 
       const currentDistance = this.levenshtein(result[0], this.template);
       if (currentDistance < 4) {
-        matches.push(result[0]);
+        matches.push(result);
       }
     }
 
-    let text = this.text;
+    let temp = this.text;
+    let text = '';
+    let startIndex = 0;
     if (matches.length > 0) {
       for (let i = 0; i < matches.length; i++) {
         const match = matches[i];
-        text = text.replace(match, "<span style='background: yellow'>" + match + '</span>');
+        const part = startIndex < match.index ? temp.substring(startIndex, match.index) : '';
+        text += part + ' ' + "<span style='background: yellow'>" + match[0] + '</span>' + ' ';
+        startIndex = (match.index + match[0].length) + 1;
       }
+    }
+    if ( startIndex < this.text.length ) {
+      const part = temp.substr(startIndex, this.text.length - 1);
+      text += part;
     }
     this.el.nativeElement.innerHTML = text;
   }
@@ -49,12 +57,16 @@ export class HighlightDirective implements  OnInit {
     const m = a.length, n = b.length;
     if (!m) { return n; }
     if (!n) { return m; }
+
     for (j = 0; j <= n; j++) { t[j] = j; }
+
     for (i = 1; i <= m; i++) {
       for (u = [i], j = 1; j <= n; j++) {
         u[j] = a[i - 1] === b[j - 1] ? t[j - 1] : Math.min(t[j - 1], t[j], u[j - 1]) + 1;
       } t = u;
-    } return u[n];
+    }
+
+    return u[n];
   }
 
 
