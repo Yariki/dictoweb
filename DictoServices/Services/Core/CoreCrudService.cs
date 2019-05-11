@@ -28,7 +28,7 @@ namespace DictoServices.Services.Core
             Mapper = mapper;
         }
 
-        public abstract Task<IEnumerable<M>> Get(string userName);
+        public abstract Task<IEnumerable<T>> Get(string userName);
 
 
         public async Task<bool> AddItem(string userName, T modelDto)

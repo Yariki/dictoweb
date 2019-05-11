@@ -2,6 +2,8 @@
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using AutoMapper;
+using DictoData.Model;
 using DictoInfrasctructure.Core;
 using DictoInfrasctructure.Dtos;
 using DictoServices.Interfaces;
@@ -16,10 +18,12 @@ namespace DictoWeb.Controllers
     public class DeckController : CoreController<DeckController>
     {
         private IDeckService _deckService;
+        private IMapper _mapper;
 
-        public DeckController(IDeckService deckService, ILogger<DeckController> logger) : base(logger)
+        public DeckController(IDeckService deckService, IMapper mapper, ILogger<DeckController> logger) : base(logger)
         {
             _deckService = deckService;
+            _mapper = mapper;
         }
 
         [HttpGet("list")]
@@ -28,7 +32,6 @@ namespace DictoWeb.Controllers
             try
             {
                 var list = await _deckService.Get(GetUserName());
-                list = list.Where(d => d.Id != 0).ToList();
                 return Ok(list);
             }
             catch (Exception e)

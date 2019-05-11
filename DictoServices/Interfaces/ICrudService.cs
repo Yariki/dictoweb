@@ -9,6 +9,6 @@ namespace DictoServices.Interfaces
         Task<bool> AddItem(string userName, T modelDto);
         bool UpdateItem(T modelDto);
         bool DeleteItem(T modelDto);
-        Task<IEnumerable<M>> Get(string userName);
+        Task<IEnumerable<T>> Get(string userName);
     }
 }

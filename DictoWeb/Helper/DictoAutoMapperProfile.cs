@@ -9,7 +9,7 @@ namespace DictoWeb.Helper
     {
         public DictoAutoMapperProfile()
         {
-            CreateMap<User, UserDto>();
+            CreateMap<User, UserDto>().ForMember(u => u.Password, opt => opt.Ignore()).ForSourceMember(u => u.Password, opt => opt.Ignore());
             CreateMap<UserDto, User>();
             CreateMap<Role, RoleDto>();
             CreateMap<RoleDto, Role>();

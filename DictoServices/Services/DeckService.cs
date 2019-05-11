@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using DictoData.Interfaces;
@@ -19,7 +20,7 @@ namespace DictoServices.Services
         {
         }
 
-        public override async Task<IEnumerable<Deck>> Get(string userName)
+        public override async Task<IEnumerable<DeckDto>> Get(string userName)
         {
             var result = GetUser(userName).Result;
             if (result.IsNull())
@@ -29,7 +30,7 @@ namespace DictoServices.Services
             
             var list = await UnitOfWork.Repository<Deck>().GetFilteredAsync(d => d.UserId == result.Id);
 
-            return list;
+            return list.Select(d => Mapper.Map<DeckDto>(d)).ToList();
         }
 
         protected override void UpdateItem(User user, Deck model, DeckDto transportModel)
