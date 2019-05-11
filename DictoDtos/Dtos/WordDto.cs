@@ -24,7 +24,7 @@ namespace DictoInfrasctructure.Dtos
 
         public List<ExampleDto> Examples { get; set; }
 
-        public int DeckId { get; set; }
+        public int? DeckId { get; set; }
 
         public DeckDto Deck { get; set; }
         
