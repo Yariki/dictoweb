@@ -9,7 +9,7 @@ import {UserWordsInfo} from '../../models/userwordsinfo';
 })
 export class HomeComponent implements OnInit {
 
-  private info: UserWordsInfo;
+  info: UserWordsInfo;
 
   constructor( private  wordService: WordService) { }
 

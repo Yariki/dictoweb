@@ -36,6 +36,13 @@ export class DeckWordsComponent implements OnInit {
   }
 
   onChange(ev: any) {
+    const id = +ev;
+
+    if (id === -1) {
+      this.selectedWords = this.selectedDeck = this.deletedWords = null;
+      return;
+    }
+
     this.wordService.getDeckWords(ev).then(result => {
       if (result != null) {
         this.selectedWords = result;
@@ -45,17 +52,18 @@ export class DeckWordsComponent implements OnInit {
       this.deletedWords = [];
     });
     this.isChanged = false;
-    const id = +ev;
     this.selectedDeck = this.decks.filter(d => d.id === id)[0];
   }
 
   onAddWordToDeck(index: number) {
-    if (index > -1 && this.selectedWords != null) {
-      const word = this.freeWords[index];
-      this.freeWords.splice(index, 1);
-      this.selectedWords.push(word);
-      this.isChanged = true;
+    if ( index === -1 || this.selectedWords == null || this.selectedDeck == null) {
+      return;
     }
+
+    const word = this.freeWords[index];
+    this.freeWords.splice(index, 1);
+    this.selectedWords.push(word);
+    this.isChanged = true;
   }
 
   onRemoveWordFromDeck(index: number) {

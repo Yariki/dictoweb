@@ -84,25 +84,25 @@ namespace DictoServices.Services
         {
             var userID = await GetUserId(userName);
             
-            var word = new Word(){Text = translateResult.Original,Level = LevelType.First,Phonetic = translateResult.Phonetic,SuperMemory = new SuperMemory(),UserId = userID, Translates = new List<Translate>(), Examples = new List<Example>(), Sound = translateResult.UrlSound};
+            var word = new Word(){Text = translateResult.Original.Trim(),Level = LevelType.First,Phonetic = translateResult.Phonetic,SuperMemory = new SuperMemory(),UserId = userID, Translates = new List<Translate>(), Examples = new List<Example>(), Sound = translateResult.UrlSound};
             foreach (var pair in translateResult.Translate)
             {
                 WordType wordType = string.IsNullOrEmpty(pair.Key) ? WordType.Definition : pair.Key.GetEnumValue<WordType>();
 
                 foreach (var translation in pair.Value)
                 {
-                    var t = new Translate(){Text = translation,WordType = wordType};
+                    var t = new Translate(){Text = translation.Trim(),WordType = wordType};
                     word.Translates.Add(t);
                 }
             }
-            word.Examples.Add(new Example() { Text = translateResult.Sentence });
+            word.Examples.Add(new Example() { Text = translateResult.Sentence.Trim() });
             CoreExamplesProvider examplesProvider = null;
             if(!string.IsNullOrEmpty(translateResult.Provider) && (examplesProvider = ExampleFactory.GetProvider(translateResult.Original,translateResult.Provider,GetLogger())) != null)
             {
                 var examples = await examplesProvider.GetExamples();
                 if (examples != null && examples.Examples.Any())
                 {
-                    examples.Examples.ForEach(e => word.Examples.Add(new Example(){Text = e}));
+                    examples.Examples.ForEach(e => word.Examples.Add(new Example(){Text = e.Trim()}));
                 }
             }
 
