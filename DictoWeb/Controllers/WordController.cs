@@ -152,6 +152,21 @@ namespace DictoWeb.Controllers
             return Ok();
         }
 
+        [HttpDelete("delete/{wordId}")]
+        public async Task<IActionResult> Delete(int wordId)
+        {
+            try
+            {
+                var result = await _wordService.DeleteWord(wordId);
+                return Ok(result);
+            }
+            catch (Exception e)
+            {
+                Log(e.ToString());
+                return BadRequest(e.Message);
+            }
+        }
+
 
         [HttpPost("update")]
         public IActionResult Update([FromBody] WordDto word)

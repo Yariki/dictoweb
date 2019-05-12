@@ -9,6 +9,7 @@ using DictoInfrasctructure.Const;
 using DictoInfrasctructure.Core;
 using DictoInfrasctructure.Dtos;
 using DictoInfrasctructure.Enums;
+using DictoInfrasctructure.Exceptions;
 using DictoInfrasctructure.Extensions;
 using DictoServices.Base;
 using DictoServices.Interfaces;
@@ -159,6 +160,37 @@ namespace DictoServices.Services
 
             return _unitOfWork.SaveChanges();
         }
+
+        public async Task<bool> DeleteWord(int id)
+        {
+            var wordRepo = _unitOfWork.Repository<Word>();
+            var word = await wordRepo.GetByIdAsync(id, "SuperMemory", "Translates", "Examples");
+            if (word == null)
+            {
+                throw new NotFoundItemException($"The word with id {id} does not exist.");
+            }
+            var spRepo = await _unitOfWork.Repository<SuperMemory>().GetByIdAsync(word.SuperMemory.Id);
+            if (spRepo != null)
+            {
+                _unitOfWork.Repository<SuperMemory>().Delete(spRepo);
+            }
+
+            if (word.Translates.Any())
+            {
+                word.Translates.ForEach(t => _unitOfWork.Repository<Translate>().Delete(t));
+            }
+
+            if (word.Examples.Any())
+            {
+                word.Examples.ForEach(e => _unitOfWork.Repository<Example>().Delete(e));
+            }
+
+            wordRepo.Delete(word);
+            _unitOfWork.SaveChanges();
+
+            return true;
+        }
+
 
         private async Task<int> GetUserId(string userName)
         {
