@@ -4,6 +4,7 @@ import {WordService} from '../../services/wordservice';
 import {WordPagination} from '../../models/wordpagination';
 import {ActivatedRoute, Router} from '@angular/router';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {DeleteMessage} from '../../shared/messages/delete.message';
 
 @Component({
   selector: 'app-word-list',
@@ -69,7 +70,7 @@ export class WordListComponent implements OnInit {
       this.word = value;
       this.modalService.open(content,{size: 'lg'}).result.then((res) => {
 
-      },
+        },
         (reason) => {
 
         });
@@ -77,7 +78,16 @@ export class WordListComponent implements OnInit {
   }
 
   onDelete(id: number) {
-
+    this.modalService.open(DeleteMessage).result.then(value => {
+      console.log(value + ' ' + id);
+      this.wordService.deleteWord(id).then(result => {
+        this.onRefresh();
+      });
+    },
+      reason => {
+        console.log(reason);
+      }
+      );
   }
 
   private getPage(dto: WordPagination) {

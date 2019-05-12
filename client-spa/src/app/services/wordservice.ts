@@ -37,6 +37,14 @@ export class WordService {
     return promise;
   }
 
+  deleteWord(id: number): Promise<boolean> {
+    const promise = new Promise<boolean>(resolve => {
+      this.httpService.delete<any>('word/delete/' + id).then(result => resolve(result));
+    });
+    return promise;
+  }
+
+
   getWordsWithoutDeck(): Promise<Word[]> {
     const promise = new Promise<Word[]>(resolve => {
       this.httpService.get<Word[]>('word/words',{ }).then(result => {

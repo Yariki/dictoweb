@@ -47,4 +47,19 @@ export class HttpService {
     return promise;
   }
 
+  delete<T>(action: string): Promise<T> {
+    const promise = new Promise<T>(resolve => {
+      const httpOptions = {
+        headers: new HttpHeaders({
+          'Access-Control-Allow-Origin': '*',
+          'Authorization': 'Bearer ' + this.authService.getToken()
+        })
+      };
+      this.httpClient.delete<T>(this.baseUrl + action, httpOptions).subscribe(response => {
+        resolve(response);
+      });
+    });
+    return promise;
+  }
+
 }
