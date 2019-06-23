@@ -14,5 +14,9 @@
 
         public const int DefaultPageSize = 10;
 
+        public const int DefaultNewWords = 40;
+
+        public const int DefaultMinutes = 40;
+
     }
 }

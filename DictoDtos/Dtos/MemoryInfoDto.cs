@@ -8,5 +8,9 @@
 
         public int CountInProcess { get; set; }
 
+        public int NewWords { get; set; }
+
+        public int Minutes { get; set; }
+
     }
 }

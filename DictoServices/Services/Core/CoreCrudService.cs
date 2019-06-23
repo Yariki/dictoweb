@@ -9,6 +9,7 @@ using DictoData.Model;
 using DictoInfrasctructure.Core;
 using DictoInfrasctructure.Exceptions;
 using DictoInfrasctructure.Extensions;
+using DictoServices.Extensions;
 using DictoServices.Interfaces;
 using Microsoft.Extensions.Logging;
 
@@ -83,18 +84,7 @@ namespace DictoServices.Services.Core
 
         protected async Task<User> GetUser(string userName)
         {
-            if (string.IsNullOrEmpty(userName))
-            {
-                throw new ArgumentNullException("userName");
-            }
-
-            var users = await UnitOfWork.Repository<User>().GetFilteredAsync(user => user.Email == userName);
-            if (users == null || !users.Any())
-            {
-                throw new KeyNotFoundException($"User {userName} wasn't found");
-            }
-
-            return users.First();
+            return await UnitOfWork.GetUser(userName);
         }
 
     }

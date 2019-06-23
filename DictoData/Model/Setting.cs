@@ -10,6 +10,8 @@ namespace DictoData.Model
         public int Minute { get; set; }
 
         public DateTime LastUsedSM2 { get; set; }
+
+        public int UserId { get; set; }
         
     }
 }
