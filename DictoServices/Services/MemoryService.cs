@@ -9,13 +9,14 @@ using DictoInfrasctructure.Const;
 using DictoInfrasctructure.Core;
 using DictoInfrasctructure.Dtos;
 using DictoServices.Extensions;
+using DictoServices.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using SQLitePCL;
 
 namespace DictoServices.Services
 {
-    public class MemoryService : CoreService
+    public class MemoryService : CoreService, IMemoryService
     {
 
         private readonly IUnitOfWork _unitOfWork;

@@ -15,7 +15,7 @@
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Levels
         </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" *ngIf="authService.isAuthenticated()">
           <a class="dropdown-item" routerLink="/level1">Level 1</a>
           <a class="dropdown-item" routerLink="/level2">Level 2</a>
           <a class="dropdown-item" routerLink="/level3">Level 3</a>
@@ -27,7 +27,9 @@
           <a class="dropdown-item" routerLink="/decks">Decks Handling</a>
           <a class="dropdown-item" routerLink="/deckwords">Edit Words and Decks</a>
         </div>
-
+      </li>
+      <li class="nav-item"  *ngIf="authService.isAuthenticated()">
+        <a class="nav-link" routerLink="/memory">Super Memory</a>
       </li>
     </ul>
 

@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using AutoMapper;
 using DictoInfrasctructure.Core;
 using DictoInfrasctructure.Dtos;
+using DictoServices.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -16,21 +18,41 @@ namespace DictoWeb.Controllers
     [Route("api/memory")]
     public class SuperMemoryController : CoreController<SuperMemoryController>
     {
-        public SuperMemoryController(ILogger<SuperMemoryController> logger) : base(logger)
+        private IMemoryService _service;
+        private IMapper _mapper;
+
+        public SuperMemoryController(IMemoryService service, IMapper mapper, ILogger<SuperMemoryController> logger) : base(logger)
         {
+            _service = service;
+            _mapper = mapper;
         }
 
-
-        public IActionResult GetStatistics()
+        [HttpGet]
+        [Route("statistic")]
+        public async Task<IActionResult> GetStatistics()
         {
-            throw new NotImplementedException();
+            try
+            {
+                return Ok(await _service.GetStatistics(GetUserName()));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
         [HttpPost]
         [Route("generate")]
-        public IActionResult GenerateRepetition([FromBody] MemoryRepeatQueryDto query)
+        public async Task<IActionResult> GenerateRepetition([FromBody] MemoryRepeatQueryDto query)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return Ok(await _service.GenerateRepetition(query, GetUserName()));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
     }

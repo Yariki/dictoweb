@@ -15,7 +15,7 @@ const decksRoutes: Routes = [
       {path: ':id/edit', component: DeckEditComponent, canActivate: [AuthGuardService]}
     ]},
   {path: 'deckwords', component: DeckWordsComponent, canActivate: [AuthGuardService]}
-]
+];
 
 
 @NgModule({
