@@ -45,20 +45,20 @@ export class DeckEditComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.editMode && this.currentDeck !== null) {
-      this.currentDeck.name = this.deckForm.value['name'];
-      this.currentDeck.description = this.deckForm.value['description'];
-      this.deckService.edit(this.currentDeck).then(result => {
-        this.onCancel();
-      });
-    } else {
-      const deck = new Deck();
-      deck.name = this.deckForm.value['name'];
-      deck.description = this.deckForm.value['description'];
-      this.deckService.add(deck).then(reuslt => {
-        this.onCancel();
-      });
-    }
+      if (this.editMode && this.currentDeck !== null) {
+        this.currentDeck.name = this.deckForm.value['name'];
+        this.currentDeck.description = this.deckForm.value['description'];
+        this.deckService.edit(this.currentDeck).then(result => {
+          this.onCancel();
+        });
+      } else {
+        const deck = new Deck();
+        deck.name = this.deckForm.value['name'];
+        deck.description = this.deckForm.value['description'];
+        this.deckService.add(deck).then(reuslt => {
+          this.onCancel();
+        });
+      }
 
   }
 
