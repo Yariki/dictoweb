@@ -25,6 +25,7 @@ import { WordDetailComponent } from './words/word-detail/word-detail.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {SharedModule} from './shared/shared.module';
 import {SupermemoryModule} from './supermemory/supermemory.module';
+import {MemoryService} from './services/memory.service';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,7 @@ import {SupermemoryModule} from './supermemory/supermemory.module';
     DeckModule,
     SupermemoryModule
   ],
-  providers: [AuthService, HttpService, AuthGuardService,  WordService, LevelsService, DeckService],
+  providers: [AuthService, HttpService, AuthGuardService,  WordService, LevelsService, DeckService, MemoryService],
 
   bootstrap: [AppComponent]
 })

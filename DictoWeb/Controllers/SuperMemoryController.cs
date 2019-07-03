@@ -27,8 +27,7 @@ namespace DictoWeb.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet]
-        [Route("statistic")]
+        [HttpGet("statistic")]
         public async Task<IActionResult> GetStatistics()
         {
             try
@@ -41,8 +40,7 @@ namespace DictoWeb.Controllers
             }
         }
 
-        [HttpPost]
-        [Route("generate")]
+        [HttpPost("generate")]
         public async Task<IActionResult> GenerateRepetition([FromBody] MemoryRepeatQueryDto query)
         {
             try
