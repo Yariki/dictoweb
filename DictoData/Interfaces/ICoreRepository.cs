@@ -27,5 +27,6 @@ namespace DictoData.Interfaces
         void Update(T entity);
 
         DbSet<T> Set { get; }
+        Task LoadAsync<TEntity2>(T entity, Expression<Func<T,IEnumerable<TEntity2>>> expression) where TEntity2 : CoreEntity;
     }
 }

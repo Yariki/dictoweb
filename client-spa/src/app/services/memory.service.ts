@@ -2,6 +2,7 @@
 import {Injectable} from '@angular/core';
 import {HttpService} from './http.service';
 import {Memoryinfo} from '../models/memoryinfo';
+import {Memoryrepeating} from '../models/memoryrepeating';
 
 
 @Injectable()
@@ -16,6 +17,15 @@ export class MemoryService {
       });
     });
 
+    return promise;
+  }
+
+  getRepetition(data: any): Promise<Memoryrepeating> {
+    const promise = new Promise<Memoryrepeating>(resolve => {
+      this.httpService.post<Memoryrepeating>('memory/generate', data).then(value => {
+        resolve(value);
+      });
+    });
     return promise;
   }
 

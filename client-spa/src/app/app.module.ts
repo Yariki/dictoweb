@@ -26,6 +26,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {SharedModule} from './shared/shared.module';
 import {SupermemoryModule} from './supermemory/supermemory.module';
 import {MemoryService} from './services/memory.service';
+import {RepeatingsettingsService} from './services/repeatingsettings.service';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,7 @@ import {MemoryService} from './services/memory.service';
     DeckModule,
     SupermemoryModule
   ],
-  providers: [AuthService, HttpService, AuthGuardService,  WordService, LevelsService, DeckService, MemoryService],
+  providers: [AuthService, HttpService, AuthGuardService,  WordService, LevelsService, DeckService, MemoryService, RepeatingsettingsService],
 
   bootstrap: [AppComponent]
 })

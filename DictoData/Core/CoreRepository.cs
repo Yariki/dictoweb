@@ -47,6 +47,13 @@ namespace DictoData.Core
             return await query.ToListAsync();
         }
 
+
+        public virtual async Task LoadAsync<TEntity2>(TEntity entity, Expression<Func<TEntity,IEnumerable<TEntity2>>> expression) where TEntity2 : CoreEntity
+        {
+            await _context.Entry(entity)
+                .Collection(expression)
+                .LoadAsync();
+        }
         
         public virtual async Task<TEntity> GetByIdAsync(int id, params string[] includes)
         {

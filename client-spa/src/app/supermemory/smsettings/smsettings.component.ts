@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
 import {Memoryinfo} from '../../models/memoryinfo';
 import {MemoryService} from '../../services/memory.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {RepeatingsettingsService} from '../../services/repeatingsettings.service';
 
 @Component({
   selector: 'app-smsettings',
@@ -14,7 +16,7 @@ export class SmsettingsComponent implements OnInit {
   memoryinfo: Memoryinfo;
 
 
-  constructor(private memoryService: MemoryService ) {
+  constructor(private memoryService: MemoryService,  private router: Router, private activeRoute: ActivatedRoute, private repeatingsettingsService: RepeatingsettingsService ) {
     this.settingsGroup = new FormGroup({
       'newwords': new FormControl(0),
       'minutes': new FormControl(40)
@@ -39,7 +41,10 @@ export class SmsettingsComponent implements OnInit {
 
 
   onSubmit() {
+    this.repeatingsettingsService.minutes = +this.settingsGroup.value['minutes'];
+    this.repeatingsettingsService.newwords = +this.settingsGroup.value['newwords'];
 
+    this.router.navigate(['repeat'], {relativeTo: this.activeRoute  });
   }
 
 }

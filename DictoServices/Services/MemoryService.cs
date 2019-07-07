@@ -85,8 +85,9 @@ namespace DictoServices.Services
 
             if (query.NewWords > 0)
             {
+                var repository = _unitOfWork.Repository<Word>();
                 var withoutRepetition =
-                    await _unitOfWork.Repository<Word>().GetFilteredAsync(w => w.SuperMemory.Repetition == 0);
+                    await repository.GetFilteredAsync(w => w.SuperMemory.Repetition == 0);
                 if (withoutRepetition.Count() > query.NewWords)
                 {
                     var count = withoutRepetition.Count();
@@ -94,7 +95,9 @@ namespace DictoServices.Services
                     for (int i = 0; i < query.NewWords; i++)
                     {
                         var index = rand.Next(0, count);
-                        result.NewWords.Add(_mapper.Map<WordDto>(withoutRepetition.ElementAt(index)));
+                        var word = withoutRepetition.ElementAt(index);
+                        await repository.LoadAsync<Translate>(word, w => w.Translates);
+                        result.NewWords.Add(_mapper.Map<WordDto>(word));
                     }
                 }
                 else
