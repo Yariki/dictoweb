@@ -29,8 +29,18 @@ services:
         - "5000:80"
     depends_on:
         - sqlserver
-  
 
+  spa:
+    build: 
+      context: .\client-spa
+      dockerfile: Dockerfile
+    container_name: clientspa    
+    ports: 
+      - "4200:4200"
+    depends_on:
+      - sqlserver
+      - dictoweb  
+  
 volumes:
   sqlserverdata:
     external: true    
