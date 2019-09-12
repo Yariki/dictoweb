@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -22,17 +23,31 @@ namespace DictoWeb
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IHostingEnvironment environment)
         {
             Configuration = configuration;
+            CurrentEnvironment = environment;
         }
 
         public IConfiguration Configuration { get; }
+
+        public IHostingEnvironment CurrentEnvironment { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
 
+            var connectionString = Configuration["ConnectionString"];
+
+            if (CurrentEnvironment.IsProduction())
+            {
+                var server = Configuration["DatabaseServer"];
+                var database = Configuration["DatabaseName"];
+                var user = Configuration["DatabaseUser"];
+                var password = Configuration["DatabaseNamePassword"];
+                connectionString =
+                    $"Server={server};Database={database};User Id={user};Password={password};MultipleActiveResultSets=true";
+            }
 
             services.AddAuthentication(sharedOptions =>
             {
@@ -45,7 +60,10 @@ namespace DictoWeb
                 options.AddPolicy("Administrator", policy => policy.RequireClaim("Administrator"));
                 options.AddPolicy("User", policy => policy.RequireClaim("User"));
             });
-            services.AddDbContext<DictoContext>();
+
+            System.Diagnostics.Debug.WriteLine($"Connection String: {connectionString}");
+
+            services.AddDbContext<DictoContext>(opt => opt.UseSqlServer(connectionString));
             services.AddLogging();
             services.AddRouting(options => options.LowercaseUrls = true);
             services.AddAutoMapper();
