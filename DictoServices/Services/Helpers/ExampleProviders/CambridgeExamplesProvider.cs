@@ -23,7 +23,7 @@ namespace DictoServices.Services.Helpers.ExampleProviders
             {
                 var web = new HtmlWeb();
                 var doc = await web.LoadFromWebAsync(string.Format(DICTIONARY_URL, Original));
-                var defs = doc.DocumentNode.SelectNodes("//div[contains(@class, 'examp emphasized')]");
+                var defs = doc.DocumentNode.SelectNodes("//div[contains(@class, 'examp dexamp')]");
                 var result = new ExamplesRequestResult();
                 result.Examples = defs.Take(5).Select(n => n.InnerText.Trim()).ToList();
                 return result;

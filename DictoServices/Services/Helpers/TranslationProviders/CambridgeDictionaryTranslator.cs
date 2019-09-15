@@ -26,14 +26,14 @@ namespace DictoServices.Services.Helpers
             {
                 var web = new HtmlWeb();
                 var doc = await web.LoadFromWebAsync(string.Format(DICTIONARY_URL,Query));
-                var defs = doc.DocumentNode.SelectNodes("//b[contains(@class, 'def')]");
-                var sounds = doc.DocumentNode.SelectNodes("//span[contains(@class,'audio_play_button')]");
+                var defs = doc.DocumentNode.SelectNodes("//div[contains(@class, 'def ddef_d')]");
+                var sounds = doc.DocumentNode.SelectNodes("//source[@type='audio/mpeg']");
                 var result = new TranslateRequestResult() { Original = Query };
                 result.Translate = new Dictionary<string, string[]>();
                 result.Translate.Add("", defs.Take(5).Select(n => n.InnerText.Replace('\n', ' ').Trim()).ToArray());
                 if (sounds.IsNotNull() && sounds.Count > 0)
                 {
-                    result.UrlSound = string.Format(DICTIONARY_BASE_URL,sounds[0].GetAttributeValue("data-src-mp3",null));
+                    result.UrlSound = string.Format(DICTIONARY_BASE_URL,sounds[0].GetAttributeValue("src",null));
                 }
                 return result;
             }
